@@ -73,48 +73,28 @@ public class MySQL5FriendListDAO extends FriendListDAO {
                 ps.addBatch();
 
                 ps.executeBatch();
-                }
-            });
-        }
+            }
+        });
+    }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
     public boolean delFriends(final int playerOid, final int friendOid) {
-        return DB.insertUpdate("DELETE FROM friends WHERE player = ? AND friend = ?", new IUStH()
-        {
-            /*     */
-            /*     */
-            public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-            {
+        return DB.insertUpdate("DELETE FROM friends WHERE player = ? AND friend = ?", new IUStH() {
+
+            public void handleInsertUpdate(PreparedStatement ps) throws SQLException {
                 ps.setInt(1, playerOid);
                 ps.setInt(2, friendOid);
                 ps.addBatch();
-                /*     */
+
                 ps.setInt(1, friendOid);
                 ps.setInt(2, playerOid);
                 ps.addBatch();
-                /*     */
-                ps.executeBatch();
-                }
-            });
-        }
 
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    /*     */
-    public boolean supports(String s, int i, int i1) {
-        return MySQL5DAOUtils.supports(s, i, i1);
-        }
+                ps.executeBatch();
+            }
+        });
     }
 
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\mysql5\MySQL5FriendListDAO.class Java compiler version: 6 (50.0) JD-Core
- * Version: 1.1.3
- */
+    public boolean supports(String s, int i, int i1) {
+        return MySQL5DAOUtils.supports(s, i, i1);
+    }
+}

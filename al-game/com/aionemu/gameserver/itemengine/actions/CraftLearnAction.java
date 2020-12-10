@@ -15,35 +15,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CraftLearnAction")
-public class CraftLearnAction
-  extends AbstractItemAction
-{
+public class CraftLearnAction extends AbstractItemAction {
   @XmlAttribute
   protected int recipeid;
-  
+
   public boolean canAct(Player player, Item parentItem, Item targetItem) {
     RecipeTemplate template = DataManager.RECIPE_DATA.getRecipeTemplateById(this.recipeid);
     if (template == null) {
@@ -53,43 +30,37 @@ public class CraftLearnAction
       return false;
     }
     if (player.getRecipeList().isRecipePresent(this.recipeid)) {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(1330060, new Object[0]));
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(1330060, new Object[0]));
       return false;
-    } 
-    
+    }
+
     if (!player.getSkillList().isSkillPresent(template.getSkillid().intValue())) {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(1330062, new Object[] { DataManager.SKILL_DATA.getSkillTemplate(template.getSkillid().intValue()).getName() }));
-      
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(1330062,
+          new Object[] { DataManager.SKILL_DATA.getSkillTemplate(template.getSkillid().intValue()).getName() }));
+
       return false;
-    } 
-    
+    }
+
     if (template.getSkillpoint().intValue() > player.getSkillList().getSkillLevel(template.getSkillid().intValue())) {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(1330063, new Object[0]));
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(1330063, new Object[0]));
       return false;
-    } 
+    }
     return true;
   }
 
-
-  
   public void act(Player player, Item parentItem, Item targetItem) {
     RecipeTemplate template = DataManager.RECIPE_DATA.getRecipeTemplateById(this.recipeid);
-    
-    PacketSendUtility.sendPacket(player, (AionServerPacket)SM_SYSTEM_MESSAGE.USE_ITEM(new DescriptionId(parentItem.getItemTemplate().getNameId())));
-    PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()));
-    
-    if (ItemService.decreaseItemCount(player, parentItem, 1L) == 0L)
-    {
+
+    PacketSendUtility.sendPacket(player,
+        (AionServerPacket) SM_SYSTEM_MESSAGE.USE_ITEM(new DescriptionId(parentItem.getItemTemplate().getNameId())));
+    PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
+        parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()));
+
+    if (ItemService.decreaseItemCount(player, parentItem, 1L) == 0L) {
       player.getRecipeList().addRecipe(player, template);
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\itemengine\actions\CraftLearnAction.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

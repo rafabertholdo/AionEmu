@@ -8,30 +8,6 @@ import com.aionemu.gameserver.model.broker.filter.BrokerMinMaxFilter;
 import com.aionemu.gameserver.model.broker.filter.BrokerPlayerClassExtraFilter;
 import com.aionemu.gameserver.model.gameobjects.Item;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public enum BrokerItemMask
 {
   WEAPON(9010, (BrokerFilter)new BrokerMinMaxFilter(1000, 1018), null, true),
@@ -227,9 +203,3 @@ public enum BrokerItemMask
     return this.childrenExist;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\broker\BrokerItemMask.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

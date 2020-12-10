@@ -4,32 +4,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_CASTSPELL
-  extends AionServerPacket
-{
+public class SM_CASTSPELL extends AionServerPacket {
   private int attackerObjectId;
   private int spellId;
   private int level;
@@ -39,7 +14,7 @@ public class SM_CASTSPELL
   private float x;
   private float y;
   private float z;
-  
+
   public SM_CASTSPELL(int attackerObjectId, int spellId, int level, int targetType, int targetObjectId, int duration) {
     this.attackerObjectId = attackerObjectId;
     this.spellId = spellId;
@@ -49,27 +24,22 @@ public class SM_CASTSPELL
     this.duration = duration;
   }
 
-  
-  public SM_CASTSPELL(int attackerObjectId, int spellId, int level, int targetType, float x, float y, float z, int duration) {
+  public SM_CASTSPELL(int attackerObjectId, int spellId, int level, int targetType, float x, float y, float z,
+      int duration) {
     this(attackerObjectId, spellId, level, targetType, 0, duration);
     this.x = x;
     this.y = y;
     this.z = z;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.attackerObjectId);
     writeH(buf, this.spellId);
     writeC(buf, this.level);
-    
+
     writeC(buf, this.targetType);
     switch (this.targetType) {
-      
+
       case 0:
         writeD(buf, this.targetObjectId);
         break;
@@ -78,15 +48,9 @@ public class SM_CASTSPELL
         writeF(buf, this.y);
         writeF(buf, this.z);
         break;
-    } 
-    
+    }
+
     writeH(buf, this.duration);
     writeD(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_CASTSPELL.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

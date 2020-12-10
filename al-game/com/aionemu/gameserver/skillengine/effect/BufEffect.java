@@ -17,128 +17,77 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "BufEffect")
-public abstract class BufEffect
-  extends EffectTemplate
-{
+public abstract class BufEffect extends EffectTemplate {
   private static final Logger log = Logger.getLogger(BufEffect.class);
 
-
-  
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-
-  
   public void calculate(Effect effect) {
     effect.addSucessEffect(this);
   }
 
-
-
-
-
-  
   public void endEffect(Effect effect) {
     Creature effected = effect.getEffected();
     int skillId = effect.getSkillId();
-    effected.getGameStats().endEffect((StatEffectId)SkillEffectId.getInstance(skillId, this.effectid, this.position));
+    effected.getGameStats().endEffect((StatEffectId) SkillEffectId.getInstance(skillId, this.effectid, this.position));
   }
 
-
-
-
-  
   public void startEffect(Effect effect) {
     if (this.change == null) {
       return;
     }
     Creature effected = effect.getEffected();
     CreatureGameStats<? extends Creature> cgs = effected.getGameStats();
-    
+
     TreeSet<StatModifier> modifiers = getModifiers(effect);
     SkillEffectId skillEffectId = getSkillEffectId(effect);
-    
+
     if (modifiers.size() > 0) {
-      cgs.addModifiers((StatEffectId)skillEffectId, modifiers);
+      cgs.addModifiers((StatEffectId) skillEffectId, modifiers);
     }
   }
 
-
-
-
-
-  
   protected SkillEffectId getSkillEffectId(Effect effect) {
     int skillId = effect.getSkillId();
     return SkillEffectId.getInstance(skillId, this.effectid, this.position);
   }
 
-
-
-
-
-
-  
   protected TreeSet<StatModifier> getModifiers(Effect effect) {
     int skillId = effect.getSkillId();
     int skillLvl = effect.getSkillLevel();
-    
+
     TreeSet<StatModifier> modifiers = new TreeSet<StatModifier>();
-    
+
     for (Change changeItem : this.change) {
-      
+
       if (changeItem.getStat() == null) {
-        
+
         log.warn("Skill stat has wrong name for skillid: " + skillId);
-        
+
         continue;
-      } 
+      }
       int valueWithDelta = changeItem.getValue() + changeItem.getDelta() * skillLvl;
-      
+
       switch (changeItem.getFunc()) {
-        
+
         case ADD:
           modifiers.add(AddModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
-        
+
         case PERCENT:
           modifiers.add(RateModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
-        
+
         case REPLACE:
           modifiers.add(SetModifier.newInstance(changeItem.getStat(), valueWithDelta, true));
-      } 
-    
-    } 
+      }
+
+    }
     return modifiers;
   }
-  
-  public void onPeriodicAction(Effect effect) {}
+
+  public void onPeriodicAction(Effect effect) {
+  }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\BufEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

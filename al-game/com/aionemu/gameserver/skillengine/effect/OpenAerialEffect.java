@@ -12,63 +12,30 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OpenAerialEffect")
-public class OpenAerialEffect
-  extends EffectTemplate
-{
+public class OpenAerialEffect extends EffectTemplate {
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-  
   public void calculate(Effect effect) {
     if (calculateEffectResistRate(effect, StatEnum.OPENAREIAL_RESISTANCE)) {
-      
+
       effect.addSucessEffect(this);
       effect.setSpellStatus(SpellStatus.OPENAERIAL);
-    } 
+    }
   }
 
-
-  
   public void startEffect(Effect effect) {
     Creature effected = effect.getEffected();
     effected.getController().cancelCurrentSkill();
     effected.getEffectController().setAbnormal(EffectId.OPENAERIAL.getEffectId());
-    PacketSendUtility.broadcastPacketAndReceive((VisibleObject)effected, (AionServerPacket)new SM_FORCED_MOVE(effect.getEffector(), effected));
+    PacketSendUtility.broadcastPacketAndReceive((VisibleObject) effected,
+        (AionServerPacket) new SM_FORCED_MOVE(effect.getEffector(), effected));
   }
 
-
-  
   public void endEffect(Effect effect) {
     effect.getEffected().getEffectController().unsetAbnormal(EffectId.OPENAERIAL.getEffectId());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\OpenAerialEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

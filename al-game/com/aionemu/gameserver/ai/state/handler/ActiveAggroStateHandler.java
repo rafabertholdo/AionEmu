@@ -10,72 +10,34 @@ import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class ActiveAggroStateHandler
-  extends StateHandler
-{
+public class ActiveAggroStateHandler extends StateHandler {
   public AIState getState() {
     return AIState.ACTIVE;
   }
 
-
-
-
-
-
-
-  
   public void handleState(AIState state, AI<?> ai) {
     ai.clearDesires();
-    Npc owner = (Npc)ai.getOwner();
+    Npc owner = (Npc) ai.getOwner();
 
-    
     int creatureCount = 0;
     for (VisibleObject visibleObject : owner.getKnownList().getKnownObjects().values()) {
-      
-      if (visibleObject instanceof Creature)
-      {
-        if (owner.isAggressiveTo((Creature)visibleObject))
-          creatureCount++; 
+
+      if (visibleObject instanceof Creature) {
+        if (owner.isAggressiveTo((Creature) visibleObject))
+          creatureCount++;
       }
-    } 
-    if (creatureCount > 0) {
-      
-      ai.addDesire((Desire)new AggressionDesire(owner, AIState.ACTIVE.getPriority()));
     }
-    else if (owner.hasWalkRoutes()) {
-      
-      ai.addDesire((Desire)new WalkDesire(owner, AIState.ACTIVE.getPriority()));
-    } 
+    if (creatureCount > 0) {
+
+      ai.addDesire((Desire) new AggressionDesire(owner, AIState.ACTIVE.getPriority()));
+    } else if (owner.hasWalkRoutes()) {
+
+      ai.addDesire((Desire) new WalkDesire(owner, AIState.ACTIVE.getPriority()));
+    }
     if (ai.desireQueueSize() == 0) {
       ai.handleEvent(Event.NOTHING_TODO);
     } else {
       ai.schedule();
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\state\handler\ActiveAggroStateHandler.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

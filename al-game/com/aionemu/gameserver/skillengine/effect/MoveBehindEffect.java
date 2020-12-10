@@ -14,69 +14,27 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MoveBehindEffect")
-public class MoveBehindEffect
-  extends DamageEffect
-{
+public class MoveBehindEffect extends DamageEffect {
   public void applyEffect(Effect effect) {
     super.applyEffect(effect);
-    Player effector = (Player)effect.getEffector();
+    Player effector = (Player) effect.getEffector();
     Creature effected = effect.getEffected();
 
-    
     double radian = Math.toRadians(MathUtil.convertHeadingToDegree(effected.getHeading()));
-    float x1 = (float)(Math.cos(Math.PI + radian) * 1.2999999523162842D);
-    float y1 = (float)(Math.sin(Math.PI + radian) * 1.2999999523162842D);
-    World.getInstance().updatePosition((VisibleObject)effector, effected.getX() + x1, effected.getY() + y1, effected.getZ() + 0.25F, effected.getHeading());
+    float x1 = (float) (Math.cos(Math.PI + radian) * 1.2999999523162842D);
+    float y1 = (float) (Math.sin(Math.PI + radian) * 1.2999999523162842D);
+    World.getInstance().updatePosition((VisibleObject) effector, effected.getX() + x1, effected.getY() + y1,
+        effected.getZ() + 0.25F, effected.getHeading());
 
-
-
-
-
-    
-    PacketSendUtility.sendPacket(effector, (AionServerPacket)new SM_PLAYER_MOVE(effector.getX(), effector.getY(), effector.getZ(), effector.getHeading()));
+    PacketSendUtility.sendPacket(effector, (AionServerPacket) new SM_PLAYER_MOVE(effector.getX(), effector.getY(),
+        effector.getZ(), effector.getHeading()));
   }
 
-
-
-
-
-
-
-
-
-  
   public void calculate(Effect effect) {
-    if (effect.getEffector() instanceof Player && effect.getEffected() != null)
-    {
+    if (effect.getEffector() instanceof Player && effect.getEffected() != null) {
       calculate(effect, DamageType.PHYSICAL);
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\MoveBehindEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

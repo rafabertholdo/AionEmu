@@ -81,10 +81,3 @@ public class Ban extends AdminCommand {
         LoginServer.getInstance().sendBanPacket(type, accountId, "", time, admin.getObjectId());
     }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Ban.class Java compiler version: 6 (50.0) JD-Core Version:
- * 1.1.3
- */

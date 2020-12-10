@@ -5,41 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "stats_template")
-public abstract class StatsTemplate
-{
+public abstract class StatsTemplate {
   @XmlAttribute(name = "maxHp")
   private int maxHp;
   @XmlAttribute(name = "maxMp")
@@ -66,83 +34,56 @@ public abstract class StatsTemplate
   private int mainHandCritRate;
   @XmlAttribute(name = "magic_accuracy")
   private int magicAccuracy;
-  
+
   public int getMaxHp() {
     return this.maxHp;
   }
 
-  
   public int getMaxMp() {
     return this.maxMp;
   }
 
-
-
-
-  
   public float getWalkSpeed() {
     return this.walkSpeed;
   }
 
-  
   public float getRunSpeed() {
     return this.runSpeed;
   }
 
-  
   public float getFlySpeed() {
     return this.flySpeed;
   }
 
-  
   public float getAttackSpeed() {
     return this.attackSpeed;
   }
 
-
-
-  
   public int getEvasion() {
     return this.evasion;
   }
 
-  
   public int getBlock() {
     return this.block;
   }
 
-  
   public int getParry() {
     return this.parry;
   }
 
-
-
-  
   public int getMainHandAttack() {
     return this.mainHandAttack;
   }
 
-  
   public int getMainHandAccuracy() {
     return this.mainHandAccuracy;
   }
 
-  
   public int getMainHandCritRate() {
     return this.mainHandCritRate;
   }
 
-
-
-  
   public int getMagicAccuracy() {
     return this.magicAccuracy;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\stats\StatsTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -21,37 +21,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2013ADangerousCrop
-  extends QuestHandler
-{
+public class _2013ADangerousCrop extends QuestHandler {
   private static final int questId = 2013;
-  
+
   public _2013ADangerousCrop() {
     super(Integer.valueOf(2013));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2013);
     this.qe.setNpcQuestData(203605).addOnTalkEvent(2013);
@@ -60,8 +36,6 @@ public class _2013ADangerousCrop
     this.deletebleItems = new int[] { 182203012 };
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(2013);
@@ -163,39 +137,29 @@ public class _2013ADangerousCrop
     return false;
   }
 
-
-  
   public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
     if (zoneName != ZoneName.MUMU_FARMLAND_220030000)
-      return false; 
+      return false;
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2013);
     if (qs == null)
-      return false; 
+      return false;
     if (qs.getQuestVarById(0) == 1) {
-      
+
       qs.setQuestVarById(0, 2);
       updateQuestStatus(player, qs);
       return true;
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2013);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2013ADangerousCrop.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

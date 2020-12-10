@@ -20,37 +20,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1038TheShadowsCommand
-  extends QuestHandler
-{
+public class _1038TheShadowsCommand extends QuestHandler {
   private static final int questId = 1038;
   private static final int[] npc_ids = new int[] { 203933, 700172, 203991, 700162 };
 
-  
   public _1038TheShadowsCommand() {
     super(Integer.valueOf(1038));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1038);
     this.qe.setNpcQuestData(204005).addOnKillEvent(1038);
@@ -59,7 +36,6 @@ public class _1038TheShadowsCommand
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1038);
@@ -72,8 +48,6 @@ public class _1038TheShadowsCommand
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1038);
@@ -208,8 +182,6 @@ public class _1038TheShadowsCommand
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1038);
@@ -218,23 +190,17 @@ public class _1038TheShadowsCommand
     }
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START || qs.getQuestVarById(0) != 7) {
       return false;
     }
     if (targetId == 204005) {
-      
+
       qs.setStatus(QuestStatus.REWARD);
       updateQuestStatus(player, qs);
       return true;
-    } 
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1038TheShadowsCommand.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

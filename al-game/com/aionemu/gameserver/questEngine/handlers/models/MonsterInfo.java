@@ -5,36 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MonsterInfo")
-public class MonsterInfo
-{
+public class MonsterInfo {
   @XmlAttribute(name = "var_id", required = true)
   protected int varId;
   @XmlAttribute(name = "min_var_value")
@@ -43,43 +16,20 @@ public class MonsterInfo
   protected int maxKill;
   @XmlAttribute(name = "npc_id", required = true)
   protected int npcId;
-  
+
   public int getVarId() {
     return this.varId;
   }
 
-
-
-
-
-
-
-  
   public Integer getMinVarValue() {
     return this.minVarValue;
   }
 
-
-
-
-
-  
   public int getMaxKill() {
     return this.maxKill;
   }
 
-
-
-
-
-  
   public int getNpcId() {
     return this.npcId;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\MonsterInfo.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

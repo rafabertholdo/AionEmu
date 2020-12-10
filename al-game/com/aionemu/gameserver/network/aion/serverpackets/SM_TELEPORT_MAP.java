@@ -10,64 +10,31 @@ import com.aionemu.gameserver.world.World;
 import java.nio.ByteBuffer;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_TELEPORT_MAP
-  extends AionServerPacket
-{
+public class SM_TELEPORT_MAP extends AionServerPacket {
   private int targetObjectId;
   private Player player;
   private TeleporterTemplate teleport;
   public Npc npc;
   private static final Logger log = Logger.getLogger(SM_TELEPORT_MAP.class);
 
-
-  
   public SM_TELEPORT_MAP(Player player, int targetObjectId, TeleporterTemplate teleport) {
     this.player = player;
     this.targetObjectId = targetObjectId;
-    this.npc = (Npc)World.getInstance().findAionObject(targetObjectId);
+    this.npc = (Npc) World.getInstance().findAionObject(targetObjectId);
     this.teleport = teleport;
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     if (this.teleport != null && this.teleport.getNpcId() != 0 && this.teleport.getTeleportId() != 0) {
-      
+
       writeD(buf, this.targetObjectId);
       writeH(buf, this.teleport.getTeleportId());
+    } else {
+
+      PacketSendUtility.sendMessage(this.player,
+          "Missing info at npc_teleporter.xml with npcid: " + this.npc.getNpcId());
+      log.info(
+          String.format("Missing teleport info with npcid: %d", new Object[] { Integer.valueOf(this.npc.getNpcId()) }));
     }
-    else {
-      
-      PacketSendUtility.sendMessage(this.player, "Missing info at npc_teleporter.xml with npcid: " + this.npc.getNpcId());
-      log.info(String.format("Missing teleport info with npcid: %d", new Object[] { Integer.valueOf(this.npc.getNpcId()) }));
-    } 
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_TELEPORT_MAP.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

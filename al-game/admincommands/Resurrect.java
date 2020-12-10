@@ -57,10 +57,3 @@ public class Resurrect extends AdminCommand {
     PacketSendUtility.sendMessage(admin, "[Resurrect] Usage: target player and use //rez <instant|prompt>");
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Resurrect.class Java compiler version: 6 (50.0) JD-Core
- * Version: 1.1.3
- */

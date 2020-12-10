@@ -16,37 +16,15 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1031TheMandurisSecret
-  extends QuestHandler
-{
+public class _1031TheMandurisSecret extends QuestHandler {
   private static final int[] mob_ids = new int[] { 210770, 210771, 210759, 210758 };
-  
+
   private static final int questId = 1031;
-  
+
   public _1031TheMandurisSecret() {
     super(Integer.valueOf(1031));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203902).addOnTalkEvent(1031);
     this.qe.setNpcQuestData(203936).addOnTalkEvent(1031);
@@ -59,20 +37,17 @@ public class _1031TheMandurisSecret
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1031);
     boolean lvlCheck = QuestService.checkLevelRequirement(1031, player.getCommonData().getLevel());
     if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1031);
@@ -82,24 +57,24 @@ public class _1031TheMandurisSecret
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     switch (targetId) {
-      
+
       case 210758:
       case 210759:
       case 210770:
       case 210771:
         if (var >= 1 && var <= 6) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -247,9 +222,3 @@ public class _1031TheMandurisSecret
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1031TheMandurisSecret.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

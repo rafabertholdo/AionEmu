@@ -16,37 +16,7 @@ import com.aionemu.gameserver.spawnengine.RiftSpawnManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.WorldMapInstance;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class RiftController
-  extends NpcController
-{
+public class RiftController extends NpcController {
   private boolean isMaster = false;
   private SpawnTemplate slaveSpawnTemplate;
   private Npc slave;
@@ -55,109 +25,87 @@ public class RiftController
   private int usedEntries;
   private boolean isAccepting;
   private RiftSpawnManager.RiftEnum riftTemplate;
-  
+
   public RiftController(Npc slave, RiftSpawnManager.RiftEnum riftTemplate) {
     this.riftTemplate = riftTemplate;
     if (slave != null) {
-      
+
       this.slave = slave;
       this.slaveSpawnTemplate = slave.getSpawn();
       this.maxEntries = Integer.valueOf(riftTemplate.getEntries());
       this.maxLevel = Integer.valueOf(riftTemplate.getMaxLevel());
-      
+
       this.isMaster = true;
       this.isAccepting = true;
-    } 
+    }
   }
 
-
-  
   public void onDialogRequest(Player player) {
     if (!this.isMaster && !this.isAccepting) {
       return;
     }
-    RequestResponseHandler responseHandler = new RequestResponseHandler((Creature)getOwner())
-      {
-        
-        public void acceptRequest(Creature requester, Player responder)
-        {
-          if (!RiftController.this.isAccepting) {
-            return;
-          }
-          int worldId = RiftController.this.slaveSpawnTemplate.getWorldId();
-          float x = RiftController.this.slaveSpawnTemplate.getX();
-          float y = RiftController.this.slaveSpawnTemplate.getY();
-          float z = RiftController.this.slaveSpawnTemplate.getZ();
-          
-          TeleportService.teleportTo(responder, worldId, x, y, z, 0);
-          RiftController.this.usedEntries++;
-          
-          if (RiftController.this.usedEntries >= RiftController.this.maxEntries.intValue()) {
-            
-            RiftController.this.isAccepting = false;
-            
-            RespawnService.scheduleDecayTask(RiftController.this.getOwner());
-            RespawnService.scheduleDecayTask(RiftController.this.slave);
-          } 
-          PacketSendUtility.broadcastPacket((VisibleObject)RiftController.this.getOwner(), (AionServerPacket)new SM_RIFT_STATUS(RiftController.this.getOwner().getObjectId(), RiftController.this.usedEntries, RiftController.this.maxEntries.intValue(), RiftController.this.maxLevel.intValue()));
+    RequestResponseHandler responseHandler = new RequestResponseHandler((Creature) getOwner()) {
+
+      public void acceptRequest(Creature requester, Player responder) {
+        if (!RiftController.this.isAccepting) {
+          return;
         }
+        int worldId = RiftController.this.slaveSpawnTemplate.getWorldId();
+        float x = RiftController.this.slaveSpawnTemplate.getX();
+        float y = RiftController.this.slaveSpawnTemplate.getY();
+        float z = RiftController.this.slaveSpawnTemplate.getZ();
 
+        TeleportService.teleportTo(responder, worldId, x, y, z, 0);
+        RiftController.this.usedEntries++;
 
+        if (RiftController.this.usedEntries >= RiftController.this.maxEntries.intValue()) {
 
+          RiftController.this.isAccepting = false;
 
+          RespawnService.scheduleDecayTask(RiftController.this.getOwner());
+          RespawnService.scheduleDecayTask(RiftController.this.slave);
+        }
+        PacketSendUtility.broadcastPacket((VisibleObject) RiftController.this.getOwner(),
+            (AionServerPacket) new SM_RIFT_STATUS(RiftController.this.getOwner().getObjectId(),
+                RiftController.this.usedEntries, RiftController.this.maxEntries.intValue(),
+                RiftController.this.maxLevel.intValue()));
+      }
 
-
-        
-        public void denyRequest(Creature requester, Player responder) {}
-      };
+      public void denyRequest(Creature requester, Player responder) {
+      }
+    };
     boolean requested = player.getResponseRequester().putRequest(160019, responseHandler);
-    if (requested)
-    {
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_QUESTION_WINDOW(160019, 0, new Object[0]));
+    if (requested) {
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_QUESTION_WINDOW(160019, 0, new Object[0]));
     }
   }
 
-
-  
   public void see(VisibleObject object) {
     if (!this.isMaster) {
       return;
     }
-    if (object instanceof Player)
-    {
-      PacketSendUtility.sendPacket((Player)object, (AionServerPacket)new SM_RIFT_STATUS(getOwner().getObjectId(), this.usedEntries, this.maxEntries.intValue(), this.maxLevel.intValue()));
+    if (object instanceof Player) {
+      PacketSendUtility.sendPacket((Player) object, (AionServerPacket) new SM_RIFT_STATUS(getOwner().getObjectId(),
+          this.usedEntries, this.maxEntries.intValue(), this.maxLevel.intValue()));
     }
   }
 
-
-
-
-
-  
   public void sendMessage(Player activePlayer) {
     if (this.isMaster && getOwner().isSpawned()) {
-      PacketSendUtility.sendPacket(activePlayer, (AionServerPacket)new SM_RIFT_ANNOUNCE(this.riftTemplate.getDestination()));
+      PacketSendUtility.sendPacket(activePlayer,
+          (AionServerPacket) new SM_RIFT_ANNOUNCE(this.riftTemplate.getDestination()));
     }
   }
 
-
-
-  
   public void sendAnnounce() {
     if (this.isMaster && getOwner().isSpawned()) {
-      
+
       WorldMapInstance worldInstance = getOwner().getPosition().getMapRegion().getParent();
       for (Player player : worldInstance.getAllWorldMapPlayers()) {
-        
+
         if (player.isSpawned())
-          sendMessage(player); 
-      } 
-    } 
+          sendMessage(player);
+      }
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\controllers\RiftController.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

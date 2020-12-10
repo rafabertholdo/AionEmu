@@ -4,36 +4,7 @@ import com.aionemu.commons.utils.Rnd;
 import com.aionemu.gameserver.model.gameobjects.VisibleObject;
 import com.aionemu.gameserver.model.gameobjects.player.Player;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public abstract class AbstractCraftTask
-  extends AbstractInteractionTask
-{
+public abstract class AbstractCraftTask extends AbstractInteractionTask {
   protected int successValue;
   protected int failureValue;
   protected int currentSuccessValue;
@@ -41,8 +12,9 @@ public abstract class AbstractCraftTask
   protected int skillLvlDiff;
   protected boolean critical;
   protected boolean setCritical = false;
-  
-  public AbstractCraftTask(Player requestor, VisibleObject responder, int successValue, int failureValue, int skillLvlDiff) {
+
+  public AbstractCraftTask(Player requestor, VisibleObject responder, int successValue, int failureValue,
+      int skillLvlDiff) {
     super(requestor, responder);
     this.successValue = successValue;
     this.failureValue = failureValue;
@@ -50,66 +22,50 @@ public abstract class AbstractCraftTask
     this.critical = (Rnd.get(100) <= 15);
   }
 
-
-  
   protected boolean onInteraction() {
     if (this.currentSuccessValue == this.successValue) {
-      
+
       onSuccessFinish();
       return true;
-    } 
+    }
     if (this.currentFailureValue == this.failureValue) {
-      
+
       onFailureFinish();
       return true;
-    } 
-    
+    }
+
     analyzeInteraction();
-    
+
     sendInteractionUpdate();
     return false;
   }
 
-
-
-
-
-
-  
   private void analyzeInteraction() {
     int multi = Math.max(0, 33 - this.skillLvlDiff * 5);
     if (Rnd.get(100) > multi) {
-      
+
       if (this.critical && Rnd.get(100) < 30)
-        this.setCritical = true; 
+        this.setCritical = true;
       this.currentSuccessValue += Rnd.get(this.successValue / (multi + 1) / 2, this.successValue);
-    }
-    else {
-      
+    } else {
+
       this.currentFailureValue += Rnd.get(this.failureValue / (multi + 1) / 2, this.failureValue);
-    } 
-    
-    if (this.currentSuccessValue >= this.successValue) {
-      
-      if (this.critical)
-        this.setCritical = true; 
-      this.currentSuccessValue = this.successValue;
     }
-    else if (this.currentFailureValue >= this.failureValue) {
-      
+
+    if (this.currentSuccessValue >= this.successValue) {
+
+      if (this.critical)
+        this.setCritical = true;
+      this.currentSuccessValue = this.successValue;
+    } else if (this.currentFailureValue >= this.failureValue) {
+
       this.currentFailureValue = this.failureValue;
-    } 
+    }
   }
-  
+
   protected abstract void sendInteractionUpdate();
-  
+
   protected abstract void onSuccessFinish();
-  
+
   protected abstract void onFailureFinish();
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\task\AbstractCraftTask.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -13,37 +13,14 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1053TheKlawThreat
-  extends QuestHandler
-{
+public class _1053TheKlawThreat extends QuestHandler {
   private static final int questId = 1053;
   private static final int[] npc_ids = new int[] { 204583, 204502 };
 
-  
   public _1053TheKlawThreat() {
     super(Integer.valueOf(1053));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1053);
     this.qe.setNpcQuestData(700169).addOnKillEvent(1053);
@@ -53,7 +30,6 @@ public class _1053TheKlawThreat
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1053);
@@ -63,14 +39,12 @@ public class _1053TheKlawThreat
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(1500);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1053);
@@ -80,61 +54,59 @@ public class _1053TheKlawThreat
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 204502) {
         return defaultQuestEndDialog(env);
       }
     } else if (qs.getStatus() != QuestStatus.START) {
-      
+
       return false;
-    } 
-    if (targetId == 204583)
-    {
+    }
+    if (targetId == 204583) {
       switch (env.getDialogId().intValue()) {
-        
+
         case 25:
           if (var == 0)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
           if (var == 1)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
           if (var == 2)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
         case 33:
           if (var == 1 && QuestService.collectItemCheck(env, true)) {
             return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
           }
           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
         case 1693:
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 186));
+          PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 186));
           return false;
         case 10000:
           if (var == 0) {
-            
+
             qs.setQuestVarById(0, var + 1);
             updateQuestStatus(player, qs);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
         case 10002:
           if (var == 1) {
-            
+
             qs.setQuestVarById(0, var + 2);
             updateQuestStatus(player, qs);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
           return false;
-      } 
+      }
     }
     return false;
   }
 
-
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1053);
@@ -144,30 +116,23 @@ public class _1053TheKlawThreat
     Rnd queen = new Rnd();
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
-    Npc npc = (Npc)env.getVisibleObject();
-    
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
+    Npc npc = (Npc) env.getVisibleObject();
+
     if (targetId == 700169) {
-      
+
       int spawn = Rnd.nextInt(5);
-      if (spawn == 1)
-      {
-        QuestService.addNewSpawn(210040000, 1, 212120, npc.getX(), npc.getY(), npc.getZ(), (byte)0, true);
-        
+      if (spawn == 1) {
+        QuestService.addNewSpawn(210040000, 1, 212120, npc.getX(), npc.getY(), npc.getZ(), (byte) 0, true);
+
         return true;
       }
-    
+
     } else if (targetId == 212120 && qs.getQuestVarById(0) == 3) {
-      
+
       qs.setStatus(QuestStatus.REWARD);
       updateQuestStatus(player, qs);
-    } 
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1053TheKlawThreat.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

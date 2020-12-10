@@ -20,37 +20,15 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1035RefreshingtheSprings
-  extends QuestHandler
-{
+public class _1035RefreshingtheSprings extends QuestHandler {
   private static final int questId = 1035;
-  private static final int[] npc_ids = new int[] { 203917, 203992, 700158, 203965, 203968, 203987, 700160, 203934, 700159 };
+  private static final int[] npc_ids = new int[] { 203917, 203992, 700158, 203965, 203968, 203987, 700160, 203934,
+      700159 };
 
-  
   public _1035RefreshingtheSprings() {
     super(Integer.valueOf(1035));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1035);
     for (int npc_id : npc_ids) {
@@ -58,7 +36,6 @@ public class _1035RefreshingtheSprings
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1035);
@@ -71,8 +48,6 @@ public class _1035RefreshingtheSprings
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1035);
@@ -309,9 +284,3 @@ public class _1035RefreshingtheSprings
     }  return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1035RefreshingtheSprings.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

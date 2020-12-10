@@ -8,68 +8,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_MESSAGE
-  extends AionServerPacket
-{
+public class SM_MESSAGE extends AionServerPacket {
   private Player player;
   private int senderObjectId;
   private String message;
@@ -79,7 +18,7 @@ public class SM_MESSAGE
   private float x;
   private float y;
   private float z;
-  
+
   public SM_MESSAGE(Player player, String message, ChatType chatType) {
     this.player = player;
     this.senderObjectId = player.getObjectId();
@@ -92,19 +31,6 @@ public class SM_MESSAGE
     this.z = player.getZ();
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public SM_MESSAGE(int senderObjectId, String senderName, String message, ChatType chatType) {
     this.senderObjectId = senderObjectId;
     this.senderName = senderName;
@@ -112,30 +38,22 @@ public class SM_MESSAGE
     this.chatType = chatType;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     boolean canRead = true;
-    
-    if (this.race != null)
-    {
-      canRead = (this.chatType.isSysMsg() || CustomConfig.FACTIONS_SPEAKING_MODE == 1 || this.player.getAccessLevel() > 0 || (con.getActivePlayer() != null && con.getActivePlayer().getAccessLevel() > 0));
+
+    if (this.race != null) {
+      canRead = (this.chatType.isSysMsg() || CustomConfig.FACTIONS_SPEAKING_MODE == 1
+          || this.player.getAccessLevel() > 0
+          || (con.getActivePlayer() != null && con.getActivePlayer().getAccessLevel() > 0));
     }
 
-    
     writeC(buf, this.chatType.toInteger());
 
-
-
-    
     writeC(buf, canRead ? 0 : (this.race.getRaceId() + 1));
     writeD(buf, this.senderObjectId);
-    
+
     switch (this.chatType) {
-      
+
       case NORMAL:
       case UNKNOWN_0x18:
       case ANNOUNCEMENTS:
@@ -160,12 +78,6 @@ public class SM_MESSAGE
         writeS(buf, this.senderName);
         writeS(buf, this.message);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_MESSAGE.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

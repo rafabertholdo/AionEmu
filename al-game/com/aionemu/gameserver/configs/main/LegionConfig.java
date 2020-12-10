@@ -4,33 +4,7 @@ import com.aionemu.commons.configuration.Property;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class LegionConfig
-{
+public class LegionConfig {
   protected static final Logger log = Logger.getLogger(LegionConfig.class);
   @Property(key = "legion.pattern", defaultValue = "[a-zA-Z ]{2,16}")
   public static Pattern LEGION_NAME_PATTERN;
@@ -89,9 +63,3 @@ public class LegionConfig
   @Property(key = "legion.ranking.periodicupdate", defaultValue = "1200")
   public static int LEGION_RANKING_PERIODICUPDATE;
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\configs\main\LegionConfig.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

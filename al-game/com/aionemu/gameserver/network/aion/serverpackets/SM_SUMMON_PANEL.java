@@ -6,38 +6,13 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_SUMMON_PANEL
-  extends AionServerPacket
-{
+public class SM_SUMMON_PANEL extends AionServerPacket {
   private Summon summon;
-  
+
   public SM_SUMMON_PANEL(Summon summon) {
     this.summon = summon;
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.summon.getObjectId());
     writeH(buf, this.summon.getLevel());
@@ -52,9 +27,3 @@ public class SM_SUMMON_PANEL
     writeH(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_SUMMON_PANEL.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

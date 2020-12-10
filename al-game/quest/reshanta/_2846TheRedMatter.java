@@ -15,20 +15,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-public class _2846TheRedMatter
-  extends QuestHandler
-{
+public class _2846TheRedMatter extends QuestHandler {
   private static final int questId = 2846;
-  
+
   public _2846TheRedMatter() {
     super(Integer.valueOf(2846));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(278039).addOnTalkEvent(2846);
     this.qe.setNpcQuestData(279027).addOnTalkEvent(2846);
@@ -36,83 +29,77 @@ public class _2846TheRedMatter
     this.qe.setQuestItemIds(182205677).add(2846);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2846);
-    
+
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     if (targetId == 0) {
-      
-      if (env.getDialogId().intValue() == 1002)
-      {
+
+      if (env.getDialogId().intValue() == 1002) {
         QuestService.startQuest(env, QuestStatus.START);
-        PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(0, 0));
+        PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_DIALOG_WINDOW(0, 0));
         return true;
       }
-    
+
     } else if (targetId == 278039) {
-      
-      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
-      {
+
+      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0) {
         if (env.getDialogId().intValue() == 25)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
         if (env.getDialogId().intValue() == 10000) {
-          
+
           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
           updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          PacketSendUtility.sendPacket(player,
+              (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
           return true;
-        } 
-        
+        }
+
         return defaultQuestStartDialog(env);
       }
-    
+
     } else if (targetId == 279027) {
-      
-      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
-      {
+
+      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1) {
         if (env.getDialogId().intValue() == 25)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
         if (env.getDialogId().intValue() == 10001) {
-          
+
           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
           updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          PacketSendUtility.sendPacket(player,
+              (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
           return true;
-        } 
-        
+        }
+
         return defaultQuestStartDialog(env);
       }
-    
+
     } else if (targetId == 798317) {
-      
+
       if (qs != null) {
-        
-        if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START)
-        {
+
+        if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START) {
           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
         }
         if (env.getDialogId().intValue() == 1009) {
-          
+
           ItemService.removeItemFromInventoryByItemId(player, 182207048);
           qs.setQuestVar(1);
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return defaultQuestEndDialog(env);
-        } 
-        
+        }
+
         return defaultQuestEndDialog(env);
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -134,9 +121,3 @@ public class _2846TheRedMatter
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\reshanta\_2846TheRedMatter.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

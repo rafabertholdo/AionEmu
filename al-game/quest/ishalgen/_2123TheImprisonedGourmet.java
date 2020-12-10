@@ -14,39 +14,19 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2123TheImprisonedGourmet
-  extends QuestHandler
-{
+public class _2123TheImprisonedGourmet extends QuestHandler {
   private static final int questId = 2123;
-  
+
   public _2123TheImprisonedGourmet() {
     super(Integer.valueOf(2123));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203550).addOnQuestStart(2123);
     this.qe.setNpcQuestData(203550).addOnTalkEvent(2123);
     this.qe.setNpcQuestData(700128).addOnTalkEvent(2123);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(2123);
@@ -178,9 +158,3 @@ public class _2123TheImprisonedGourmet
     return defaultQuestEndDialog(env);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ishalgen\_2123TheImprisonedGourmet.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

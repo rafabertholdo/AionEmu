@@ -17,34 +17,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2004ACharmedCube
-  extends QuestHandler
-{
+public class _2004ACharmedCube extends QuestHandler {
   private static final int questId = 2004;
-  
+
   public _2004ACharmedCube() {
     super(Integer.valueOf(2004));
   }
 
-  
   public void register() {
     this.qe.addQuestLvlUp(2004);
     this.qe.setNpcQuestData(203539).addOnTalkEvent(2004);
@@ -54,8 +33,6 @@ public class _2004ACharmedCube
     this.qe.setNpcQuestData(210403).addOnKillEvent(2004);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2004);
@@ -179,8 +156,6 @@ public class _2004ACharmedCube
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2004);
@@ -190,45 +165,39 @@ public class _2004ACharmedCube
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     switch (targetId) {
-      
+
       case 210402:
       case 210403:
         if (var >= 3 && var < 8) {
-          
+
           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
         if (var == 8) {
-          
+
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2004);
     boolean lvlCheck = QuestService.checkLevelRequirement(2004, player.getCommonData().getLevel());
     if (!lvlCheck || qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ishalgen\_2004ACharmedCube.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

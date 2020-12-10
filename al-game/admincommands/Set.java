@@ -220,10 +220,3 @@ public class Set extends AdminCommand {
     PacketSendUtility.sendMessage(player, "You have successfuly switched class");
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Set.class Java compiler version: 6 (50.0) JD-Core Version:
- * 1.1.3
- */

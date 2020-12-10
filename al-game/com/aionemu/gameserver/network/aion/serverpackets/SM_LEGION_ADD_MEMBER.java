@@ -5,36 +5,12 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_LEGION_ADD_MEMBER
-  extends AionServerPacket
-{
+public class SM_LEGION_ADD_MEMBER extends AionServerPacket {
   private Player player;
   private boolean isMember;
   private int msgId;
   private String text;
-  
+
   public SM_LEGION_ADD_MEMBER(Player player, boolean isMember, int msgId, String text) {
     this.player = player;
     this.isMember = isMember;
@@ -42,8 +18,6 @@ public class SM_LEGION_ADD_MEMBER
     this.text = text;
   }
 
-
-  
   public void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.player.getObjectId());
     writeS(buf, this.player.getName());
@@ -56,9 +30,3 @@ public class SM_LEGION_ADD_MEMBER
     writeS(buf, this.text);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_LEGION_ADD_MEMBER.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -22,37 +22,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1114TheNymphsGown
-  extends QuestHandler
-{
+public class _1114TheNymphsGown extends QuestHandler {
   private static final int questId = 1114;
   private static final int[] npc_ids = new int[] { 203075, 203058, 700008 };
 
-  
   public _1114TheNymphsGown() {
     super(Integer.valueOf(1114));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182200214).add(1114);
     for (int npc_id : npc_ids) {
@@ -60,7 +37,6 @@ public class _1114TheNymphsGown
     }
   }
 
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -216,25 +192,18 @@ public class _1114TheNymphsGown
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     Player player = env.getPlayer();
     int id = item.getItemTemplate().getTemplateId();
     int itemObjId = item.getObjectId();
     QuestState qs = player.getQuestStateList().getQuestState(1114);
-    
+
     if (id != 182200214)
-      return false; 
-    PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+      return false;
+    PacketSendUtility.broadcastPacket(player,
+        (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
     if (qs == null || qs.getStatus() == QuestStatus.NONE)
-      sendQuestDialog(player, 0, 4); 
+      sendQuestDialog(player, 0, 4);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\poeta\_1114TheNymphsGown.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

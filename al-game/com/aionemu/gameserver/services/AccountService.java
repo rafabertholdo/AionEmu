@@ -21,149 +21,85 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class AccountService
-{
+public class AccountService {
   private static final Logger log = Logger.getLogger(AccountService.class);
-  
+
   private static CacheMap<Integer, Account> accountsMap = CacheMapFactory.createSoftCacheMap("Account", "account");
 
-
-
-
-
-
-
-
-
-
-
-
-  
-  public static Account getAccount(int accountId, String accountName, AccountTime accountTime, byte accessLevel, byte membership) {
+  public static Account getAccount(int accountId, String accountName, AccountTime accountTime, byte accessLevel,
+      byte membership) {
     log.debug("[AS] request for account: " + accountId);
-    
-    Account account = (Account)accountsMap.get(Integer.valueOf(accountId));
+
+    Account account = (Account) accountsMap.get(Integer.valueOf(accountId));
     if (account == null) {
-      
+
       account = loadAccount(accountId);
-      
+
       if (CacheConfig.CACHE_ACCOUNTS) {
         accountsMap.put(Integer.valueOf(accountId), account);
       }
-    } 
+    }
     account.setName(accountName);
     account.setAccountTime(accountTime);
     account.setAccessLevel(accessLevel);
     account.setMembership(membership);
-    
+
     removeDeletedCharacters(account);
-    
+
     return account;
   }
 
-
-
-
-
-
-
-  
   private static void removeDeletedCharacters(Account account) {
     Iterator<PlayerAccountData> it = account.iterator();
     while (it.hasNext()) {
-      
+
       PlayerAccountData pad = it.next();
       int deletionTime = pad.getDeletionTimeInSeconds() * 1000;
       if (deletionTime != 0 && deletionTime <= System.currentTimeMillis()) {
-        
+
         it.remove();
         PlayerService.deletePlayerFromDB(pad.getPlayerCommonData().getPlayerObjId());
-      } 
-    } 
+      }
+    }
   }
 
-
-
-
-
-
-
-
-  
   private static Account loadAccount(int accountId) {
     Account account = new Account(accountId);
-    
-    PlayerDAO playerDAO = (PlayerDAO)DAOManager.getDAO(PlayerDAO.class);
-    PlayerAppearanceDAO appereanceDAO = (PlayerAppearanceDAO)DAOManager.getDAO(PlayerAppearanceDAO.class);
-    
+
+    PlayerDAO playerDAO = (PlayerDAO) DAOManager.getDAO(PlayerDAO.class);
+    PlayerAppearanceDAO appereanceDAO = (PlayerAppearanceDAO) DAOManager.getDAO(PlayerAppearanceDAO.class);
+
     List<Integer> playerOids = playerDAO.getPlayerOidsOnAccount(accountId);
-    
-    for (Iterator<Integer> i$ = playerOids.iterator(); i$.hasNext(); ) { int playerOid = ((Integer)i$.next()).intValue();
-      
+
+    for (Iterator<Integer> i$ = playerOids.iterator(); i$.hasNext();) {
+      int playerOid = ((Integer) i$.next()).intValue();
+
       PlayerCommonData playerCommonData = playerDAO.loadPlayerCommonData(playerOid);
       PlayerAppearance appereance = appereanceDAO.load(playerOid);
 
-      
-      LegionMember legionMember = ((LegionMemberDAO)DAOManager.getDAO(LegionMemberDAO.class)).loadLegionMember(playerOid);
+      LegionMember legionMember = ((LegionMemberDAO) DAOManager.getDAO(LegionMemberDAO.class))
+          .loadLegionMember(playerOid);
 
+      List<Item> equipment = ((InventoryDAO) DAOManager.getDAO(InventoryDAO.class)).loadEquipment(playerOid);
 
-
-      
-      List<Item> equipment = ((InventoryDAO)DAOManager.getDAO(InventoryDAO.class)).loadEquipment(playerOid);
-      
       PlayerAccountData acData = new PlayerAccountData(playerCommonData, appereance, equipment, legionMember);
-      
+
       playerDAO.setCreationDeletionTime(acData);
-      
-      account.addPlayerAccountData(acData); }
 
+      account.addPlayerAccountData(acData);
+    }
 
-
-
-    
-    Storage accWarehouse = ((InventoryDAO)DAOManager.getDAO(InventoryDAO.class)).loadStorage(null, account.getId(), StorageType.ACCOUNT_WAREHOUSE);
+    Storage accWarehouse = ((InventoryDAO) DAOManager.getDAO(InventoryDAO.class)).loadStorage(null, account.getId(),
+        StorageType.ACCOUNT_WAREHOUSE);
     ItemService.loadItemStones(accWarehouse.getStorageItems());
     account.setAccountWarehouse(accWarehouse);
 
-
-
-    
     if (account.getAccountWarehouse() == null) {
-      
+
       account.setAccountWarehouse(new Storage(StorageType.ACCOUNT_WAREHOUSE));
       account.getAccountWarehouse().setOwnerId(account.getId());
-    } 
-    
+    }
+
     return account;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\AccountService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

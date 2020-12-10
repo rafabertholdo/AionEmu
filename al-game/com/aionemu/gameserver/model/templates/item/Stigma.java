@@ -8,34 +8,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Stigma")
-public class Stigma
-{
+public class Stigma {
   @XmlElement(name = "require_skill")
   protected List<RequireSkill> requireSkill;
   @XmlAttribute
@@ -44,26 +19,19 @@ public class Stigma
   protected int skilllvl;
   @XmlAttribute
   protected int shard;
-  
+
   public int getSkillid() {
     return this.skillid;
   }
 
-
-
-  
   public int getSkilllvl() {
     return this.skilllvl;
   }
 
-
-
-  
   public int getShard() {
     return this.shard;
   }
 
-  
   public List<RequireSkill> getRequireSkill() {
     if (this.requireSkill == null) {
       this.requireSkill = new ArrayList<RequireSkill>();
@@ -71,9 +39,3 @@ public class Stigma
     return this.requireSkill;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\item\Stigma.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

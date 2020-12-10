@@ -22,62 +22,36 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1014OdiumintheDukakiSettlement
-  extends QuestHandler
-{
+public class _1014OdiumintheDukakiSettlement extends QuestHandler {
   private static final int questId = 1014;
   private static final int[] npc_ids = new int[] { 203129, 730020, 203098, 700090 };
   private static final int[] mob_ids = new int[] { 210145, 210174, 210739 };
 
-  
   public _1014OdiumintheDukakiSettlement() {
     super(Integer.valueOf(1014));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1014);
     this.qe.setQuestItemIds(182200012).add(1014);
     for (int mob_id : mob_ids)
-      this.qe.setNpcQuestData(mob_id).addOnKillEvent(1014); 
+      this.qe.setNpcQuestData(mob_id).addOnKillEvent(1014);
     for (int npc_id : npc_ids) {
       this.qe.setNpcQuestData(npc_id).addOnTalkEvent(1014);
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1014);
     boolean lvlCheck = QuestService.checkLevelRequirement(1014, player.getCommonData().getLevel());
     if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1014);
@@ -194,9 +168,6 @@ public class _1014OdiumintheDukakiSettlement
     return false;
   }
 
-
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1014);
@@ -205,20 +176,18 @@ public class _1014OdiumintheDukakiSettlement
     }
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     if (targetId == 210145 && qs.getQuestVarById(0) < 10) {
-      
+
       qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
       updateQuestStatus(player, qs);
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -246,9 +215,3 @@ public class _1014OdiumintheDukakiSettlement
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\verteron\_1014OdiumintheDukakiSettlement.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

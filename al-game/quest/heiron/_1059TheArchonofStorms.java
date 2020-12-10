@@ -28,36 +28,36 @@ import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
 public class _1059TheArchonofStorms extends QuestHandler {
-    private static final int questId = 1059;
-    private static final int[] npc_ids = new int[] { 204505, 204533, 700282, 204535 };
+  private static final int questId = 1059;
+  private static final int[] npc_ids = new int[] { 204505, 204533, 700282, 204535 };
 
-    public _1059TheArchonofStorms() {
-        super(Integer.valueOf(1059));
-    }
+  public _1059TheArchonofStorms() {
+    super(Integer.valueOf(1059));
+  }
 
-    public void register() {
-        this.qe.addQuestLvlUp(1059);
-        this.qe.setQuestMovieEndIds(193).add(1059);
-        this.qe.setQuestItemIds(182201619).add(1059);
-        for (int npc_id : npc_ids) {
-            this.qe.setNpcQuestData(npc_id).addOnTalkEvent(1059);
-        }
+  public void register() {
+    this.qe.addQuestLvlUp(1059);
+    this.qe.setQuestMovieEndIds(193).add(1059);
+    this.qe.setQuestItemIds(182201619).add(1059);
+    for (int npc_id : npc_ids) {
+      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(1059);
     }
+  }
 
-    public boolean onLvlUpEvent(QuestEnv env) {
-        Player player = env.getPlayer();
-        QuestState qs = player.getQuestStateList().getQuestState(1059);
-        boolean lvlCheck = QuestService.checkLevelRequirement(1059, player.getCommonData().getLevel());
-        if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck) {
-            return false;
-        }
-        QuestState qs2 = player.getQuestStateList().getQuestState(1500);
-        if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-            return false;
-        qs.setStatus(QuestStatus.START);
-        updateQuestStatus(player, qs);
-        return true;
+  public boolean onLvlUpEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(1059);
+    boolean lvlCheck = QuestService.checkLevelRequirement(1059, player.getCommonData().getLevel());
+    if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck) {
+      return false;
     }
+    QuestState qs2 = player.getQuestStateList().getQuestState(1500);
+    if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
+      return false;
+    qs.setStatus(QuestStatus.START);
+    updateQuestStatus(player, qs);
+    return true;
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -218,10 +218,3 @@ public class _1059TheArchonofStorms extends QuestHandler {
     return true;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\heiron\_1059TheArchonofStorms.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

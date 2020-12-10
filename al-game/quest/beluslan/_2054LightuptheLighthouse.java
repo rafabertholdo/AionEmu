@@ -22,48 +22,22 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2054LightuptheLighthouse
-  extends QuestHandler
-{
+public class _2054LightuptheLighthouse extends QuestHandler {
   private static final int questId = 2054;
   private static final int[] npc_ids = new int[] { 204768, 204739, 730109, 730140, 700287 };
 
-  
   public _2054LightuptheLighthouse() {
     super(Integer.valueOf(2054));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182204308).add(2054);
     this.qe.addQuestLvlUp(2054);
     for (int npc_id : npc_ids)
-      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(2054); 
+      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(2054);
     this.deletebleItems = new int[] { 182204309, 182204308 };
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2054);
@@ -73,14 +47,12 @@ public class _2054LightuptheLighthouse
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(2500);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(2054);
@@ -210,8 +182,6 @@ public class _2054LightuptheLighthouse
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -237,9 +207,3 @@ public class _2054LightuptheLighthouse
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\beluslan\_2054LightuptheLighthouse.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -8,41 +8,14 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class GameTimeService
-{
+public class GameTimeService {
   private static Logger log = Logger.getLogger(GameTimeService.class);
   private static final int GAMETIME_UPDATE = 180000;
-  
+
   public static final GameTimeService getInstance() {
     return SingletonHolder.instance;
   }
 
-
-
-
-
-
-  
   private GameTimeService() {
     ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
         {
@@ -60,15 +33,7 @@ public class GameTimeService
     log.info("GameTimeService started. Update interval:180000");
   }
 
-  
-  private static class SingletonHolder
-  {
+  private static class SingletonHolder {
     protected static final GameTimeService instance = new GameTimeService();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\GameTimeService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

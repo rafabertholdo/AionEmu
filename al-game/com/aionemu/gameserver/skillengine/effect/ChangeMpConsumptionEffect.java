@@ -8,71 +8,35 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ChangeMpConsumptionEffect")
-public class ChangeMpConsumptionEffect
-  extends BufEffect
-{
+public class ChangeMpConsumptionEffect extends BufEffect {
   @XmlAttribute
   protected boolean percent;
   @XmlAttribute
   protected int value;
-  
+
   public void startEffect(Effect effect) {
     super.startEffect(effect);
-    
-    ActionObserver observer = new ActionObserver(ActionObserver.ObserverType.SKILLUSE)
-      {
-        
-        public void skilluse(Skill skill)
-        {
-          skill.setChangeMpConsumption(ChangeMpConsumptionEffect.this.value);
-        }
-      };
-    
+
+    ActionObserver observer = new ActionObserver(ActionObserver.ObserverType.SKILLUSE) {
+
+      public void skilluse(Skill skill) {
+        skill.setChangeMpConsumption(ChangeMpConsumptionEffect.this.value);
+      }
+    };
+
     effect.getEffected().getObserveController().addObserver(observer);
     effect.setActionObserver(observer, this.position);
   }
 
-
-  
   public void endEffect(Effect effect) {
     super.endEffect(effect);
     ActionObserver observer = effect.getActionObserver(this.position);
     effect.getEffected().getObserveController().removeObserver(observer);
   }
 
-
-  
   public void calculate(Effect effect) {
     super.calculate(effect);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\ChangeMpConsumptionEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

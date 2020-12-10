@@ -11,37 +11,13 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2020KeepingtheBlackClawTribeinCheck
-  extends QuestHandler
-{
+public class _2020KeepingtheBlackClawTribeinCheck extends QuestHandler {
   private static final int questId = 2020;
-  
+
   public _2020KeepingtheBlackClawTribeinCheck() {
     super(Integer.valueOf(2020));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2020);
     this.qe.setNpcQuestData(203665).addOnTalkEvent(2020);
@@ -49,8 +25,6 @@ public class _2020KeepingtheBlackClawTribeinCheck
     this.qe.setNpcQuestData(210562).addOnKillEvent(2020);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2020);
@@ -60,74 +34,76 @@ public class _2020KeepingtheBlackClawTribeinCheck
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.START) {
-      
+
       switch (targetId) {
-        
+
         case 203665:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 0)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
               break;
             case 10000:
               if (var == 0) {
-                
+
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              }  break;
-          } 
+              }
+              break;
+          }
           break;
         case 203668:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 1)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
               if (var == 5)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
               if (var == 6)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034);
               break;
             case 10001:
             case 10002:
               if (var == 1 || var == 5) {
-                
+
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              } 
+              }
             case 33:
               if (var == 6) {
-                
+
                 if (QuestService.collectItemCheck(env, true)) {
-                  
+
                   qs.setStatus(QuestStatus.REWARD);
                   updateQuestStatus(player, qs);
                   return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-                } 
-                
+                }
+
                 return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2120);
-              }  break;
-          } 
+              }
+              break;
+          }
           break;
-      } 
+      }
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 203668)
-        return defaultQuestEndDialog(env); 
-    } 
+        return defaultQuestEndDialog(env);
+    }
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2020);
@@ -137,33 +113,25 @@ public class _2020KeepingtheBlackClawTribeinCheck
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (targetId == 210562 && var >= 2 && var < 5) {
-      
+
       qs.setQuestVarById(0, var + 1);
       updateQuestStatus(player, qs);
       return true;
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2020);
     boolean lvlCheck = QuestService.checkLevelRequirement(2020, player.getCommonData().getLevel());
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2020KeepingtheBlackClawTribeinCheck.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -8,48 +8,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ArmorMasteryEffect")
-public class ArmorMasteryEffect
-  extends BufEffect
-{
+public class ArmorMasteryEffect extends BufEffect {
   @XmlAttribute(name = "armor")
   private ArmorType armorType;
-  
+
   public ArmorType getArmorType() {
     return this.armorType;
   }
 
-
-
-  
   public void calculate(Effect effect) {
-    Player player = (Player)effect.getEffector();
-    
+    Player player = (Player) effect.getEffector();
+
     Integer skillId = player.getSkillList().getArmorMasterySkill(this.armorType);
     if (skillId != null && skillId.intValue() != effect.getSkillId()) {
       return;
@@ -61,25 +32,16 @@ public class ArmorMasteryEffect
     }
   }
 
-  
   public void startEffect(Effect effect) {
     super.startEffect(effect);
-    Player player = (Player)effect.getEffector();
+    Player player = (Player) effect.getEffector();
     player.getEffectController().removeEffect(effect.getSkillId());
     player.getEffectController().setArmorMastery(effect.getSkillId());
   }
 
-
-  
   public void endEffect(Effect effect) {
     super.endEffect(effect);
-    Player player = (Player)effect.getEffector();
+    Player player = (Player) effect.getEffector();
     player.getEffectController().unsetArmorMastery();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\ArmorMasteryEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -7,38 +7,13 @@ import com.aionemu.gameserver.questEngine.model.QuestEnv;
 import com.aionemu.gameserver.questEngine.model.QuestState;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1376AMountaineOfTrouble
-  extends QuestHandler
-{
+public class _1376AMountaineOfTrouble extends QuestHandler {
   private static final int questId = 1376;
-  
+
   public _1376AMountaineOfTrouble() {
     super(Integer.valueOf(1376));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203947).addOnQuestStart(1376);
     this.qe.setNpcQuestData(203947).addOnTalkEvent(1376);
@@ -47,38 +22,34 @@ public class _1376AMountaineOfTrouble
     this.qe.setNpcQuestData(210986).addOnKillEvent(1376);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     int targetId = 0;
-    
+
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     QuestState qs = player.getQuestStateList().getQuestState(1376);
     if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-      
-      if (targetId == 203947)
-      {
+
+      if (targetId == 203947) {
         if (env.getDialogId().intValue() == 25) {
           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
         }
         return defaultQuestStartDialog(env);
       }
-    
+
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 203964) {
-        
+
         if (env.getDialogId().intValue() == -1)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
         return defaultQuestEndDialog(env);
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1376);
@@ -88,42 +59,37 @@ public class _1376AMountaineOfTrouble
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     switch (targetId) {
-      
+
       case 210976:
         if (var >= 0 && var < 6) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
         if (var == 6) {
-          
+
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
       case 210986:
         if (var >= 0 && var < 6) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
         if (var == 6) {
-          
+
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1376AMountaineOfTrouble.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

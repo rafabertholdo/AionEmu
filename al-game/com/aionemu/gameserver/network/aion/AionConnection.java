@@ -17,399 +17,204 @@ import java.nio.channels.SocketChannel;
 import javolution.util.FastList;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class AionConnection
-  extends AConnection
-{
+public class AionConnection extends AConnection {
   private static final Logger log = Logger.getLogger(AionConnection.class);
 
-
-
-
-
-
-  
-  public enum State
-  {
+  public enum State {
     CONNECTED,
 
-
-    
     AUTHED,
 
-
-    
     IN_GAME;
   }
 
-
-
-  
   private final FastList<AionServerPacket> sendMsgQueue = new FastList();
 
-
-
-  
   private State state;
 
-
-
-  
   private Account account;
 
-
-
-  
   private final Crypt crypt = new Crypt();
 
-  
   private Player activePlayer;
 
-  
   private String lastPlayerName = "";
 
-
-  
   private AionPacketHandler aionPacketHandler;
 
-  
   private long lastPingTimeMS;
 
-  
   private FIFORunnableQueue<Runnable> packetQueue;
 
-
-  
   public AionConnection(SocketChannel sc, Dispatcher d) throws IOException {
     super(sc, d);
-    
+
     AionPacketHandlerFactory aionPacketHandlerFactory = AionPacketHandlerFactory.getInstance();
     this.aionPacketHandler = aionPacketHandlerFactory.getPacketHandler();
-    
+
     this.state = State.CONNECTED;
-    
+
     String ip = getIP();
     log.info("connection from: " + ip);
 
-    
-    sendPacket((AionServerPacket)new SM_KEY());
+    sendPacket((AionServerPacket) new SM_KEY());
   }
 
-
-
-
-
-
-
-
-  
   public final int enableCryptKey() {
     return this.crypt.enableKey();
   }
 
-
-
-
-
-
-
-
-
-  
   protected final boolean processData(ByteBuffer data) {
     try {
-      if (!this.crypt.decrypt(data))
-      {
+      if (!this.crypt.decrypt(data)) {
         log.warn("Decrypt fail!");
         return false;
       }
-    
+
     } catch (Exception ex) {
-      
+
       log.error("Exception caught during decrypt!" + ex.getMessage());
       return false;
-    } 
-    
+    }
+
     AionClientPacket pck = this.aionPacketHandler.handle(data, this);
-    
+
     if (this.state == State.IN_GAME && this.activePlayer == null) {
-      
-      log.warn("CHECKPOINT: Skipping packet processing of " + pck.getPacketName() + " for player " + this.lastPlayerName);
+
+      log.warn(
+          "CHECKPOINT: Skipping packet processing of " + pck.getPacketName() + " for player " + this.lastPlayerName);
       return false;
-    } 
+    }
 
-
-
-    
     if (pck != null && pck.read()) {
       getPacketQueue().execute(pck);
     }
     return true;
   }
 
-
-
-  
   public FIFORunnableQueue<Runnable> getPacketQueue() {
     if (this.packetQueue == null)
-      this.packetQueue = new FIFORunnableQueue<Runnable>() {  }
-        ; 
+      this.packetQueue = new FIFORunnableQueue<Runnable>() {
+      };
     return this.packetQueue;
   }
 
-
-
-
-
-
-
-
-  
   protected final boolean writeData(ByteBuffer data) {
     synchronized (this.guard) {
-      
+
       long begin = System.nanoTime();
       if (this.sendMsgQueue.isEmpty())
-        return false; 
-      AionServerPacket packet = (AionServerPacket)this.sendMsgQueue.removeFirst();
-      
+        return false;
+      AionServerPacket packet = (AionServerPacket) this.sendMsgQueue.removeFirst();
+
       try {
         packet.write(this, data);
         return true;
-      }
-      finally {
-        
+      } finally {
+
         RunnableStatsManager.handleStats(packet.getClass(), "runImpl()", System.nanoTime() - begin);
-      } 
-    } 
+      }
+    }
   }
 
-
-
-
-
-
-
-
-  
   protected final long getDisconnectionDelay() {
     return 0L;
   }
 
-
-
-
-
-
-
-
-  
   protected final void onDisconnect() {
     if (getAccount() != null)
-      LoginServer.getInstance().aionClientDisconnected(getAccount().getId()); 
+      LoginServer.getInstance().aionClientDisconnected(getAccount().getId());
     if (getActivePlayer() != null) {
-      
+
       Player player = getActivePlayer();
-      
+
       if (player.getController().isInShutdownProgress()) {
         PlayerService.playerLoggedOut(player);
-      
-      }
-      else {
-        
+
+      } else {
+
         int delay = 15;
         PlayerService.playerLoggedOutDelay(player, delay * 1000);
-      } 
-    } 
+      }
+    }
   }
 
-
-
-
-
-
-  
   protected final void onServerClose() {
     close(true);
   }
 
-
-
-
-
-
-  
   public final void encrypt(ByteBuffer buf) {
     this.crypt.encrypt(buf);
   }
 
-
-
-
-
-
-
-  
   public final void sendPacket(AionServerPacket bp) {
     synchronized (this.guard) {
 
-
-
-      
       if (isWriteDisabled()) {
         return;
       }
       this.sendMsgQueue.addLast(bp);
       enableWriteInterest();
-    } 
+    }
   }
 
-
-
-
-
-
-
-
-
-
-
-  
   public final void close(AionServerPacket closePacket, boolean forced) {
     synchronized (this.guard) {
-      
+
       if (isWriteDisabled()) {
         return;
       }
       log.debug("sending packet: " + closePacket + " and closing connection after that.");
-      
+
       this.pendingClose = true;
       this.isForcedClosing = forced;
       this.sendMsgQueue.clear();
       this.sendMsgQueue.addLast(closePacket);
       enableWriteInterest();
-    } 
+    }
   }
 
-
-
-
-
-
-  
   public final State getState() {
     return this.state;
   }
 
-
-
-
-
-
-
-  
   public void setState(State state) {
     this.state = state;
   }
 
-
-
-
-
-
-  
   public Account getAccount() {
     return this.account;
   }
 
-
-
-
-
-
-
-  
   public void setAccount(Account account) {
     this.account = account;
   }
 
-
-
-
-
-
-
-  
   public boolean setActivePlayer(Player player) {
     if (this.activePlayer != null && player != null)
-      return false; 
+      return false;
     this.activePlayer = player;
-    
+
     if (this.activePlayer == null) {
       this.state = State.AUTHED;
     } else {
       this.state = State.IN_GAME;
-    } 
+    }
     if (this.activePlayer != null) {
       this.lastPlayerName = player.getName();
     }
     return true;
   }
 
-
-
-
-
-
-  
   public Player getActivePlayer() {
     return this.activePlayer;
   }
 
-
-
-
-  
   public long getLastPingTimeMS() {
     return this.lastPingTimeMS;
   }
 
-
-
-
-  
   public void setLastPingTimeMS(long lastPingTimeMS) {
     this.lastPingTimeMS = lastPingTimeMS;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\AionConnection.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

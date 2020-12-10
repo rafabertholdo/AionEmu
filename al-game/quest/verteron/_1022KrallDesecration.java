@@ -87,35 +87,28 @@ public class _1022KrallDesecration extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(1022);
         if (qs == null || qs.getStatus() != QuestStatus.START) {
             return false;
-            }
+        }
         int var = qs.getQuestVarById(0);
         int targetId = 0;
         if (env.getVisibleObject() instanceof Npc)
             targetId = ((Npc) env.getVisibleObject()).getNpcId();
         switch (targetId) {
-            /*     */
+
             case 210178:
                 if (var >= 1 && var <= 4) {
-                    /*     */
+
                     qs.setQuestVarById(0, var + 1);
                     updateQuestStatus(player, qs);
                     return true;
-                    }
+                }
                 if (var == 5) {
-                    /*     */
+
                     qs.setStatus(QuestStatus.REWARD);
                     updateQuestStatus(player, qs);
                     return true;
-                    }
+                }
                 break;
-            }
-        return false;
         }
+        return false;
     }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1022KrallDesecration.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */
+}

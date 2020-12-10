@@ -11,44 +11,15 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_STATS_INFO;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class PlayerGameStats
-  extends CreatureGameStats<Player>
-{
+public class PlayerGameStats extends CreatureGameStats<Player> {
   private int currentRunSpeed = 0;
   private int currentFlySpeed = 0;
   private int currentAttackSpeed = 0;
 
-
-
-
-  
   public PlayerGameStats(Player owner) {
     super(owner);
   }
 
-
-
-
-
-
-  
   public PlayerGameStats(PlayerStatsData playerStatsData, Player owner) {
     super(owner);
     PlayerStatsTemplate pst = playerStatsData.getTemplate(owner.getPlayerClass(), owner.getLevel());
@@ -56,41 +27,34 @@ public class PlayerGameStats
     log.debug("loading base game stats for player " + owner.getName() + " (id " + owner.getObjectId() + "): " + this);
   }
 
-
-
-
-  
   public void recomputeStats() {
     super.recomputeStats();
     int newRunSpeed = getCurrentStat(StatEnum.SPEED);
     int newFlySpeed = getCurrentStat(StatEnum.FLY_SPEED);
     int newAttackSpeed = getCurrentStat(StatEnum.ATTACK_SPEED);
-    
-    if (newRunSpeed != this.currentRunSpeed || this.currentFlySpeed != newFlySpeed || newAttackSpeed != this.currentAttackSpeed)
-    {
-      PacketSendUtility.broadcastPacket(this.owner, (AionServerPacket)new SM_EMOTION((Creature)this.owner, EmotionType.START_EMOTE2, 0, 0), true);
+
+    if (newRunSpeed != this.currentRunSpeed || this.currentFlySpeed != newFlySpeed
+        || newAttackSpeed != this.currentAttackSpeed) {
+      PacketSendUtility.broadcastPacket(this.owner,
+          (AionServerPacket) new SM_EMOTION((Creature) this.owner, EmotionType.START_EMOTE2, 0, 0), true);
     }
-    
-    PacketSendUtility.sendPacket(this.owner, (AionServerPacket)new SM_STATS_INFO(this.owner));
-    
+
+    PacketSendUtility.sendPacket(this.owner, (AionServerPacket) new SM_STATS_INFO(this.owner));
+
     this.currentRunSpeed = newRunSpeed;
     this.currentFlySpeed = newFlySpeed;
     this.currentAttackSpeed = newAttackSpeed;
   }
 
-
-
-
-
-
-  
   private void initStats(PlayerStatsTemplate pst, int level) {
     this.lock.writeLock().lock();
-    
-    try {
-      initStats(pst.getMaxHp(), pst.getMaxMp(), pst.getPower(), pst.getHealth(), pst.getAgility(), pst.getAccuracy(), pst.getKnowledge(), pst.getWill(), pst.getMainHandAttack(), pst.getMainHandCritRate(), Math.round(pst.getAttackSpeed() * 1000.0F), 1500, Math.round(pst.getRunSpeed() * 1000.0F), Math.round(pst.getFlySpeed() * 1000.0F));
 
-      
+    try {
+      initStats(pst.getMaxHp(), pst.getMaxMp(), pst.getPower(), pst.getHealth(), pst.getAgility(), pst.getAccuracy(),
+          pst.getKnowledge(), pst.getWill(), pst.getMainHandAttack(), pst.getMainHandCritRate(),
+          Math.round(pst.getAttackSpeed() * 1000.0F), 1500, Math.round(pst.getRunSpeed() * 1000.0F),
+          Math.round(pst.getFlySpeed() * 1000.0F));
+
       setAttackCounter(1);
       initStat(StatEnum.PARRY, pst.getParry());
       initStat(StatEnum.BLOCK, pst.getBlock());
@@ -101,32 +65,15 @@ public class PlayerGameStats
       initStat(StatEnum.REGEN_HP, level + 3);
       initStat(StatEnum.REGEN_MP, level + 8);
       initStat(StatEnum.MAXDP, 4000);
-    }
-    finally {
-      
+    } finally {
+
       this.lock.writeLock().unlock();
-    } 
+    }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  protected void initStats(int maxHp, int maxMp, int power, int health, int agility, int accuracy, int knowledge, int will, int mainHandAttack, int mainHandCritRate, int attackSpeed, int attackRange, int runSpeed, int flySpeed) {
+  protected void initStats(int maxHp, int maxMp, int power, int health, int agility, int accuracy, int knowledge,
+      int will, int mainHandAttack, int mainHandCritRate, int attackSpeed, int attackRange, int runSpeed,
+      int flySpeed) {
     this.stats.clear();
     initStat(StatEnum.MAXHP, maxHp);
     initStat(StatEnum.MAXMP, maxMp);
@@ -167,20 +114,8 @@ public class PlayerGameStats
     initStat(StatEnum.BOOST_HEAL, 100);
   }
 
-
-
-
-
-
-  
   public void doLevelUpgrade() {
     initStats(this.owner.getPlayerStatsTemplate(), this.owner.getLevel());
     recomputeStats();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\gameobjects\stats\PlayerGameStats.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

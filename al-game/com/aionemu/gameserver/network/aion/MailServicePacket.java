@@ -7,38 +7,15 @@ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
 import java.nio.ByteBuffer;
 import java.util.Collection;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public abstract class MailServicePacket
-  extends InventoryPacket
-{
+public abstract class MailServicePacket extends InventoryPacket {
   protected void writeLettersList(ByteBuffer buf, Collection<Letter> letters, Player player) {
     writeC(buf, 2);
     writeD(buf, player.getObjectId());
     writeC(buf, 0);
     writeH(buf, player.getMailbox().getFreeSlots());
-    
+
     for (Letter letter : letters) {
-      
+
       writeD(buf, letter.getObjectId());
       writeS(buf, letter.getSenderName());
       writeS(buf, letter.getTitle());
@@ -46,23 +23,22 @@ public abstract class MailServicePacket
         writeC(buf, 0);
       } else {
         writeC(buf, 1);
-      }  if (letter.getAttachedItem() != null) {
-        
+      }
+      if (letter.getAttachedItem() != null) {
+
         writeD(buf, letter.getAttachedItem().getObjectId());
         writeD(buf, letter.getAttachedItem().getItemTemplate().getTemplateId());
+      } else {
+
+        writeD(buf, 0);
+        writeD(buf, 0);
       }
-      else {
-        
-        writeD(buf, 0);
-        writeD(buf, 0);
-      } 
-      writeD(buf, (int)letter.getAttachedKinah());
+      writeD(buf, (int) letter.getAttachedKinah());
       writeD(buf, 0);
       writeC(buf, 0);
-    } 
+    }
   }
 
-  
   protected void writeEmptyLettersList(ByteBuffer buf, Player player) {
     writeC(buf, 2);
     writeD(buf, player.getObjectId());
@@ -70,13 +46,11 @@ public abstract class MailServicePacket
     writeC(buf, 0);
   }
 
-  
   protected void writeMailMessage(ByteBuffer buf, int messageId) {
     writeC(buf, 1);
     writeC(buf, messageId);
   }
 
-  
   protected void writeMailboxState(ByteBuffer buf, int haveNewMail, int haveUnread) {
     writeC(buf, 0);
     writeC(buf, haveNewMail);
@@ -86,7 +60,6 @@ public abstract class MailServicePacket
     writeC(buf, 0);
   }
 
-  
   protected void writeLetterRead(ByteBuffer buf, Letter letter, long time) {
     writeC(buf, 3);
     writeD(buf, letter.getRecipientId());
@@ -97,38 +70,37 @@ public abstract class MailServicePacket
     writeS(buf, letter.getSenderName());
     writeS(buf, letter.getTitle());
     writeS(buf, letter.getMessage());
-    
+
     Item item = letter.getAttachedItem();
     if (item != null) {
-      
+
       ItemTemplate itemTemplate = item.getItemTemplate();
-      
+
       writeMailGeneralInfo(buf, item);
-      
+
       if (itemTemplate.isArmor()) {
         writeArmorInfo(buf, item, false, false, true);
       } else if (itemTemplate.isWeapon()) {
         writeWeaponInfo(buf, item, false, false, false, true);
       } else {
         writeGeneralItemInfo(buf, item, false, true);
-      } 
+      }
     } else {
-      
+
       writeD(buf, 0);
       writeD(buf, 0);
       writeD(buf, 0);
       writeD(buf, 0);
       writeD(buf, 0);
-    } 
-    
-    writeD(buf, (int)letter.getAttachedKinah());
+    }
+
+    writeD(buf, (int) letter.getAttachedKinah());
     writeD(buf, 0);
     writeC(buf, 0);
     writeQ(buf, time / 1000L);
     writeC(buf, 0);
   }
 
-  
   protected void writeLetterState(ByteBuffer buf, int letterId, int attachmentType) {
     writeC(buf, 5);
     writeD(buf, letterId);
@@ -136,7 +108,6 @@ public abstract class MailServicePacket
     writeC(buf, 1);
   }
 
-  
   protected void writeLetterDelete(ByteBuffer buf, int letterId) {
     writeC(buf, 6);
     writeD(buf, 0);
@@ -144,9 +115,3 @@ public abstract class MailServicePacket
     writeD(buf, letterId);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\MailServicePacket.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

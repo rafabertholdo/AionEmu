@@ -15,40 +15,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ActionItemUseOperation", propOrder = {"finish"})
-public class ActionItemUseOperation
-  extends QuestOperation
-{
+@XmlType(name = "ActionItemUseOperation", propOrder = { "finish" })
+public class ActionItemUseOperation extends QuestOperation {
   @XmlElement(required = true)
   protected QuestOperations finish;
-  
+
   public void doOperate(final QuestEnv env) {
     final Npc npc;
     final Player player = env.getPlayer();
@@ -72,9 +44,3 @@ public class ActionItemUseOperation
         }3000L);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\operations\ActionItemUseOperation.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

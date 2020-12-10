@@ -9,56 +9,21 @@ import com.aionemu.gameserver.utils.gametime.GameTimeManager;
 import com.aionemu.gameserver.world.World;
 import java.util.concurrent.Future;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class RespawnService
-{
+public class RespawnService {
   public static Future<?> scheduleDecayTask(final Npc npc) {
     int respawnInterval = npc.getSpawn().getSpawnGroup().getInterval();
     int decayInterval = Math.round(respawnInterval * 0.8F);
     if (decayInterval > 240) {
       decayInterval = 240;
     }
-    return ThreadPoolManager.getInstance().schedule(new Runnable()
-        {
-          
-          public void run()
-          {
-            npc.getController().onDespawn(false);
-          }
-        },  (decayInterval * 1000));
+    return ThreadPoolManager.getInstance().schedule(new Runnable() {
+
+      public void run() {
+        npc.getController().onDespawn(false);
+      }
+    }, (decayInterval * 1000));
   }
 
-
-
-
-  
   public static Future<?> scheduleRespawnTask(final VisibleObject visibleObject) {
     final World world = World.getInstance();
     int interval = visibleObject.getSpawn().getSpawnGroup().getInterval();
@@ -96,9 +61,3 @@ public class RespawnService
         }(interval * 1000));
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\RespawnService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

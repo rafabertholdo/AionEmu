@@ -8,31 +8,7 @@ import com.aionemu.gameserver.model.group.PlayerGroup;
 import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_DISTRIBUTION_SETTINGS
-  extends AionClientPacket
-{
+public class CM_DISTRIBUTION_SETTINGS extends AionClientPacket {
   private LootRuleType lootrules;
   private LootDistribution autodistribution;
   private int common_item_above;
@@ -42,19 +18,14 @@ public class CM_DISTRIBUTION_SETTINGS
   private int ethernal_item_above;
   private int over_ethernal;
   private int over_over_ethernal;
-  
+
   public CM_DISTRIBUTION_SETTINGS(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     switch (readD()) {
-      
+
       case 0:
         this.lootrules = LootRuleType.FREEFORALL;
         break;
@@ -67,10 +38,10 @@ public class CM_DISTRIBUTION_SETTINGS
       default:
         this.lootrules = LootRuleType.FREEFORALL;
         break;
-    } 
-    
+    }
+
     switch (readD()) {
-      
+
       case 0:
         this.autodistribution = LootDistribution.NORMAL;
         break;
@@ -83,8 +54,8 @@ public class CM_DISTRIBUTION_SETTINGS
       default:
         this.autodistribution = LootDistribution.NORMAL;
         break;
-    } 
-    
+    }
+
     this.common_item_above = readD();
     this.superior_item_above = readD();
     this.heroic_item_above = readD();
@@ -94,24 +65,15 @@ public class CM_DISTRIBUTION_SETTINGS
     this.over_over_ethernal = readD();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player leader = ((AionConnection)getConnection()).getActivePlayer();
+    Player leader = ((AionConnection) getConnection()).getActivePlayer();
     if (leader != null) {
-      
+
       PlayerGroup pg = leader.getPlayerGroup();
       if (pg != null)
-        pg.setLootGroupRules(new LootGroupRules(this.lootrules, this.autodistribution, this.common_item_above, this.superior_item_above, this.heroic_item_above, this.fabled_item_above, this.ethernal_item_above, this.over_ethernal, this.over_over_ethernal)); 
-    } 
+        pg.setLootGroupRules(new LootGroupRules(this.lootrules, this.autodistribution, this.common_item_above,
+            this.superior_item_above, this.heroic_item_above, this.fabled_item_above, this.ethernal_item_above,
+            this.over_ethernal, this.over_over_ethernal));
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_DISTRIBUTION_SETTINGS.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

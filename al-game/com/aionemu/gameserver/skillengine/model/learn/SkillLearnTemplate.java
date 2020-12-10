@@ -5,35 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "skill")
-public class SkillLearnTemplate
-{
+public class SkillLearnTemplate {
   @XmlAttribute(name = "classId", required = true)
   private SkillClass classId;
   @XmlAttribute(name = "skillId", required = true)
@@ -52,71 +26,40 @@ public class SkillLearnTemplate
   private boolean autolearn;
   @XmlAttribute
   private boolean stigma = false;
-  
+
   public SkillClass getClassId() {
     return this.classId;
   }
 
-
-
-  
   public int getSkillId() {
     return this.skillId;
   }
 
-
-
-  
   public int getSkillLevel() {
     return this.skillLevel;
   }
 
-
-
-  
   public String getName() {
     return this.name;
   }
 
-
-
-  
   public SkillUsageType getType() {
     return this.type;
   }
 
-
-
-  
   public int getMinLevel() {
     return this.minLevel;
   }
 
-
-
-  
   public SkillRace getRace() {
     return this.race;
   }
 
-
-
-  
   public boolean isAutolearn() {
     return this.autolearn;
   }
 
-
-
-
-  
   public boolean isStigma() {
     return this.stigma;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\model\learn\SkillLearnTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

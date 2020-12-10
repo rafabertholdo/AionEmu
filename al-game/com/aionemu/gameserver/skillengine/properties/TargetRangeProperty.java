@@ -14,131 +14,93 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TargetRangeProperty")
-public class TargetRangeProperty
-  extends Property
-{
+public class TargetRangeProperty extends Property {
   private static final Logger log = Logger.getLogger(TargetRangeProperty.class);
 
-  
   @XmlAttribute(required = true)
   protected TargetRangeAttribute value;
 
-  
   @XmlAttribute
   protected int distance;
 
-  
   @XmlAttribute
   protected int maxcount;
 
-  
   public TargetRangeAttribute getValue() {
     return this.value;
   }
 
-  
   public boolean set(Skill skill) {
     Creature firstTarget;
     List<Creature> effectedList = skill.getEffectedList();
     int counter = 0;
     switch (this.value) {
 
-
-      
       case AREA:
         firstTarget = skill.getFirstTarget();
         if (firstTarget == null) {
-          
+
           log.warn("CHECKPOINT: first target is null for skillid " + skill.getSkillTemplate().getSkillId());
           return false;
-        } 
-        
+        }
+
         for (VisibleObject nextCreature : firstTarget.getKnownList().getKnownObjects().values()) {
-          
+
           if (counter >= this.maxcount) {
             break;
           }
-          
+
           if (firstTarget == nextCreature) {
             continue;
           }
-          
-          if (skill.getEffector() instanceof Trap && ((Trap)skill.getEffector()).getCreator() == nextCreature) {
+
+          if (skill.getEffector() instanceof Trap && ((Trap) skill.getEffector()).getCreator() == nextCreature) {
             continue;
           }
-          
-          if (nextCreature instanceof Creature && MathUtil.isIn3dRange((VisibleObject)firstTarget, nextCreature, (this.distance + 4))) {
 
-            
-            effectedList.add((Creature)nextCreature);
+          if (nextCreature instanceof Creature
+              && MathUtil.isIn3dRange((VisibleObject) firstTarget, nextCreature, (this.distance + 4))) {
+
+            effectedList.add((Creature) nextCreature);
             counter++;
-          } 
-        } 
+          }
+        }
         break;
       case PARTY:
         if (skill.getEffector() instanceof Player) {
-          
-          Player effector = (Player)skill.getEffector();
+
+          Player effector = (Player) skill.getEffector();
           if (effector.isInAlliance()) {
-            
+
             effectedList.clear();
-            for (PlayerAllianceMember allianceMember : effector.getPlayerAlliance().getMembersForGroup(effector.getObjectId())) {
-              
+            for (PlayerAllianceMember allianceMember : effector.getPlayerAlliance()
+                .getMembersForGroup(effector.getObjectId())) {
+
               if (!allianceMember.isOnline())
-                continue;  Player member = allianceMember.getPlayer();
-              if (MathUtil.isIn3dRange((VisibleObject)effector, (VisibleObject)member, (this.distance + 4)))
-                effectedList.add(member); 
-            }  break;
-          } 
+                continue;
+              Player member = allianceMember.getPlayer();
+              if (MathUtil.isIn3dRange((VisibleObject) effector, (VisibleObject) member, (this.distance + 4)))
+                effectedList.add(member);
+            }
+            break;
+          }
           if (effector.isInGroup()) {
-            
+
             effectedList.clear();
             for (Player member : effector.getPlayerGroup().getMembers()) {
 
-              
-              if (member != null && MathUtil.isIn3dRange((VisibleObject)effector, (VisibleObject)member, (this.distance + 4))) {
+              if (member != null
+                  && MathUtil.isIn3dRange((VisibleObject) effector, (VisibleObject) member, (this.distance + 4))) {
                 effectedList.add(member);
               }
-            } 
-          } 
-        } 
+            }
+          }
+        }
         break;
-    } 
+    }
 
-
-    
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\properties\TargetRangeProperty.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

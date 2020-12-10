@@ -17,74 +17,45 @@ import com.aionemu.gameserver.utils.stats.StatFunctions;
 import com.aionemu.gameserver.world.World;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_MOVE
-  extends AionClientPacket
-{
+public class CM_MOVE extends AionClientPacket {
   private static final Logger log = Logger.getLogger(CM_MOVE.class);
-  
+
   private MovementType type;
-  
+
   private byte heading;
-  
+
   private byte movementType;
-  
+
   private float x;
-  
+
   private float y;
-  
+
   private float z;
   private float x2;
   private float y2;
   private float z2;
   private byte glideFlag;
-  
+
   public CM_MOVE(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
-    
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
+
     if (!player.isSpawned()) {
       return;
     }
     this.x = readF();
     this.y = readF();
     this.z = readF();
-    
-    this.heading = (byte)readC();
-    this.movementType = (byte)readC();
+
+    this.heading = (byte) readC();
+    this.movementType = (byte) readC();
     this.type = MovementType.getMovementTypeById(this.movementType);
-    
+
     switch (this.type) {
-      
+
       case MOVEMENT_START_MOUSE:
       case MOVEMENT_START_KEYBOARD:
         this.x2 = readF();
@@ -96,96 +67,97 @@ public class CM_MOVE
         this.x2 = readF();
         this.y2 = readF();
         this.z2 = readF();
-      
+
       case MOVEMENT_GLIDE_UP:
       case VALIDATE_GLIDE_MOUSE:
-        this.glideFlag = (byte)readC();
+        this.glideFlag = (byte) readC();
         break;
-    } 
+    }
   }
 
-
-
-  
   protected void runImpl() {
     float glideSpeed;
     double angle;
     MoveController mc;
     StringBuilder sb;
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
     World world = World.getInstance();
-    
+
     if (this.type == null) {
       return;
     }
     float playerZ = player.getZ();
-    
+
     switch (this.type) {
-      
+
       case MOVEMENT_START_MOUSE:
       case MOVEMENT_START_KEYBOARD:
       case MOVEMENT_MOVIN_ELEVATOR:
       case MOVEMENT_ON_ELEVATOR:
       case MOVEMENT_STAYIN_ELEVATOR:
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
         player.getMoveController().setNewDirection(this.x2, this.y2, this.z2);
         player.getController().onStartMove();
         player.getFlyController().onStopGliding();
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.x2, this.y2, this.z2, this.heading, this.type), false);
+        PacketSendUtility.broadcastPacket(player, (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y,
+            this.z, this.x2, this.y2, this.z2, this.heading, this.type), false);
         break;
-      
+
       case MOVEMENT_GLIDE_START_MOUSE:
         player.getMoveController().setNewDirection(this.x2, this.y2, this.z2);
-      
+
       case MOVEMENT_GLIDE_DOWN:
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
         player.getController().onMove();
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.x2, this.y2, this.z2, this.heading, this.glideFlag, this.type), false);
-        
+        PacketSendUtility.broadcastPacket(player, (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y,
+            this.z, this.x2, this.y2, this.z2, this.heading, this.glideFlag, this.type), false);
+
         player.getFlyController().switchToGliding();
         break;
       case MOVEMENT_GLIDE_UP:
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
         player.getController().onMove();
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.heading, this.glideFlag, this.type), false);
-        
+        PacketSendUtility.broadcastPacket(player, (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y,
+            this.z, this.heading, this.glideFlag, this.type), false);
+
         player.getFlyController().switchToGliding();
         break;
       case VALIDATE_GLIDE_MOUSE:
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
         player.getController().onMove();
         player.getFlyController().switchToGliding();
 
-
-
-
-        
         glideSpeed = player.getGameStats().getCurrentStat(StatEnum.SPEED);
         angle = Math.toRadians((this.heading * 3));
-        this.x2 = (float)(glideSpeed * Math.cos(angle));
-        this.y2 = (float)(glideSpeed * Math.sin(angle));
-        
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.x2, this.y2, this.z2, this.heading, this.glideFlag, MovementType.MOVEMENT_GLIDE_DOWN), false);
+        this.x2 = (float) (glideSpeed * Math.cos(angle));
+        this.y2 = (float) (glideSpeed * Math.sin(angle));
+
+        PacketSendUtility.broadcastPacket(player, (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y,
+            this.z, this.x2, this.y2, this.z2, this.heading, this.glideFlag, MovementType.MOVEMENT_GLIDE_DOWN), false);
         break;
 
-      
       case VALIDATE_MOUSE:
       case VALIDATE_KEYBOARD:
         player.getController().onMove();
         player.getFlyController().onStopGliding();
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
-        
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
+
         mc = player.getMoveController();
-        
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, mc.getTargetX(), mc.getTargetY(), mc.getTargetZ(), this.heading, (this.type == MovementType.VALIDATE_MOUSE) ? MovementType.MOVEMENT_START_MOUSE : MovementType.MOVEMENT_START_KEYBOARD), false);
+
+        PacketSendUtility.broadcastPacket(player,
+            (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, mc.getTargetX(),
+                mc.getTargetY(), mc.getTargetZ(), this.heading,
+                (this.type == MovementType.VALIDATE_MOUSE) ? MovementType.MOVEMENT_START_MOUSE
+                    : MovementType.MOVEMENT_START_KEYBOARD),
+            false);
         break;
 
-
-      
       case MOVEMENT_STOP:
-        PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.heading, this.type), false);
-        
-        world.updatePosition((VisibleObject)player, this.x, this.y, this.z, this.heading);
+        PacketSendUtility.broadcastPacket(player,
+            (AionServerPacket) new SM_MOVE(player.getObjectId(), this.x, this.y, this.z, this.heading, this.type),
+            false);
+
+        world.updatePosition((VisibleObject) player, this.x, this.y, this.z, this.heading);
         player.getController().onStopMove();
         player.getFlyController().onStopGliding();
         break;
@@ -198,35 +170,24 @@ public class CM_MOVE
         sb.append(" player=").append(player.getName());
         log.warn(sb.toString());
         break;
-    } 
+    }
 
-
-    
-    if (player.isInGroup() || player.isInAlliance())
-    {
+    if (player.isInGroup() || player.isInAlliance()) {
       GroupAllianceUpdater.getInstance().add(player);
     }
-    
-    float distance = playerZ - this.z;
-    if (FallDamageConfig.ACTIVE_FALL_DAMAGE && player.isInState(CreatureState.ACTIVE) && !player.isInState(CreatureState.FLYING) && !player.isInState(CreatureState.GLIDING) && (this.type == MovementType.MOVEMENT_STOP || distance >= FallDamageConfig.MAXIMUM_DISTANCE_MIDAIR))
-    {
 
-      
+    float distance = playerZ - this.z;
+    if (FallDamageConfig.ACTIVE_FALL_DAMAGE && player.isInState(CreatureState.ACTIVE)
+        && !player.isInState(CreatureState.FLYING) && !player.isInState(CreatureState.GLIDING)
+        && (this.type == MovementType.MOVEMENT_STOP || distance >= FallDamageConfig.MAXIMUM_DISTANCE_MIDAIR)) {
+
       if (StatFunctions.calculateFallDamage(player, distance)) {
         return;
       }
     }
 
-    
-    if (this.type != MovementType.MOVEMENT_STOP && player.isProtectionActive())
-    {
+    if (this.type != MovementType.MOVEMENT_STOP && player.isProtectionActive()) {
       player.getController().stopProtectionActiveTask();
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_MOVE.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

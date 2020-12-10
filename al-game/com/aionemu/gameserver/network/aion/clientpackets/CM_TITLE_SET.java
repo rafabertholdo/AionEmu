@@ -11,74 +11,31 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_SET;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_UPDATE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_TITLE_SET
-  extends AionClientPacket
-{
+public class CM_TITLE_SET extends AionClientPacket {
   private int titleId;
-  
+
   public CM_TITLE_SET(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     this.titleId = readD();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
-    sendPacket((AionServerPacket)new SM_TITLE_SET(this.titleId));
-    PacketSendUtility.broadcastPacket((VisibleObject)player, (AionServerPacket)new SM_TITLE_UPDATE(player, this.titleId));
-    if (player.getCommonData().getTitleId() > 0)
-    {
-      if (player.getGameStats() != null)
-      {
-        TitleChangeListener.onTitleChange((CreatureGameStats)player.getGameStats(), player.getCommonData().getTitleId(), false);
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
+    sendPacket((AionServerPacket) new SM_TITLE_SET(this.titleId));
+    PacketSendUtility.broadcastPacket((VisibleObject) player,
+        (AionServerPacket) new SM_TITLE_UPDATE(player, this.titleId));
+    if (player.getCommonData().getTitleId() > 0) {
+      if (player.getGameStats() != null) {
+        TitleChangeListener.onTitleChange((CreatureGameStats) player.getGameStats(),
+            player.getCommonData().getTitleId(), false);
       }
     }
     player.getCommonData().setTitleId(this.titleId);
-    if (player.getGameStats() != null)
-    {
-      TitleChangeListener.onTitleChange((CreatureGameStats)player.getGameStats(), this.titleId, true);
+    if (player.getGameStats() != null) {
+      TitleChangeListener.onTitleChange((CreatureGameStats) player.getGameStats(), this.titleId, true);
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_TITLE_SET.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

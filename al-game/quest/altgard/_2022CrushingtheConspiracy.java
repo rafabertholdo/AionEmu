@@ -17,35 +17,13 @@ import com.aionemu.gameserver.services.TeleportService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2022CrushingtheConspiracy
-  extends QuestHandler
-{
+public class _2022CrushingtheConspiracy extends QuestHandler {
   private static final int questId = 2022;
-  
+
   public _2022CrushingtheConspiracy() {
     super(Integer.valueOf(2022));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2022);
     this.qe.setNpcQuestData(203557).addOnTalkEvent(2022);
@@ -55,8 +33,6 @@ public class _2022CrushingtheConspiracy
     this.qe.setNpcQuestData(700141).addOnTalkEvent(2022);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -148,8 +124,6 @@ public class _2022CrushingtheConspiracy
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2022);
@@ -159,46 +133,39 @@ public class _2022CrushingtheConspiracy
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     switch (targetId) {
-      
+
       case 210753:
         if (var >= 3 && var < 4) {
-          
+
           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2022);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     int[] quests = { 2200, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 };
     for (int id : quests) {
-      
+
       QuestState qs2 = player.getQuestStateList().getQuestState(id);
       if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE) {
         return false;
       }
-    } 
+    }
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2022CrushingtheConspiracy.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

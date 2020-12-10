@@ -8,48 +8,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "WeaponMasteryEffect")
-public class WeaponMasteryEffect
-  extends BufEffect
-{
+public class WeaponMasteryEffect extends BufEffect {
   @XmlAttribute(name = "weapon")
   private WeaponType weaponType;
-  
+
   public WeaponType getWeaponType() {
     return this.weaponType;
   }
 
-
-
-  
   public void calculate(Effect effect) {
-    Player player = (Player)effect.getEffector();
-    
+    Player player = (Player) effect.getEffector();
+
     Integer skillId = player.getSkillList().getWeaponMasterySkill(this.weaponType);
     if (skillId != null && skillId.intValue() != effect.getSkillId()) {
       return;
@@ -61,25 +32,16 @@ public class WeaponMasteryEffect
     }
   }
 
-  
   public void endEffect(Effect effect) {
     super.endEffect(effect);
-    Player player = (Player)effect.getEffector();
+    Player player = (Player) effect.getEffector();
     player.getEffectController().unsetWeaponMastery();
   }
 
-
-  
   public void startEffect(Effect effect) {
-    Player player = (Player)effect.getEffector();
+    Player player = (Player) effect.getEffector();
     player.getEffectController().removeEffect(player.getEffectController().getWeaponMastery());
     super.startEffect(effect);
     player.getEffectController().setWeaponMastery(effect.getSkillId());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\WeaponMasteryEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

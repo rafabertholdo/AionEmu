@@ -11,38 +11,15 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1003IllegalLogging
-  extends QuestHandler
-{
+public class _1003IllegalLogging extends QuestHandler {
   private static final int questId = 1003;
-  private static final int[] mob_ids = new int[] { 210096, 210149, 210145, 210146, 210150, 210151, 210092, 210160, 210154 };
+  private static final int[] mob_ids = new int[] { 210096, 210149, 210145, 210146, 210150, 210151, 210092, 210160,
+      210154 };
 
-  
   public _1003IllegalLogging() {
     super(Integer.valueOf(1003));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203081).addOnTalkEvent(1003);
     this.qe.addQuestLvlUp(1003);
@@ -51,20 +28,17 @@ public class _1003IllegalLogging
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1003);
     boolean lvlCheck = QuestService.checkLevelRequirement(1003, player.getCommonData().getLevel());
     if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1003);
@@ -74,41 +48,39 @@ public class _1003IllegalLogging
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.START) {
-      
-      if (targetId == 203081)
-      {
+
+      if (targetId == 203081) {
         switch (env.getDialogId().intValue()) {
-          
+
           case 25:
             if (var == 0)
-              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
             if (var == 13) {
               return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
             }
           case 10000:
           case 10001:
             if (var == 0 || var == 13) {
-              
+
               qs.setQuestVarById(0, var + 1);
               updateQuestStatus(player, qs);
-              PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+              PacketSendUtility.sendPacket(player,
+                  (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
               return true;
-            } 
+            }
             break;
-        } 
+        }
       }
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       return defaultQuestEndDialog(env);
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1003);
@@ -118,12 +90,12 @@ public class _1003IllegalLogging
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     switch (targetId) {
-      
+
       case 210092:
       case 210096:
       case 210145:
@@ -133,32 +105,27 @@ public class _1003IllegalLogging
       case 210151:
       case 210154:
         if (var >= 1 && var <= 12) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
         break;
       case 210160:
         if (var >= 14 && var <= 15) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        } 
+        }
         if (var == 16) {
-          
+
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\poeta\_1003IllegalLogging.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

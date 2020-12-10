@@ -9,61 +9,29 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SkillAtkDrainInstantEffect")
-public class SkillAtkDrainInstantEffect
-  extends DamageEffect
-{
+public class SkillAtkDrainInstantEffect extends DamageEffect {
   @XmlAttribute
   protected int percent;
   @XmlAttribute(name = "heal_type")
   protected HealType healType;
-  
+
   public void applyEffect(Effect effect) {
     super.applyEffect(effect);
     int value = effect.getReserved1() * this.percent / 100;
     switch (this.healType) {
-      
+
       case HP:
         effect.getEffector().getLifeStats().increaseHp(SM_ATTACK_STATUS.TYPE.NATURAL_HP, value);
         break;
       case MP:
         effect.getEffector().getLifeStats().increaseMp(SM_ATTACK_STATUS.TYPE.NATURAL_MP, value);
         break;
-    } 
+    }
   }
 
-
-  
   public void calculate(Effect effect) {
     calculate(effect, DamageType.PHYSICAL);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\SkillAtkDrainInstantEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

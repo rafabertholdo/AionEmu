@@ -8,22 +8,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "cube_npc")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CubeExpandTemplate
-{
+public class CubeExpandTemplate {
   @XmlElement(name = "expand", required = true)
   protected List<Expand> cubeExpands;
   @XmlAttribute(name = "id", required = true)
@@ -31,48 +18,29 @@ public class CubeExpandTemplate
   @XmlAttribute(name = "name", required = true)
   private String name = "";
 
-
-  
   public String getName() {
     return this.name;
   }
 
-  
   public int getNpcId() {
     return this.Id;
   }
 
-
-
-
-
-  
   public boolean contains(int level) {
     for (Expand expand : this.cubeExpands) {
-      
+
       if (expand.getLevel() == level)
-        return true; 
-    } 
+        return true;
+    }
     return false;
   }
 
-
-
-
-
-  
   public Expand get(int level) {
     for (Expand expand : this.cubeExpands) {
-      
+
       if (expand.getLevel() == level)
-        return expand; 
-    } 
+        return expand;
+    }
     return null;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\CubeExpandTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

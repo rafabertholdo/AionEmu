@@ -11,58 +11,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NpcDialogOperation")
-public class NpcDialogOperation
-  extends QuestOperation
-{
+public class NpcDialogOperation extends QuestOperation {
   @XmlAttribute(required = true)
   protected int id;
   @XmlAttribute(name = "quest_id")
   protected Integer questId;
-  
+
   public void doOperate(QuestEnv env) {
     Player player = env.getPlayer();
     VisibleObject obj = env.getVisibleObject();
     int qId = env.getQuestId().intValue();
     if (this.questId != null)
-      qId = this.questId.intValue(); 
+      qId = this.questId.intValue();
     if (qId == 0) {
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(obj.getObjectId(), this.id));
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_DIALOG_WINDOW(obj.getObjectId(), this.id));
     } else {
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(obj.getObjectId(), this.id, qId));
-    } 
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_DIALOG_WINDOW(obj.getObjectId(), this.id, qId));
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\operations\NpcDialogOperation.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

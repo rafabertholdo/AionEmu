@@ -21,40 +21,40 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 import com.aionemu.gameserver.world.WorldMapType;
 
 public class _1020SealingTheAbyssGate extends QuestHandler {
-    private static final int questId = 1020;
-    private static final int[] npcIds = new int[] { 203098, 700141, 700142, 700551 };
+  private static final int questId = 1020;
+  private static final int[] npcIds = new int[] { 203098, 700141, 700142, 700551 };
 
-    public _1020SealingTheAbyssGate() {
-        super(Integer.valueOf(1020));
+  public _1020SealingTheAbyssGate() {
+    super(Integer.valueOf(1020));
+  }
+
+  public void register() {
+    this.qe.addOnEnterWorld(1020);
+    this.qe.addQuestLvlUp(1020);
+    this.qe.addOnDie(1020);
+    for (int npcId : npcIds) {
+      this.qe.setNpcQuestData(npcId).addOnTalkEvent(1020);
     }
+  }
 
-    public void register() {
-        this.qe.addOnEnterWorld(1020);
-        this.qe.addQuestLvlUp(1020);
-        this.qe.addOnDie(1020);
-        for (int npcId : npcIds) {
-            this.qe.setNpcQuestData(npcId).addOnTalkEvent(1020);
-        }
+  public boolean onLvlUpEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(1020);
+    boolean lvlCheck = QuestService.checkLevelRequirement(1020, player.getCommonData().getLevel());
+    if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
+      return false;
+    int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
+    for (int id : quests) {
+
+      QuestState qs2 = player.getQuestStateList().getQuestState(id);
+      if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE) {
+        return false;
+      }
     }
-
-    public boolean onLvlUpEvent(QuestEnv env) {
-        Player player = env.getPlayer();
-        QuestState qs = player.getQuestStateList().getQuestState(1020);
-        boolean lvlCheck = QuestService.checkLevelRequirement(1020, player.getCommonData().getLevel());
-        if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
-            return false;
-        int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
-        for (int id : quests) {
-
-            QuestState qs2 = player.getQuestStateList().getQuestState(id);
-            if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE) {
-                return false;
-            }
-        }
-        qs.setStatus(QuestStatus.START);
-        updateQuestStatus(player, qs);
-        return true;
-    }
+    qs.setStatus(QuestStatus.START);
+    updateQuestStatus(player, qs);
+    return true;
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -180,59 +180,52 @@ public class _1020SealingTheAbyssGate extends QuestHandler {
     return false;
   }
 
-    public boolean onDieEvent(QuestEnv env) {
-        Player player = env.getPlayer();
-        QuestState qs = player.getQuestStateList().getQuestState(1020);
-        if (qs == null || qs.getStatus() != QuestStatus.START)
-            return false;
-        int var = qs.getQuestVars().getQuestVars();
-        if (var == 2 || var == 3) {
+  public boolean onDieEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(1020);
+    if (qs == null || qs.getStatus() != QuestStatus.START)
+      return false;
+    int var = qs.getQuestVars().getQuestVars();
+    if (var == 2 || var == 3) {
 
-            qs.setQuestVar(1);
-            ItemService.decreaseItemCountByItemId(player, 182200024, 1L);
-            updateQuestStatus(player, qs);
-        }
-
-        return false;
+      qs.setQuestVar(1);
+      ItemService.decreaseItemCountByItemId(player, 182200024, 1L);
+      updateQuestStatus(player, qs);
     }
 
-    public boolean onEnterWorldEvent(QuestEnv env) {
-        Player player = env.getPlayer();
-        QuestState qs = player.getQuestStateList().getQuestState(1020);
-        if (qs == null) {
-            return false;
-        }
-        if (qs.getStatus() == QuestStatus.START) {
+    return false;
+  }
 
-            int var = qs.getQuestVars().getQuestVars();
-            if (var == 2 || var == 3) {
-                if (player.getWorldId() != 310030000) {
-                    qs.setQuestVar(1);
-                    ItemService.decreaseItemCountByItemId(player, 182200024, 1L);
-                    updateQuestStatus(player, qs);
-                }
-
-            }
-        } else if (qs.getStatus() == QuestStatus.LOCKED && player.getCommonData().getLevel() > 15) {
-
-            int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
-            for (int id : quests) {
-
-                QuestState qs2 = player.getQuestStateList().getQuestState(id);
-                if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-                    return false;
-            }
-            qs.setStatus(QuestStatus.START);
-            updateQuestStatus(player, qs);
-            return true;
-        }
-        return false;
+  public boolean onEnterWorldEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(1020);
+    if (qs == null) {
+      return false;
     }
+    if (qs.getStatus() == QuestStatus.START) {
+
+      int var = qs.getQuestVars().getQuestVars();
+      if (var == 2 || var == 3) {
+        if (player.getWorldId() != 310030000) {
+          qs.setQuestVar(1);
+          ItemService.decreaseItemCountByItemId(player, 182200024, 1L);
+          updateQuestStatus(player, qs);
+        }
+
+      }
+    } else if (qs.getStatus() == QuestStatus.LOCKED && player.getCommonData().getLevel() > 15) {
+
+      int[] quests = { 1130, 1023, 1022, 1021, 1019, 1018, 1017, 1016, 1015, 1014, 1013, 1012, 1011 };
+      for (int id : quests) {
+
+        QuestState qs2 = player.getQuestStateList().getQuestState(id);
+        if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
+          return false;
+      }
+      qs.setStatus(QuestStatus.START);
+      updateQuestStatus(player, qs);
+      return true;
+    }
+    return false;
+  }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1020SealingTheAbyssGate.class Java compiler version: 6
- * (50.0) JD-Core Version: 1.1.3
- */

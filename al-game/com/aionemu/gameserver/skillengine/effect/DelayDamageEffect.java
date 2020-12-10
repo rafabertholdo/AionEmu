@@ -9,43 +9,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DelayDamageEffect")
-public class DelayDamageEffect
-  extends DamageEffect
-{
+public class DelayDamageEffect extends DamageEffect {
   @XmlAttribute
   protected int delay;
-  
+
   public void calculate(Effect effect) {
     calculate(effect, DamageType.MAGICAL);
   }
 
-
-  
   public void applyEffect(final Effect effect) {
     ThreadPoolManager.getInstance().schedule(new Runnable()
         {
@@ -56,9 +29,3 @@ public class DelayDamageEffect
         }this.delay);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\DelayDamageEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

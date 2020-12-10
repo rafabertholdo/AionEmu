@@ -11,132 +11,60 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class ChatService
-{
+public class ChatService {
   private static final Logger log = Logger.getLogger(ChatService.class);
-  
+
   private static Map<Integer, Player> players = new HashMap<Integer, Player>();
-  
+
   private static byte[] ip = new byte[] { Byte.MAX_VALUE, 0, 0, 1 };
   private static int port = 10241;
 
-
-
-
-
-
-  
   public static void onPlayerLogin(final Player player) {
-    ThreadPoolManager.getInstance().schedule(new Runnable()
-        {
-          
-          public void run()
-          {
-            if (!ChatService.isPlayerConnected(player)) {
-              
-              ChatServer.getInstance().sendPlayerLoginRequst(player);
-            }
-            else {
-              
-              ChatService.log.warn("Player already registered with chat server " + player.getName());
-            } 
-          }
-        },  10000L);
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
+
+      public void run() {
+        if (!ChatService.isPlayerConnected(player)) {
+
+          ChatServer.getInstance().sendPlayerLoginRequst(player);
+        } else {
+
+          ChatService.log.warn("Player already registered with chat server " + player.getName());
+        }
+      }
+    }, 10000L);
   }
 
-
-
-
-
-
-
-
-  
   public static void onPlayerLogout(Player player) {
     players.remove(Integer.valueOf(player.getObjectId()));
     ChatServer.getInstance().sendPlayerLogout(player);
   }
 
-
-
-
-
-
-  
   public static boolean isPlayerConnected(Player player) {
     return players.containsKey(Integer.valueOf(player.getObjectId()));
   }
 
-
-
-
-
-  
   public static void playerAuthed(int playerId, byte[] token) {
     Player player = World.getInstance().findPlayer(playerId);
     if (player != null) {
-      
+
       players.put(Integer.valueOf(playerId), player);
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_CHAT_INIT(token));
-    } 
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_CHAT_INIT(token));
+    }
   }
 
-
-
-
-  
   public static byte[] getIp() {
     return ip;
   }
 
-
-
-
-  
   public static int getPort() {
     return port;
   }
 
-
-
-
-  
   public static void setIp(byte[] _ip) {
     ip = _ip;
   }
 
-
-
-
-  
   public static void setPort(int _port) {
     port = _port;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\ChatService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

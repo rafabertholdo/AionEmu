@@ -18,20 +18,20 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
 public class _4934TheShulacksStigma extends QuestHandler {
-    private static final int questId = 4934;
+  private static final int questId = 4934;
 
-    public _4934TheShulacksStigma() {
-        super(Integer.valueOf(4934));
-    }
+  public _4934TheShulacksStigma() {
+    super(Integer.valueOf(4934));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(204051).addOnQuestStart(4934);
-        this.qe.setNpcQuestData(204211).addOnTalkEvent(4934);
-        this.qe.setNpcQuestData(204285).addOnTalkEvent(4934);
-        this.qe.setNpcQuestData(700562).addOnTalkEvent(4934);
-        this.qe.setQuestItemIds(182207102).add(4934);
-        this.qe.setNpcQuestData(204051).addOnTalkEvent(4934);
-    }
+  public void register() {
+    this.qe.setNpcQuestData(204051).addOnQuestStart(4934);
+    this.qe.setNpcQuestData(204211).addOnTalkEvent(4934);
+    this.qe.setNpcQuestData(204285).addOnTalkEvent(4934);
+    this.qe.setNpcQuestData(700562).addOnTalkEvent(4934);
+    this.qe.setQuestItemIds(182207102).add(4934);
+    this.qe.setNpcQuestData(204051).addOnTalkEvent(4934);
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -160,10 +160,3 @@ public class _4934TheShulacksStigma extends QuestHandler {
     return false;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\pandaemonium\_4934TheShulacksStigma.class Java compiler version: 6
- * (50.0) JD-Core Version: 1.1.3
- */

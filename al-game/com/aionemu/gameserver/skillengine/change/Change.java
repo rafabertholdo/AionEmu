@@ -6,34 +6,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Change")
-public class Change
-{
+public class Change {
   @XmlAttribute(required = true)
   private StatEnum stat;
   @XmlAttribute(required = true)
@@ -42,38 +17,20 @@ public class Change
   private int value;
   @XmlAttribute
   private int delta;
-  
+
   public StatEnum getStat() {
     return this.stat;
   }
 
-
-
-
-  
   public Func getFunc() {
     return this.func;
   }
 
-
-
-
-  
   public int getValue() {
     return this.value;
   }
 
-
-
-
-  
   public int getDelta() {
     return this.delta;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\change\Change.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

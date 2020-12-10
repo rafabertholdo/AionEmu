@@ -14,36 +14,13 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _4015TheMissingLaborers
-  extends QuestHandler
-{
+public class _4015TheMissingLaborers extends QuestHandler {
   private static final int questId = 4015;
-  
+
   public _4015TheMissingLaborers() {
     super(Integer.valueOf(4015));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(205130).addOnQuestStart(4015);
     this.qe.setNpcQuestData(205130).addOnTalkEvent(4015);
@@ -51,8 +28,6 @@ public class _4015TheMissingLaborers
     this.qe.setNpcQuestData(205130).addOnTalkEvent(4015);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -124,9 +99,3 @@ public class _4015TheMissingLaborers
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\brusthonin\_4015TheMissingLaborers.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

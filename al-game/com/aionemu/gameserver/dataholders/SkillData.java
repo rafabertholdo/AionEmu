@@ -9,86 +9,34 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "skill_data")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SkillData
-{
+public class SkillData {
   @XmlElement(name = "skill_template")
   private List<SkillTemplate> skillTemplates;
   private TIntObjectHashMap<SkillTemplate> skillData = new TIntObjectHashMap();
 
-  
   void afterUnmarshal(Unmarshaller u, Object parent) {
     this.skillData.clear();
-    for (SkillTemplate skillTempalte : this.skillTemplates)
-    {
+    for (SkillTemplate skillTempalte : this.skillTemplates) {
       this.skillData.put(skillTempalte.getSkillId(), skillTempalte);
     }
   }
 
-
-
-
-
-  
   public SkillTemplate getSkillTemplate(int skillId) {
-    return (SkillTemplate)this.skillData.get(skillId);
+    return (SkillTemplate) this.skillData.get(skillId);
   }
 
-
-
-
-  
   public int size() {
     return this.skillData.size();
   }
 
-
-
-
-  
   public List<SkillTemplate> getSkillTemplates() {
     return this.skillTemplates;
   }
 
-
-
-
-  
   public void setSkillTemplates(List<SkillTemplate> skillTemplates) {
     this.skillTemplates = skillTemplates;
     afterUnmarshal(null, null);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\dataholders\SkillData.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

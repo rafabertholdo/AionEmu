@@ -30,36 +30,13 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1929ASliverofDarkness
-  extends QuestHandler
-{
+public class _1929ASliverofDarkness extends QuestHandler {
   private static final int questId = 1929;
-  
+
   public _1929ASliverofDarkness() {
     super(Integer.valueOf(1929));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1929);
     this.qe.setNpcQuestData(203752).addOnTalkEvent(1929);
@@ -76,8 +53,6 @@ public class _1929ASliverofDarkness
     this.qe.addOnDie(1929);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final int instanceId = player.getInstanceId();
@@ -291,40 +266,34 @@ public class _1929ASliverofDarkness
     return false;
   }
 
-
-  
   public boolean onMovieEndEvent(QuestEnv env, int movieId) {
     if (movieId != 155)
-      return false; 
+      return false;
     Player player = env.getPlayer();
     int instanceId = player.getInstanceId();
     env.setQuestId(Integer.valueOf(1929));
     QuestState qs = player.getQuestStateList().getQuestState(1929);
     if (qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVars().getQuestVars() != 94)
-      return false; 
-    QuestService.addNewSpawn(310070000, instanceId, 205111, 197.6F, 265.9F, 1374.0F, (byte)0, true);
+      return false;
+    QuestService.addNewSpawn(310070000, instanceId, 205111, 197.6F, 265.9F, 1374.0F, (byte) 0, true);
     qs.setQuestVar(98);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1929);
     if (qs != null)
-      return false; 
+      return false;
     boolean lvlCheck = QuestService.checkLevelRequirement(1929, player.getCommonData().getLevel());
     if (!lvlCheck)
-      return false; 
+      return false;
     env.setQuestId(Integer.valueOf(1929));
     QuestService.startQuest(env, QuestStatus.START);
     return true;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1929);
@@ -351,50 +320,46 @@ public class _1929ASliverofDarkness
     return false;
   }
 
-
-  
   public boolean onDieEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1929);
     if (qs == null || qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     int var = qs.getQuestVars().getQuestVars();
     if (var > 90) {
-      
+
       removeStigma(player);
       qs.setQuestVar(2);
       updateQuestStatus(player, qs);
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1, new Object[] { DataManager.QUEST_DATA.getQuestById(1929).getName() }));
-    } 
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1,
+          new Object[] { DataManager.QUEST_DATA.getQuestById(1929).getName() }));
+    }
     return false;
   }
 
-
-  
   public boolean onEnterWorldEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1929);
     if (qs != null && qs.getStatus() == QuestStatus.START) {
-      
+
       int var = qs.getQuestVars().getQuestVars();
-      if (var > 90)
-      {
+      if (var > 90) {
         if (player.getWorldId() != 310070000) {
-          
+
           removeStigma(player);
           qs.setQuestVar(2);
           updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1, new Object[] { DataManager.QUEST_DATA.getQuestById(1929).getName() }));
-        } 
+          PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1,
+              new Object[] { DataManager.QUEST_DATA.getQuestById(1929).getName() }));
+        }
       }
-    } 
+    }
     return false;
   }
 
-  
   private int getStoneId(Player player) {
     switch (player.getCommonData().getPlayerClass()) {
-      
+
       case GLADIATOR:
         return 140000008;
       case TEMPLAR:
@@ -411,25 +376,17 @@ public class _1929ASliverofDarkness
         return 140000098;
       case CHANTER:
         return 140000112;
-    } 
+    }
     return 0;
   }
 
-  
   private void removeStigma(Player player) {
     int itemId = getStoneId(player);
     List<Item> items = player.getEquipment().getEquippedItemsByItemId(itemId);
     Equipment equipment = player.getEquipment();
-    for (Item item : items)
-    {
+    for (Item item : items) {
       equipment.unEquipItem(item.getObjectId(), 0);
     }
     ItemService.removeItemFromInventoryByItemId(player, itemId);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\sanctum\_1929ASliverofDarkness.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

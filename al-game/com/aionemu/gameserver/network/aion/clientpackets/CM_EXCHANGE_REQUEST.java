@@ -14,89 +14,50 @@ import com.aionemu.gameserver.services.ExchangeService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.world.World;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_EXCHANGE_REQUEST
-  extends AionClientPacket
-{
+public class CM_EXCHANGE_REQUEST extends AionClientPacket {
   public Integer targetObjectId;
-  
+
   public CM_EXCHANGE_REQUEST(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.targetObjectId = Integer.valueOf(readD());
   }
 
-
-
-  
   protected void runImpl() {
-    final Player activePlayer = ((AionConnection)getConnection()).getActivePlayer();
+    final Player activePlayer = ((AionConnection) getConnection()).getActivePlayer();
     final Player targetPlayer = World.getInstance().findPlayer(this.targetObjectId.intValue());
 
+    if (activePlayer != targetPlayer) {
 
-
-    
-    if (activePlayer != targetPlayer)
-    {
-
-
-      
       if (targetPlayer != null) {
-        
+
         if (targetPlayer.getPlayerSettings().isInDeniedStatus(DeniedStatus.TRADE)) {
-          
-          sendPacket((AionServerPacket)SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_TRADE(targetPlayer.getName()));
+
+          sendPacket((AionServerPacket) SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_TRADE(targetPlayer.getName()));
           return;
-        } 
-        sendPacket((AionServerPacket)SM_SYSTEM_MESSAGE.REQUEST_TRADE(targetPlayer.getName()));
-        
-        RequestResponseHandler responseHandler = new RequestResponseHandler((Creature)activePlayer)
-          {
-            public void acceptRequest(Creature requester, Player responder)
-            {
-              ExchangeService.getInstance().registerExchange(activePlayer, targetPlayer);
-            }
-
-
-            
-            public void denyRequest(Creature requester, Player responder) {
-              PacketSendUtility.sendPacket(activePlayer, (AionServerPacket)new SM_SYSTEM_MESSAGE(SystemMessageId.EXCHANGE_HE_REJECTED_EXCHANGE, new Object[] { this.val$targetPlayer.getName() }));
-            }
-          };
-        
-        boolean requested = targetPlayer.getResponseRequester().putRequest(90001, responseHandler);
-        if (requested)
-        {
-          PacketSendUtility.sendPacket(targetPlayer, (AionServerPacket)new SM_QUESTION_WINDOW(90001, 0, new Object[] { activePlayer.getName() }));
         }
-      } 
+        sendPacket((AionServerPacket) SM_SYSTEM_MESSAGE.REQUEST_TRADE(targetPlayer.getName()));
+
+        RequestResponseHandler responseHandler = new RequestResponseHandler((Creature) activePlayer) {
+          public void acceptRequest(Creature requester, Player responder) {
+            ExchangeService.getInstance().registerExchange(activePlayer, targetPlayer);
+          }
+
+          public void denyRequest(Creature requester, Player responder) {
+            PacketSendUtility.sendPacket(activePlayer,
+                (AionServerPacket) new SM_SYSTEM_MESSAGE(SystemMessageId.EXCHANGE_HE_REJECTED_EXCHANGE,
+                    new Object[] { this.val$targetPlayer.getName() }));
+          }
+        };
+
+        boolean requested = targetPlayer.getResponseRequester().putRequest(90001, responseHandler);
+        if (requested) {
+          PacketSendUtility.sendPacket(targetPlayer,
+              (AionServerPacket) new SM_QUESTION_WINDOW(90001, 0, new Object[] { activePlayer.getName() }));
+        }
+      }
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_EXCHANGE_REQUEST.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

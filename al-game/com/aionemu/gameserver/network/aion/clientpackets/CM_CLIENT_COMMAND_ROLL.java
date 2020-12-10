@@ -9,56 +9,27 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_CLIENT_COMMAND_ROLL
-  extends AionClientPacket
-{
+public class CM_CLIENT_COMMAND_ROLL extends AionClientPacket {
   private int maxRoll;
   private int roll;
-  
+
   public CM_CLIENT_COMMAND_ROLL(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.maxRoll = readD();
   }
 
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
     if (player == null) {
       return;
     }
     this.roll = Rnd.get(1, this.maxRoll);
-    PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(1400126, new Object[] { Integer.valueOf(this.roll), Integer.valueOf(this.maxRoll) }));
-    PacketSendUtility.broadcastPacket((VisibleObject)player, (AionServerPacket)new SM_SYSTEM_MESSAGE(1400127, new Object[] { player.getName(), Integer.valueOf(this.roll), Integer.valueOf(this.maxRoll) }));
+    PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(1400126,
+        new Object[] { Integer.valueOf(this.roll), Integer.valueOf(this.maxRoll) }));
+    PacketSendUtility.broadcastPacket((VisibleObject) player, (AionServerPacket) new SM_SYSTEM_MESSAGE(1400127,
+        new Object[] { player.getName(), Integer.valueOf(this.roll), Integer.valueOf(this.maxRoll) }));
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_CLIENT_COMMAND_ROLL.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

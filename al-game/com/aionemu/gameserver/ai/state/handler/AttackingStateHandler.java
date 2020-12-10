@@ -17,70 +17,39 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_LOOKATOBJECT;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class AttackingStateHandler
-  extends StateHandler
-{
+public class AttackingStateHandler extends StateHandler {
   public AIState getState() {
     return AIState.ATTACKING;
   }
 
-
-
-
-
-
-
-  
   public void handleState(AIState state, AI<?> ai) {
     ai.clearDesires();
-    
-    Creature target = ((Npc)ai.getOwner()).getAggroList().getMostHated();
+
+    Creature target = ((Npc) ai.getOwner()).getAggroList().getMostHated();
     if (target == null) {
       return;
     }
-    Npc owner = (Npc)ai.getOwner();
-    owner.setTarget((VisibleObject)target);
-    PacketSendUtility.broadcastPacket((VisibleObject)owner, (AionServerPacket)new SM_LOOKATOBJECT((VisibleObject)owner));
-    
-    owner.setState(CreatureState.WEAPON_EQUIPPED);
-    PacketSendUtility.broadcastPacket((VisibleObject)owner, (AionServerPacket)new SM_EMOTION((Creature)owner, EmotionType.START_EMOTE2, 0, target.getObjectId()));
-    
-    PacketSendUtility.broadcastPacket((VisibleObject)owner, (AionServerPacket)new SM_EMOTION((Creature)owner, EmotionType.ATTACKMODE, 0, target.getObjectId()));
+    Npc owner = (Npc) ai.getOwner();
+    owner.setTarget((VisibleObject) target);
+    PacketSendUtility.broadcastPacket((VisibleObject) owner,
+        (AionServerPacket) new SM_LOOKATOBJECT((VisibleObject) owner));
 
-    
+    owner.setState(CreatureState.WEAPON_EQUIPPED);
+    PacketSendUtility.broadcastPacket((VisibleObject) owner,
+        (AionServerPacket) new SM_EMOTION((Creature) owner, EmotionType.START_EMOTE2, 0, target.getObjectId()));
+
+    PacketSendUtility.broadcastPacket((VisibleObject) owner,
+        (AionServerPacket) new SM_EMOTION((Creature) owner, EmotionType.ATTACKMODE, 0, target.getObjectId()));
+
     owner.getMoveController().setSpeed(owner.getGameStats().getCurrentStat(StatEnum.SPEED) / 1000.0F);
     owner.getMoveController().setDistance(owner.getGameStats().getCurrentStat(StatEnum.ATTACK_RANGE) / 1000.0F);
-    
+
     if (owner.getNpcSkillList() != null)
-      ai.addDesire((Desire)new SkillUseDesire((Creature)owner, AIState.USESKILL.getPriority())); 
-    ai.addDesire((Desire)new AttackDesire(owner, target, AIState.ATTACKING.getPriority()));
+      ai.addDesire((Desire) new SkillUseDesire((Creature) owner, AIState.USESKILL.getPriority()));
+    ai.addDesire((Desire) new AttackDesire(owner, target, AIState.ATTACKING.getPriority()));
     if (owner.getGameStats().getCurrentStat(StatEnum.SPEED) != 0) {
-      ai.addDesire((Desire)new MoveToTargetDesire(owner, target, AIState.ATTACKING.getPriority()));
+      ai.addDesire((Desire) new MoveToTargetDesire(owner, target, AIState.ATTACKING.getPriority()));
     }
     ai.schedule();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\state\handler\AttackingStateHandler.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

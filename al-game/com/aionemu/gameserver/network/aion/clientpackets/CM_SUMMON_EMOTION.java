@@ -13,79 +13,51 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_SUMMON_EMOTION
-  extends AionClientPacket
-{
+public class CM_SUMMON_EMOTION extends AionClientPacket {
   private static final Logger log = Logger.getLogger(CM_SUMMON_EMOTION.class);
 
-  
   private int objId;
-  
+
   private int emotionTypeId;
 
-  
   public CM_SUMMON_EMOTION(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.objId = readD();
     this.emotionTypeId = readC();
   }
 
-
-  
   protected void runImpl() {
     EmotionType emotionType = EmotionType.getEmotionTypeById(this.emotionTypeId);
 
-    
     if (emotionType == EmotionType.UNK) {
       log.error("Unknown emotion type? 0x" + Integer.toHexString(this.emotionTypeId).toUpperCase());
     }
-    Player activePlayer = ((AionConnection)getConnection()).getActivePlayer();
+    Player activePlayer = ((AionConnection) getConnection()).getActivePlayer();
     if (activePlayer == null)
-      return; 
+      return;
     Summon summon = activePlayer.getSummon();
     if (summon == null)
-      return; 
+      return;
     switch (emotionType) {
-      
+
       case FLY:
       case LAND:
-        PacketSendUtility.broadcastPacket((VisibleObject)summon, (AionServerPacket)new SM_EMOTION((Creature)summon, emotionType));
+        PacketSendUtility.broadcastPacket((VisibleObject) summon,
+            (AionServerPacket) new SM_EMOTION((Creature) summon, emotionType));
         break;
       case ATTACKMODE:
         summon.setState(CreatureState.WEAPON_EQUIPPED);
-        PacketSendUtility.broadcastPacket((VisibleObject)summon, (AionServerPacket)new SM_EMOTION((Creature)summon, emotionType));
+        PacketSendUtility.broadcastPacket((VisibleObject) summon,
+            (AionServerPacket) new SM_EMOTION((Creature) summon, emotionType));
         break;
       case NEUTRALMODE:
         summon.unsetState(CreatureState.WEAPON_EQUIPPED);
-        PacketSendUtility.broadcastPacket((VisibleObject)summon, (AionServerPacket)new SM_EMOTION((Creature)summon, emotionType));
+        PacketSendUtility.broadcastPacket((VisibleObject) summon,
+            (AionServerPacket) new SM_EMOTION((Creature) summon, emotionType));
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_SUMMON_EMOTION.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

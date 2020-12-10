@@ -11,89 +11,42 @@ import com.aionemu.gameserver.skillengine.SkillEngine;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SkillUseDesire
-  extends AbstractDesire
-{
+public class SkillUseDesire extends AbstractDesire {
   protected Creature owner;
   private NpcSkillList skillList;
-  
+
   public SkillUseDesire(Creature owner, int desirePower) {
     super(desirePower);
     this.owner = owner;
-    this.skillList = ((Npc)owner).getNpcSkillList();
+    this.skillList = ((Npc) owner).getNpcSkillList();
   }
 
-
-  
   public boolean handleDesire(AI<?> ai) {
     if (this.owner.isCasting()) {
       return true;
     }
 
-
-    
     List<NpcSkillTemplate> skills = this.skillList.getNpcSkills();
     NpcSkillTemplate npcSkill = skills.get(Rnd.get(0, this.skillList.getCount() - 1));
 
-
-
-
-    
     int skillProbability = npcSkill.getProbability();
     if (Rnd.get(0, 100) < skillProbability) {
-      
-      Skill skill = SkillEngine.getInstance().getSkill(this.owner, npcSkill.getSkillid(), npcSkill.getSkillLevel(), this.owner.getTarget());
 
-      
+      Skill skill = SkillEngine.getInstance().getSkill(this.owner, npcSkill.getSkillid(), npcSkill.getSkillLevel(),
+          this.owner.getTarget());
+
       if (skill != null) {
         skill.useSkill();
       }
-    } 
-    
+    }
+
     return true;
   }
 
+  public void onClear() {
+  }
 
-
-  
-  public void onClear() {}
-
-
-
-  
   public int getExecutionInterval() {
     return 1;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\desires\impl\SkillUseDesire.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

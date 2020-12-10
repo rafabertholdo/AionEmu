@@ -6,61 +6,33 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_TARGET_SELECTED
-  extends AionServerPacket
-{
+public class SM_TARGET_SELECTED extends AionServerPacket {
   private Player player;
   private int level;
   private int maxHp;
   private int currentHp;
   private int targetObjId;
-  
+
   public SM_TARGET_SELECTED(Player player) {
     this.player = player;
     if (player.getTarget() instanceof Creature) {
-      
-      this.level = ((Creature)player.getTarget()).getLevel();
-      this.maxHp = ((Creature)player.getTarget()).getLifeStats().getMaxHp();
-      this.currentHp = ((Creature)player.getTarget()).getLifeStats().getCurrentHp();
-    
-    }
-    else {
-      
+
+      this.level = ((Creature) player.getTarget()).getLevel();
+      this.maxHp = ((Creature) player.getTarget()).getLifeStats().getMaxHp();
+      this.currentHp = ((Creature) player.getTarget()).getLifeStats().getCurrentHp();
+
+    } else {
+
       this.level = 1;
       this.maxHp = 1;
       this.currentHp = 1;
-    } 
-    
+    }
+
     if (player.getTarget() != null) {
       this.targetObjId = player.getTarget().getObjectId();
     }
   }
 
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.targetObjId);
     writeH(buf, this.level);
@@ -68,9 +40,3 @@ public class SM_TARGET_SELECTED
     writeD(buf, this.currentHp);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_TARGET_SELECTED.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

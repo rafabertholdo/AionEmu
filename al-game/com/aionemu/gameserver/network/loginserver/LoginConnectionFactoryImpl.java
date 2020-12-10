@@ -6,56 +6,8 @@ import com.aionemu.commons.network.Dispatcher;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class LoginConnectionFactoryImpl
-  implements ConnectionFactory
-{
+public class LoginConnectionFactoryImpl implements ConnectionFactory {
   public AConnection create(SocketChannel socket, Dispatcher dispatcher) throws IOException {
     return new LoginServerConnection(socket, dispatcher);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\loginserver\LoginConnectionFactoryImpl.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

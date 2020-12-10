@@ -9,72 +9,31 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.services.SocialService;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_BLOCK_DEL
-  extends AionClientPacket
-{
+public class CM_BLOCK_DEL extends AionClientPacket {
   private static Logger log = Logger.getLogger(CM_BLOCK_DEL.class);
 
-
-  
   private String targetName;
 
-
-  
   public CM_BLOCK_DEL(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     this.targetName = readS();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player activePlayer = ((AionConnection)getConnection()).getActivePlayer();
-    
+    Player activePlayer = ((AionConnection) getConnection()).getActivePlayer();
+
     BlockedPlayer target = activePlayer.getBlockList().getBlockedPlayer(this.targetName);
     if (target == null) {
-      
-      sendPacket((AionServerPacket)SM_SYSTEM_MESSAGE.BUDDYLIST_NOT_IN_LIST);
 
-    
+      sendPacket((AionServerPacket) SM_SYSTEM_MESSAGE.BUDDYLIST_NOT_IN_LIST);
+
+    } else if (!SocialService.deleteBlockedUser(activePlayer, target.getObjId())) {
+
+      log.debug("Could not unblock " + this.targetName + " from " + activePlayer.getName()
+          + " blocklist. Check database setup.");
     }
-    else if (!SocialService.deleteBlockedUser(activePlayer, target.getObjId())) {
-      
-      log.debug("Could not unblock " + this.targetName + " from " + activePlayer.getName() + " blocklist. Check database setup.");
-    } 
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_BLOCK_DEL.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

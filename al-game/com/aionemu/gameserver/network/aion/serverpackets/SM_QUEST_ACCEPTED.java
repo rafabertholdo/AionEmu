@@ -5,41 +5,13 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_QUEST_ACCEPTED
-  extends AionServerPacket
-{
+public class SM_QUEST_ACCEPTED extends AionServerPacket {
   private int questId;
   private int status;
   private int step;
   private int action;
   private int timer;
-  
+
   public SM_QUEST_ACCEPTED(int questId, int status, int step) {
     this.action = 1;
     this.questId = questId;
@@ -47,10 +19,6 @@ public class SM_QUEST_ACCEPTED
     this.step = step;
   }
 
-
-
-
-  
   public SM_QUEST_ACCEPTED(int questId, QuestStatus status, int step) {
     this.action = 2;
     this.questId = questId;
@@ -58,10 +26,6 @@ public class SM_QUEST_ACCEPTED
     this.step = step;
   }
 
-
-
-
-  
   public SM_QUEST_ACCEPTED(int questId) {
     this.action = 3;
     this.questId = questId;
@@ -69,10 +33,6 @@ public class SM_QUEST_ACCEPTED
     this.step = 0;
   }
 
-
-
-
-  
   public SM_QUEST_ACCEPTED(int questId, int timer) {
     this.action = 4;
     this.questId = questId;
@@ -80,13 +40,9 @@ public class SM_QUEST_ACCEPTED
     this.step = 0;
   }
 
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     switch (this.action) {
-      
+
       case 1:
       case 2:
       case 3:
@@ -105,12 +61,6 @@ public class SM_QUEST_ACCEPTED
         writeH(buf, 0);
         writeC(buf, 1);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_QUEST_ACCEPTED.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

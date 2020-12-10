@@ -12,63 +12,30 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StumbleEffect")
-public class StumbleEffect
-  extends EffectTemplate
-{
+public class StumbleEffect extends EffectTemplate {
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-  
   public void calculate(Effect effect) {
     if (calculateEffectResistRate(effect, StatEnum.STUMBLE_RESISTANCE)) {
-      
+
       effect.addSucessEffect(this);
       effect.setSpellStatus(SpellStatus.STUMBLE);
-    } 
+    }
   }
 
-
-  
   public void startEffect(Effect effect) {
     Creature effected = effect.getEffected();
     effected.getController().cancelCurrentSkill();
     effected.getEffectController().setAbnormal(EffectId.STUMBLE.getEffectId());
-    PacketSendUtility.broadcastPacketAndReceive((VisibleObject)effected, (AionServerPacket)new SM_FORCED_MOVE(effect.getEffector(), effected));
+    PacketSendUtility.broadcastPacketAndReceive((VisibleObject) effected,
+        (AionServerPacket) new SM_FORCED_MOVE(effect.getEffector(), effected));
   }
 
-
-  
   public void endEffect(Effect effect) {
     effect.getEffected().getEffectController().unsetAbnormal(EffectId.STUMBLE.getEffectId());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\StumbleEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

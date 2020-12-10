@@ -14,59 +14,29 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "HideEffect")
-public class HideEffect
-  extends BufEffect
-{
+public class HideEffect extends BufEffect {
   @XmlAttribute
   protected int value;
-  
+
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-
-  
   public void calculate(Effect effect) {
     effect.addSucessEffect(this);
   }
 
-  
   public void endEffect(Effect effect) {
     CreatureVisualState visualState;
     super.endEffect(effect);
-    
+
     Creature effected = effect.getEffected();
     effected.getEffectController().unsetAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 
-
-    
     switch (this.value) {
-      
+
       case 1:
         visualState = CreatureVisualState.HIDE1;
         break;
@@ -88,27 +58,24 @@ public class HideEffect
       default:
         visualState = CreatureVisualState.VISIBLE;
         break;
-    } 
+    }
     effected.unsetVisualState(visualState);
-    
-    if (effected instanceof Player)
-    {
-      PacketSendUtility.broadcastPacket((Player)effected, (AionServerPacket)new SM_PLAYER_STATE((Player)effected), true);
+
+    if (effected instanceof Player) {
+      PacketSendUtility.broadcastPacket((Player) effected, (AionServerPacket) new SM_PLAYER_STATE((Player) effected),
+          true);
     }
   }
 
-  
   public void startEffect(final Effect effect) {
     CreatureVisualState visualState;
     super.startEffect(effect);
-    
+
     final Creature effected = effect.getEffected();
     effected.getEffectController().setAbnormal(EffectId.INVISIBLE_RELATED.getEffectId());
 
-
-    
     switch (this.value) {
-      
+
       case 1:
         visualState = CreatureVisualState.HIDE1;
         break;
@@ -130,53 +97,33 @@ public class HideEffect
       default:
         visualState = CreatureVisualState.VISIBLE;
         break;
-    } 
+    }
     effected.setVisualState(visualState);
-    
-    if (effected instanceof Player)
-    {
-      PacketSendUtility.broadcastPacket((Player)effected, (AionServerPacket)new SM_PLAYER_STATE((Player)effected), true);
+
+    if (effected instanceof Player) {
+      PacketSendUtility.broadcastPacket((Player) effected, (AionServerPacket) new SM_PLAYER_STATE((Player) effected),
+          true);
     }
 
-    
-    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.SKILLUSE)
-        {
+    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.SKILLUSE) {
 
-          
-          public void skilluse(Skill skill)
-          {
-            effected.getEffectController().removeEffect(effect.getSkillId());
-          }
-        });
+      public void skilluse(Skill skill) {
+        effected.getEffectController().removeEffect(effect.getSkillId());
+      }
+    });
 
+    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.ATTACKED) {
 
-    
-    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.ATTACKED)
-        {
+      public void attacked(Creature creature) {
+        effected.getEffectController().removeEffect(effect.getSkillId());
+      }
+    });
 
-          
-          public void attacked(Creature creature)
-          {
-            effected.getEffectController().removeEffect(effect.getSkillId());
-          }
-        });
+    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.ATTACK) {
 
-
-    
-    effected.getObserveController().attach(new ActionObserver(ActionObserver.ObserverType.ATTACK)
-        {
-
-          
-          public void attack(Creature creature)
-          {
-            effected.getEffectController().removeEffect(effect.getSkillId());
-          }
-        });
+      public void attack(Creature creature) {
+        effected.getEffectController().removeEffect(effect.getSkillId());
+      }
+    });
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\HideEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

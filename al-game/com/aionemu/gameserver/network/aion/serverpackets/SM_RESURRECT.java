@@ -5,58 +5,22 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_RESURRECT
-  extends AionServerPacket
-{
+public class SM_RESURRECT extends AionServerPacket {
   private String name;
   private int skillId;
-  
+
   public SM_RESURRECT(Creature creature) {
     this(creature, 0);
   }
 
-  
   public SM_RESURRECT(Creature creature, int skillId) {
     this.name = creature.getName();
     this.skillId = skillId;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeS(buf, this.name);
     writeH(buf, this.skillId);
     writeD(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_RESURRECT.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -5,28 +5,7 @@ import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.services.MailService;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_SEND_MAIL
-  extends AionClientPacket
-{
+public class CM_SEND_MAIL extends AionClientPacket {
   private String recipientName;
   private String title;
   private String message;
@@ -34,13 +13,11 @@ public class CM_SEND_MAIL
   private int itemCount;
   private int kinahCount;
   private int express;
-  
+
   public CM_SEND_MAIL(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.recipientName = readS();
     this.title = readS();
@@ -53,23 +30,16 @@ public class CM_SEND_MAIL
     this.express = readC();
   }
 
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
     if (!player.isTrading()) {
 
-      
       if (this.express == 0)
-        MailService.getInstance().sendMail(player, this.recipientName, this.title, this.message, this.itemObjId, this.itemCount, this.kinahCount, false); 
+        MailService.getInstance().sendMail(player, this.recipientName, this.title, this.message, this.itemObjId,
+            this.itemCount, this.kinahCount, false);
       if (this.express == 1)
-        MailService.getInstance().sendMail(player, this.recipientName, this.title, this.message, this.itemObjId, this.itemCount, this.kinahCount, true); 
-    } 
+        MailService.getInstance().sendMail(player, this.recipientName, this.title, this.message, this.itemObjId,
+            this.itemCount, this.kinahCount, true);
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_SEND_MAIL.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

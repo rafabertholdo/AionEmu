@@ -17,43 +17,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Quest", propOrder = {"collectItems", "rewards", "questDrop", "finishedQuestConds", "classPermitted", "genderPermitted", "questWorkItems", "fighterSelectableReward", "knightSelectableReward", "rangerSelectableReward", "assassinSelectableReward", "wizardSelectableReward", "elementalistSelectableReward", "priestSelectableReward", "chanterSelectableReward"})
-public class QuestTemplate
-{
+@XmlType(name = "Quest", propOrder = { "collectItems", "rewards", "questDrop", "finishedQuestConds", "classPermitted",
+    "genderPermitted", "questWorkItems", "fighterSelectableReward", "knightSelectableReward", "rangerSelectableReward",
+    "assassinSelectableReward", "wizardSelectableReward", "elementalistSelectableReward", "priestSelectableReward",
+    "chanterSelectableReward" })
+public class QuestTemplate {
   @XmlElement(name = "collect_items")
   protected CollectItems collectItems;
   protected List<Rewards> rewards;
@@ -109,553 +78,164 @@ public class QuestTemplate
   protected Integer combineSkillpoint;
   @XmlAttribute(name = "timer")
   protected Boolean timer;
-  
+
   public CollectItems getCollectItems() {
     return this.collectItems;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<Rewards> getRewards() {
-    if (this.rewards == null)
-    {
+    if (this.rewards == null) {
       this.rewards = new ArrayList<Rewards>();
     }
     return this.rewards;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestDrop> getQuestDrop() {
-    if (this.questDrop == null)
-    {
+    if (this.questDrop == null) {
       this.questDrop = new ArrayList<QuestDrop>();
     }
     return this.questDrop;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<Integer> getFinishedQuestConds() {
-    if (this.finishedQuestConds == null)
-    {
+    if (this.finishedQuestConds == null) {
       this.finishedQuestConds = new ArrayList<Integer>();
     }
     return this.finishedQuestConds;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<PlayerClass> getClassPermitted() {
-    if (this.classPermitted == null)
-    {
+    if (this.classPermitted == null) {
       this.classPermitted = new ArrayList<PlayerClass>();
     }
     return this.classPermitted;
   }
 
-
-
-
-
-
-
-  
   public Gender getGenderPermitted() {
     return this.genderPermitted;
   }
 
-
-
-
-
-
-
-  
   public QuestWorkItems getQuestWorkItems() {
     return this.questWorkItems;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getFighterSelectableReward() {
-    if (this.fighterSelectableReward == null)
-    {
+    if (this.fighterSelectableReward == null) {
       this.fighterSelectableReward = new ArrayList<QuestItems>();
     }
     return this.fighterSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getKnightSelectableReward() {
-    if (this.knightSelectableReward == null)
-    {
+    if (this.knightSelectableReward == null) {
       this.knightSelectableReward = new ArrayList<QuestItems>();
     }
     return this.knightSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getRangerSelectableReward() {
-    if (this.rangerSelectableReward == null)
-    {
+    if (this.rangerSelectableReward == null) {
       this.rangerSelectableReward = new ArrayList<QuestItems>();
     }
     return this.rangerSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getAssassinSelectableReward() {
-    if (this.assassinSelectableReward == null)
-    {
+    if (this.assassinSelectableReward == null) {
       this.assassinSelectableReward = new ArrayList<QuestItems>();
     }
     return this.assassinSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getWizardSelectableReward() {
-    if (this.wizardSelectableReward == null)
-    {
+    if (this.wizardSelectableReward == null) {
       this.wizardSelectableReward = new ArrayList<QuestItems>();
     }
     return this.wizardSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getElementalistSelectableReward() {
-    if (this.elementalistSelectableReward == null)
-    {
+    if (this.elementalistSelectableReward == null) {
       this.elementalistSelectableReward = new ArrayList<QuestItems>();
     }
     return this.elementalistSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getPriestSelectableReward() {
-    if (this.priestSelectableReward == null)
-    {
+    if (this.priestSelectableReward == null) {
       this.priestSelectableReward = new ArrayList<QuestItems>();
     }
     return this.priestSelectableReward;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<QuestItems> getChanterSelectableReward() {
-    if (this.chanterSelectableReward == null)
-    {
+    if (this.chanterSelectableReward == null) {
       this.chanterSelectableReward = new ArrayList<QuestItems>();
     }
     return this.chanterSelectableReward;
   }
 
-
-
-
-
-  
   public int getId() {
     return this.id;
   }
 
-
-
-
-
-
-
-  
   public String getName() {
     return this.name;
   }
 
-
-
-
-
-
-
-  
   public Integer getNameId() {
     return this.nameId;
   }
 
-
-
-
-
-
-
-  
   public Integer getMinlevelPermitted() {
     return this.minlevelPermitted;
   }
 
-
-
-
-
-
-
-  
   public Integer getMaxRepeatCount() {
     return this.maxRepeatCount;
   }
 
-
-
-
-
-
-
-  
   public boolean isCannotShare() {
-    if (this.cannotShare == null)
-    {
+    if (this.cannotShare == null) {
       return false;
     }
 
-    
     return this.cannotShare.booleanValue();
   }
 
-
-
-
-
-
-
-
-  
   public boolean isCannotGiveup() {
-    if (this.cannotGiveup == null)
-    {
+    if (this.cannotGiveup == null) {
       return false;
     }
 
-    
     return this.cannotGiveup.booleanValue();
   }
 
-
-
-
-
-
-
-
-  
   public boolean isUseClassReward() {
-    if (this.useClassReward == null)
-    {
+    if (this.useClassReward == null) {
       return false;
     }
 
-    
     return this.useClassReward.booleanValue();
   }
 
-
-
-
-
-
-
-
-  
   public Race getRacePermitted() {
     return this.racePermitted;
   }
 
-
-
-
-
-
-
-  
   public Integer getCombineSkill() {
     return this.combineskill;
   }
 
-
-
-
-
-
-
-  
   public Integer getCombineSkillPoint() {
     return this.combineSkillpoint;
   }
 
-
-
-
-
-
-
-  
   public boolean isTimer() {
-    if (this.timer == null)
-    {
+    if (this.timer == null) {
       return false;
     }
 
-    
     return this.timer.booleanValue();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\QuestTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

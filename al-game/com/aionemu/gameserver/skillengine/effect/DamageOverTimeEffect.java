@@ -11,57 +11,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DamageOverTimeEffect")
-public class DamageOverTimeEffect
-  extends DamageEffect
-{
+public class DamageOverTimeEffect extends DamageEffect {
   @XmlAttribute(required = true)
   protected int checktime;
-  
+
   public void calculate(Effect effect) {
     if (calculateEffectResistRate(effect, null)) {
       effect.addSucessEffect(this);
     }
   }
 
-  
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
+  public void endEffect(Effect effect) {
+  }
 
-
-  
-  public void endEffect(Effect effect) {}
-
-
-
-  
   public void onPeriodicAction(Effect effect) {
     Creature effected = effect.getEffected();
     Creature effector = effect.getEffector();
@@ -70,23 +38,13 @@ public class DamageOverTimeEffect
     effected.getController().onAttack(effector, effect.getSkillId(), SM_ATTACK_STATUS.TYPE.DAMAGE, damage);
   }
 
-
-  
   public void startEffect(final Effect effect) {
-    Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
-        {
-          
-          public void run()
-          {
-            DamageOverTimeEffect.this.onPeriodicAction(effect);
-          }
-        },  this.checktime, this.checktime);
+    Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable() {
+
+      public void run() {
+        DamageOverTimeEffect.this.onPeriodicAction(effect);
+      }
+    }, this.checktime, this.checktime);
     effect.setPeriodicTask(task, this.position);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\DamageOverTimeEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

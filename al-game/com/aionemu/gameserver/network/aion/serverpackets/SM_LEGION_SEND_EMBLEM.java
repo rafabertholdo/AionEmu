@@ -4,43 +4,14 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_LEGION_SEND_EMBLEM
-  extends AionServerPacket
-{
+public class SM_LEGION_SEND_EMBLEM extends AionServerPacket {
   private int legionId;
   private int emblemId;
   private int color_r;
   private int color_g;
   private int color_b;
   private String legionName;
-  
+
   public SM_LEGION_SEND_EMBLEM(int legionId, int emblemId, int color_r, int color_g, int color_b, String legionName) {
     this.legionId = legionId;
     this.emblemId = emblemId;
@@ -50,8 +21,6 @@ public class SM_LEGION_SEND_EMBLEM
     this.legionName = legionName;
   }
 
-
-  
   public void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.legionId);
     writeH(buf, this.emblemId);
@@ -64,9 +33,3 @@ public class SM_LEGION_SEND_EMBLEM
     writeC(buf, 1);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_LEGION_SEND_EMBLEM.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

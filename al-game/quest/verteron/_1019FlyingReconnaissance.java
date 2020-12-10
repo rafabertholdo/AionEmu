@@ -25,37 +25,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1019FlyingReconnaissance
-  extends QuestHandler
-{
+public class _1019FlyingReconnaissance extends QuestHandler {
   private static final int questId = 1019;
-  
+
   public _1019FlyingReconnaissance() {
     super(Integer.valueOf(1019));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1019);
     this.qe.setNpcQuestData(203146).addOnTalkEvent(1019);
@@ -68,8 +44,6 @@ public class _1019FlyingReconnaissance
     this.qe.setNpcQuestData(210697).addOnKillEvent(1019);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1019);
@@ -184,50 +158,44 @@ public class _1019FlyingReconnaissance
     return false;
   }
 
-
-  
   public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
     if (zoneName != ZoneName.TURSIN_OUTPOST)
-      return false; 
+      return false;
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1019);
     if (qs == null)
-      return false; 
+      return false;
     if (zoneName == ZoneName.TURSIN_OUTPOST_ENTRANCE)
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 18)); 
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 18));
     if (qs.getQuestVarById(0) == 1) {
-      
+
       qs.setQuestVarById(0, 2);
       updateQuestStatus(player, qs);
       return true;
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onAttackEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1019);
     if (qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVars().getQuestVars() != 4)
-      return false; 
+      return false;
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     if (targetId != 210158)
-      return false; 
+      return false;
     if (MathUtil.getDistance(env.getVisibleObject(), 1552.74F, 1160.36F, 114.0F) < 6.0D) {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 13));
-      ((Npc)env.getVisibleObject()).getController().onDie(null);
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 13));
+      ((Npc) env.getVisibleObject()).getController().onDie(null);
       qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
       updateQuestStatus(player, qs);
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, final Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -257,8 +225,6 @@ public class _1019FlyingReconnaissance
     return true;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1019);
@@ -268,44 +234,33 @@ public class _1019FlyingReconnaissance
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
-    if (targetId == 210158 && 
-      var == 1)
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 22)); 
+    if (targetId == 210158 && var == 1)
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 22));
     qs.setStatus(QuestStatus.REWARD);
     qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
     updateQuestStatus(player, qs);
 
-
-    
-    if (targetId == 210697)
-    {
+    if (targetId == 210697) {
       if (var == 10) {
-        
+
         qs.setStatus(QuestStatus.REWARD);
         updateQuestStatus(player, qs);
         return true;
-      } 
+      }
     }
     return false;
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     boolean lvlCheck = QuestService.checkLevelRequirement(1019, player.getCommonData().getLevel());
     QuestState qs = player.getQuestStateList().getQuestState(1019);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\verteron\_1019FlyingReconnaissance.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

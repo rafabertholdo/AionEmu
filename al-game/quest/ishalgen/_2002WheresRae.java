@@ -22,34 +22,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.WorldMapInstance;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2002WheresRae
-  extends QuestHandler
-{
+public class _2002WheresRae extends QuestHandler {
   private static final int questId = 2002;
   private static final int[] npc_ids = new int[] { 203519, 203534, 203553, 700045, 203516, 205020, 203537 };
 
-  
   public _2002WheresRae() {
     super(Integer.valueOf(2002));
   }
 
-  
   public void register() {
     this.qe.addQuestLvlUp(2002);
     this.qe.setNpcQuestData(210377).addOnKillEvent(2002);
@@ -59,7 +39,6 @@ public class _2002WheresRae
     }
   }
 
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(2002);
@@ -252,8 +231,6 @@ public class _2002WheresRae
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2002);
@@ -263,39 +240,32 @@ public class _2002WheresRae
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     switch (targetId) {
-      
+
       case 210377:
       case 210378:
         if (var >= 3 && var < 10) {
-          
+
           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2002);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ishalgen\_2002WheresRae.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -19,35 +19,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2122AshestoAshes
-  extends QuestHandler
-{
+public class _2122AshestoAshes extends QuestHandler {
   private static final int questId = 2122;
-  
+
   public _2122AshestoAshes() {
     super(Integer.valueOf(2122));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203551).addOnTalkEvent(2122);
     this.qe.setNpcQuestData(700148).addOnTalkEvent(2122);
@@ -55,8 +33,6 @@ public class _2122AshestoAshes
     this.qe.setQuestItemIds(182203120).add(2122);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2122);
@@ -158,25 +134,18 @@ public class _2122AshestoAshes
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     Player player = env.getPlayer();
     int id = item.getItemTemplate().getTemplateId();
     int itemObjId = item.getObjectId();
     QuestState qs = player.getQuestStateList().getQuestState(2122);
-    
+
     if (id != 182203120)
-      return false; 
-    PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+      return false;
+    PacketSendUtility.broadcastPacket(player,
+        (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
     if (qs == null || qs.getStatus() == QuestStatus.NONE)
-      sendQuestDialog(player, 0, 4); 
+      sendQuestDialog(player, 0, 4);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ishalgen\_2122AshestoAshes.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

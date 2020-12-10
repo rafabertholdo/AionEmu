@@ -8,56 +8,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestVar", propOrder = {"npc"})
-public class QuestVar
-{
+@XmlType(name = "QuestVar", propOrder = { "npc" })
+public class QuestVar {
   protected List<QuestNpc> npc;
   @XmlAttribute(required = true)
   protected int value;
-  
+
   public boolean operate(QuestEnv env, QuestState qs) {
     int var = -1;
     if (qs != null)
-      var = qs.getQuestVars().getQuestVars(); 
+      var = qs.getQuestVars().getQuestVars();
     if (var != this.value)
-      return false; 
+      return false;
     for (QuestNpc questNpc : this.npc) {
-      
+
       if (questNpc.operate(env, qs))
-        return true; 
-    } 
+        return true;
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\QuestVar.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

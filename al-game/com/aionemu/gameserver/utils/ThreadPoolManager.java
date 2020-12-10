@@ -18,259 +18,167 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public final class ThreadPoolManager
-  implements DisconnectionThreadPool
-{
+public final class ThreadPoolManager implements DisconnectionThreadPool {
   private static final Logger log = Logger.getLogger(ThreadPoolManager.class);
-  
+
   public static final long MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING = 5000L;
-  
+
   private static final long MAX_DELAY = TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2L;
 
-  
   private final ScheduledThreadPoolExecutor scheduledPool;
 
-  
   private final ThreadPoolExecutor instantPool;
 
-  
   private final ThreadPoolExecutor longRunningPool;
-  
+
   private final ScheduledThreadPoolExecutor disconnectionScheduledThreadPool;
 
-  
-  private static final class SingletonHolder
-  {
+  private static final class SingletonHolder {
     private static final ThreadPoolManager INSTANCE = new ThreadPoolManager();
   }
 
-  
   public static ThreadPoolManager getInstance() {
     return SingletonHolder.INSTANCE;
   }
 
-
-
-
-  
   private ThreadPoolManager() {
     int instantPoolSize = Math.max(1, ThreadConfig.THREAD_POOL_SIZE / 3);
-    
+
     this.scheduledPool = new ScheduledThreadPoolExecutor(ThreadConfig.THREAD_POOL_SIZE - instantPoolSize);
-    this.scheduledPool.setRejectedExecutionHandler((RejectedExecutionHandler)new AionRejectedExecutionHandler());
+    this.scheduledPool.setRejectedExecutionHandler((RejectedExecutionHandler) new AionRejectedExecutionHandler());
     this.scheduledPool.prestartAllCoreThreads();
-    
-    this.instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100000));
-    
-    this.instantPool.setRejectedExecutionHandler((RejectedExecutionHandler)new AionRejectedExecutionHandler());
+
+    this.instantPool = new ThreadPoolExecutor(instantPoolSize, instantPoolSize, 0L, TimeUnit.SECONDS,
+        new ArrayBlockingQueue<Runnable>(100000));
+
+    this.instantPool.setRejectedExecutionHandler((RejectedExecutionHandler) new AionRejectedExecutionHandler());
     this.instantPool.prestartAllCoreThreads();
-    
-    this.longRunningPool = new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-    
-    this.longRunningPool.setRejectedExecutionHandler((RejectedExecutionHandler)new AionRejectedExecutionHandler());
+
+    this.longRunningPool = new ThreadPoolExecutor(0, 2147483647, 60L, TimeUnit.SECONDS,
+        new SynchronousQueue<Runnable>());
+
+    this.longRunningPool.setRejectedExecutionHandler((RejectedExecutionHandler) new AionRejectedExecutionHandler());
     this.longRunningPool.prestartAllCoreThreads();
-    
+
     this.disconnectionScheduledThreadPool = new ScheduledThreadPoolExecutor(4);
-    this.disconnectionScheduledThreadPool.setRejectedExecutionHandler((RejectedExecutionHandler)new AionRejectedExecutionHandler());
+    this.disconnectionScheduledThreadPool
+        .setRejectedExecutionHandler((RejectedExecutionHandler) new AionRejectedExecutionHandler());
     this.disconnectionScheduledThreadPool.prestartAllCoreThreads();
-    
-    scheduleAtFixedRate(new Runnable()
-        {
-          public void run()
-          {
-            ThreadPoolManager.this.purge();
-          }
-        },  60000L, 60000L);
-    
-    log.info("ThreadPoolManager: Initialized with " + this.scheduledPool.getPoolSize() + " scheduler, " + this.instantPool.getPoolSize() + " instant, " + this.longRunningPool.getPoolSize() + " long, " + this.disconnectionScheduledThreadPool.getPoolSize() + " disconnection running thread(s).");
+
+    scheduleAtFixedRate(new Runnable() {
+      public void run() {
+        ThreadPoolManager.this.purge();
+      }
+    }, 60000L, 60000L);
+
+    log.info("ThreadPoolManager: Initialized with " + this.scheduledPool.getPoolSize() + " scheduler, "
+        + this.instantPool.getPoolSize() + " instant, " + this.longRunningPool.getPoolSize() + " long, "
+        + this.disconnectionScheduledThreadPool.getPoolSize() + " disconnection running thread(s).");
   }
 
-
-
-  
   private final long validate(long delay) {
     return Math.max(0L, Math.min(MAX_DELAY, delay));
   }
-  
-  private static final class ThreadPoolExecuteWrapper
-    extends ExecuteWrapper
-  {
+
+  private static final class ThreadPoolExecuteWrapper extends ExecuteWrapper {
     private ThreadPoolExecuteWrapper(Runnable runnable) {
       super(runnable);
     }
 
-
-    
     protected long getMaximumRuntimeInMillisecWithoutWarning() {
       return 5000L;
     }
   }
 
-
-
-  
   public final ScheduledFuture<?> schedule(Runnable r, long delay) {
     ThreadPoolExecuteWrapper threadPoolExecuteWrapper = new ThreadPoolExecuteWrapper(r);
     delay = validate(delay);
-    
-    return (ScheduledFuture<?>)new ScheduledFutureWrapper(this.scheduledPool.schedule((Runnable)threadPoolExecuteWrapper, delay, TimeUnit.MILLISECONDS));
+
+    return (ScheduledFuture<?>) new ScheduledFutureWrapper(
+        this.scheduledPool.schedule((Runnable) threadPoolExecuteWrapper, delay, TimeUnit.MILLISECONDS));
   }
 
-  
   public final ScheduledFuture<?> scheduleEffect(Runnable r, long delay) {
     return schedule(r, delay);
   }
 
-  
   public final ScheduledFuture<?> scheduleGeneral(Runnable r, long delay) {
     return schedule(r, delay);
   }
 
-  
   public final ScheduledFuture<?> scheduleAi(Runnable r, long delay) {
     return schedule(r, delay);
   }
 
-
-
-  
   public final ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long delay, long period) {
     ThreadPoolExecuteWrapper threadPoolExecuteWrapper = new ThreadPoolExecuteWrapper(r);
     delay = validate(delay);
     period = validate(period);
-    
-    return (ScheduledFuture<?>)new ScheduledFutureWrapper(this.scheduledPool.scheduleAtFixedRate((Runnable)threadPoolExecuteWrapper, delay, period, TimeUnit.MILLISECONDS));
+
+    return (ScheduledFuture<?>) new ScheduledFutureWrapper(this.scheduledPool
+        .scheduleAtFixedRate((Runnable) threadPoolExecuteWrapper, delay, period, TimeUnit.MILLISECONDS));
   }
 
-  
   public final ScheduledFuture<?> scheduleEffectAtFixedRate(Runnable r, long delay, long period) {
     return scheduleAtFixedRate(r, delay, period);
   }
 
-  
   public final ScheduledFuture<?> scheduleGeneralAtFixedRate(Runnable r, long delay, long period) {
     return scheduleAtFixedRate(r, delay, period);
   }
 
-  
   public final ScheduledFuture<?> scheduleAiAtFixedRate(Runnable r, long delay, long period) {
     return scheduleAtFixedRate(r, delay, period);
   }
 
-
-
-  
   public final void execute(Runnable r) {
     ThreadPoolExecuteWrapper threadPoolExecuteWrapper = new ThreadPoolExecuteWrapper(r);
-    
-    this.instantPool.execute((Runnable)threadPoolExecuteWrapper);
+
+    this.instantPool.execute((Runnable) threadPoolExecuteWrapper);
   }
 
-  
   public final void executeTask(Runnable r) {
     execute(r);
   }
 
-  
   public final void executeLongRunning(Runnable r) {
     ExecuteWrapper executeWrapper = new ExecuteWrapper(r);
-    
-    this.longRunningPool.execute((Runnable)executeWrapper);
+
+    this.longRunningPool.execute((Runnable) executeWrapper);
   }
 
-
-
-  
   public final Future<?> submit(Runnable r) {
     ThreadPoolExecuteWrapper threadPoolExecuteWrapper = new ThreadPoolExecuteWrapper(r);
-    
-    return this.instantPool.submit((Runnable)threadPoolExecuteWrapper);
+
+    return this.instantPool.submit((Runnable) threadPoolExecuteWrapper);
   }
 
-  
   public final Future<?> submitLongRunning(Runnable r) {
     ExecuteWrapper executeWrapper = new ExecuteWrapper(r);
-    
-    return this.longRunningPool.submit((Runnable)executeWrapper);
+
+    return this.longRunningPool.submit((Runnable) executeWrapper);
   }
 
-
-
-
-
-
-
-
-
-  
   public void executeLsPacket(Runnable pkt) {
     execute(pkt);
   }
 
-
-
-
-
-
-
-  
   public final void scheduleDisconnection(DisconnectionTask dt, long delay) {
-    schedule((Runnable)dt, delay);
+    schedule((Runnable) dt, delay);
   }
 
-
-
-
-
-
-
-  
   public void waitForDisconnectionTasks() {
     try {
       this.disconnectionScheduledThreadPool.shutdown();
       this.disconnectionScheduledThreadPool.awaitTermination(6L, TimeUnit.MINUTES);
+    } catch (Exception e) {
     }
-    catch (Exception e) {}
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public ScheduledFuture<?> scheduleTaskManager(Runnable r, long delay) {
     return schedule(r, delay);
   }
 
-  
   public void purge() {
     this.scheduledPool.purge();
     this.instantPool.purge();
@@ -278,52 +186,45 @@ public final class ThreadPoolManager
     this.disconnectionScheduledThreadPool.purge();
   }
 
-
-
-
-  
   public void shutdown() {
     long begin = System.currentTimeMillis();
-    
+
     log.info("ThreadPoolManager: Shutting down.");
     log.info("\t... executing " + getTaskCount(this.scheduledPool) + " scheduled tasks.");
     log.info("\t... executing " + getTaskCount(this.instantPool) + " instant tasks.");
     log.info("\t... executing " + getTaskCount(this.longRunningPool) + " long running tasks.");
-    
+
     this.scheduledPool.shutdown();
     this.instantPool.shutdown();
     this.longRunningPool.shutdown();
-    
+
     boolean success = false;
-    
+
     try {
       success |= awaitTermination(5000L);
-      
+
       this.scheduledPool.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
       this.scheduledPool.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
-      
+
       success |= awaitTermination(10000L);
-    }
-    catch (InterruptedException e) {
-      
+    } catch (InterruptedException e) {
+
       e.printStackTrace();
-    } 
-    
+    }
+
     log.info("\t... success: " + success + " in " + (System.currentTimeMillis() - begin) + " msec.");
     log.info("\t... " + getTaskCount(this.scheduledPool) + " scheduled tasks left.");
     log.info("\t... " + getTaskCount(this.instantPool) + " instant tasks left.");
     log.info("\t... " + getTaskCount(this.longRunningPool) + " long running tasks left.");
   }
 
-  
   private int getTaskCount(ThreadPoolExecutor tp) {
     return tp.getQueue().size() + tp.getActiveCount();
   }
 
-  
   public List<String> getStats() {
     List<String> list = new ArrayList<String>();
-    
+
     list.add("");
     list.add("Scheduled pool:");
     list.add("=================================================");
@@ -370,34 +271,28 @@ public final class ThreadPoolManager
     list.add("\tgetQueuedTaskCount: .. " + this.disconnectionScheduledThreadPool.getQueue().size());
     list.add("\tgetTaskCount: ........ " + this.disconnectionScheduledThreadPool.getTaskCount());
     list.add("");
-    
+
     return list;
   }
 
-  
   private boolean awaitTermination(long timeoutInMillisec) throws InterruptedException {
     long begin = System.currentTimeMillis();
-    
+
     while (System.currentTimeMillis() - begin < timeoutInMillisec) {
-      
+
       if (!this.scheduledPool.awaitTermination(10L, TimeUnit.MILLISECONDS) && this.scheduledPool.getActiveCount() > 0) {
         continue;
       }
       if (!this.instantPool.awaitTermination(10L, TimeUnit.MILLISECONDS) && this.instantPool.getActiveCount() > 0) {
         continue;
       }
-      if (!this.longRunningPool.awaitTermination(10L, TimeUnit.MILLISECONDS) && this.longRunningPool.getActiveCount() > 0) {
+      if (!this.longRunningPool.awaitTermination(10L, TimeUnit.MILLISECONDS)
+          && this.longRunningPool.getActiveCount() > 0) {
         continue;
       }
       return true;
-    } 
-    
+    }
+
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\ThreadPoolManager.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

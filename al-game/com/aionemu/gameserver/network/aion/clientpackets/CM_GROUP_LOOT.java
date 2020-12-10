@@ -5,31 +5,7 @@ import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.services.DropService;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_GROUP_LOOT
-  extends AionClientPacket
-{
+public class CM_GROUP_LOOT extends AionClientPacket {
   private int groupId;
   private int unk1;
   private int unk2;
@@ -39,13 +15,11 @@ public class CM_GROUP_LOOT
   private int distributionId;
   private int roll;
   private long bid;
-  
+
   public CM_GROUP_LOOT(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.groupId = readD();
     this.unk1 = readD();
@@ -58,30 +32,19 @@ public class CM_GROUP_LOOT
     this.bid = readQ();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
     if (player == null) {
       return;
     }
     switch (this.distributionId) {
-      
+
       case 2:
         DropService.getInstance().handleRoll(player, this.roll, this.itemId, this.npcId);
         break;
       case 3:
         DropService.getInstance().handleBid(player, this.bid, this.itemId, this.npcId);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_GROUP_LOOT.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

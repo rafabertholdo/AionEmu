@@ -8,68 +8,32 @@ import com.aionemu.gameserver.services.ChatService;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_CS_AUTH_RESPONSE
-  extends CsClientPacket
-{
+public class CM_CS_AUTH_RESPONSE extends CsClientPacket {
   protected static final Logger log = Logger.getLogger(CM_CS_AUTH_RESPONSE.class);
 
-
-  
   private int response;
 
-  
   private byte[] ip;
 
-  
   private int port;
 
-
-  
   public CM_CS_AUTH_RESPONSE(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.response = readC();
     this.ip = readB(4);
     this.port = readH();
   }
 
-
-  
   protected void runImpl() {
     switch (this.response) {
-      
+
       case 0:
-        log.info("GameServer authed successfully IP : " + (this.ip[0] & 0xFF) + "." + (this.ip[1] & 0xFF) + "." + (this.ip[2] & 0xFF) + "." + (this.ip[3] & 0xFF) + " Port: " + this.port);
-        ((ChatServerConnection)getConnection()).setState(ChatServerConnection.State.AUTHED);
+        log.info("GameServer authed successfully IP : " + (this.ip[0] & 0xFF) + "." + (this.ip[1] & 0xFF) + "."
+            + (this.ip[2] & 0xFF) + "." + (this.ip[3] & 0xFF) + " Port: " + this.port);
+        ((ChatServerConnection) getConnection()).setState(ChatServerConnection.State.AUTHED);
         ChatService.setIp(this.ip);
         ChatService.setPort(this.port);
         break;
@@ -79,20 +43,13 @@ public class CM_CS_AUTH_RESPONSE
         break;
       case 2:
         log.info("GameServer is already registered at ChatServer side! trying again...");
-        ThreadPoolManager.getInstance().schedule(new Runnable()
-            {
-              public void run()
-              {
-                ((ChatServerConnection)CM_CS_AUTH_RESPONSE.this.getConnection()).sendPacket((CsServerPacket)new SM_CS_AUTH());
-              }
-            },  10000L);
+        ThreadPoolManager.getInstance().schedule(new Runnable() {
+          public void run() {
+            ((ChatServerConnection) CM_CS_AUTH_RESPONSE.this.getConnection())
+                .sendPacket((CsServerPacket) new SM_CS_AUTH());
+          }
+        }, 10000L);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\chatserver\clientpackets\CM_CS_AUTH_RESPONSE.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

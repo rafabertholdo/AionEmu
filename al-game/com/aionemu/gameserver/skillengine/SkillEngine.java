@@ -8,96 +8,42 @@ import com.aionemu.gameserver.skillengine.model.ActivationAttribute;
 import com.aionemu.gameserver.skillengine.model.Skill;
 import com.aionemu.gameserver.skillengine.model.SkillTemplate;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SkillEngine
-{
+public class SkillEngine {
   public static final SkillEngine skillEngine = new SkillEngine();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public Skill getSkillFor(Player player, int skillId, VisibleObject firstTarget) {
     SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-    
+
     if (template == null) {
       return null;
     }
-    
-    if (template.getActivationAttribute() != ActivationAttribute.PROVOKED)
-    {
+
+    if (template.getActivationAttribute() != ActivationAttribute.PROVOKED) {
       if (!player.getSkillList().isSkillPresent(skillId)) {
         return null;
       }
     }
-    
+
     Creature target = null;
     if (firstTarget instanceof Creature) {
-      target = (Creature)firstTarget;
+      target = (Creature) firstTarget;
     }
     return new Skill(template, player, target);
   }
 
-
-
-
-
-
-
-
-
-  
   public Skill getSkill(Creature creature, int skillId, int skillLevel, VisibleObject firstTarget) {
     SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(skillId);
-    
+
     if (template == null) {
       return null;
     }
     Creature target = null;
     if (firstTarget instanceof Creature)
-      target = (Creature)firstTarget; 
+      target = (Creature) firstTarget;
     return new Skill(template, creature, skillLevel, target);
   }
 
-  
   public static SkillEngine getInstance() {
     return skillEngine;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\SkillEngine.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

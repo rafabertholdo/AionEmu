@@ -8,51 +8,19 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_EMOTION;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_OPEN_STATICDOOR
-  extends AionClientPacket
-{
+public class CM_OPEN_STATICDOOR extends AionClientPacket {
   private int doorId;
-  
+
   public CM_OPEN_STATICDOOR(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.doorId = readD();
   }
 
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
-    PacketSendUtility.broadcastPacketAndReceive((VisibleObject)player, (AionServerPacket)new SM_EMOTION(this.doorId));
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
+    PacketSendUtility.broadcastPacketAndReceive((VisibleObject) player, (AionServerPacket) new SM_EMOTION(this.doorId));
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_OPEN_STATICDOOR.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

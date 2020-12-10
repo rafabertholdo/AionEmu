@@ -6,53 +6,24 @@ import com.aionemu.gameserver.ai.desires.MoveDesire;
 import com.aionemu.gameserver.model.gameobjects.Creature;
 import com.aionemu.gameserver.model.gameobjects.Npc;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class MoveToTargetDesire
-  extends AbstractDesire
-  implements MoveDesire
-{
+public class MoveToTargetDesire extends AbstractDesire implements MoveDesire {
   private Npc owner;
   private Creature target;
-  
+
   public MoveToTargetDesire(Npc owner, Creature target, int desirePower) {
     super(desirePower);
     this.owner = owner;
     this.target = target;
   }
 
-
-
-  
   public boolean handleDesire(AI ai) {
     if (this.owner == null || this.owner.getLifeStats().isAlreadyDead())
-      return false; 
+      return false;
     if (this.target == null || this.target.getLifeStats().isAlreadyDead()) {
       return false;
     }
     this.owner.getMoveController().setFollowTarget(true);
-    
+
     if (!this.owner.getMoveController().isScheduled()) {
       this.owner.getMoveController().schedule();
     }
@@ -63,41 +34,25 @@ public class MoveToTargetDesire
     return true;
   }
 
-
-  
   public boolean equals(Object o) {
     if (this == o)
-      return true; 
+      return true;
     if (!(o instanceof MoveToTargetDesire)) {
       return false;
     }
-    MoveToTargetDesire that = (MoveToTargetDesire)o;
+    MoveToTargetDesire that = (MoveToTargetDesire) o;
     return this.target.equals(that.target);
   }
 
-
-
-
-  
   public Creature getTarget() {
     return this.target;
   }
 
-
-  
   public int getExecutionInterval() {
     return 1;
   }
 
-
-  
   public void onClear() {
     this.owner.getMoveController().stop();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\desires\impl\MoveToTargetDesire.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

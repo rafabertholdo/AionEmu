@@ -18,20 +18,20 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.WorldMapInstance;
 
 public class _4200ASuspiciousCall extends QuestHandler {
-    private static final int questId = 4200;
-    private static final int[] npc_ids = new int[] { 204839, 798332, 700522, 279006, 204286 };
+  private static final int questId = 4200;
+  private static final int[] npc_ids = new int[] { 204839, 798332, 700522, 279006, 204286 };
 
-    public _4200ASuspiciousCall() {
-        super(Integer.valueOf(4200));
-    }
+  public _4200ASuspiciousCall() {
+    super(Integer.valueOf(4200));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(204839).addOnQuestStart(4200);
-        this.qe.setQuestItemIds(182209097).add(4200);
-        for (int npc_id : npc_ids) {
-            this.qe.setNpcQuestData(npc_id).addOnTalkEvent(4200);
-        }
+  public void register() {
+    this.qe.setNpcQuestData(204839).addOnQuestStart(4200);
+    this.qe.setQuestItemIds(182209097).add(4200);
+    for (int npc_id : npc_ids) {
+      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(4200);
     }
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -163,10 +163,3 @@ public class _4200ASuspiciousCall extends QuestHandler {
     return true;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\beluslan\_4200ASuspiciousCall.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

@@ -18,54 +18,20 @@ import java.util.concurrent.Future;
 import javolution.util.FastSet;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class AnnouncementService
-{
+public class AnnouncementService {
   private static final Logger log = Logger.getLogger(AnnouncementService.class);
-  
+
   private Collection<Announcement> announcements;
   private List<Future<?>> delays = new ArrayList<Future<?>>();
 
-  
   private AnnouncementService() {
     load();
   }
 
-  
   public static final AnnouncementService getInstance() {
     return SingletonHolder.instance;
   }
 
-
-
-
-
-  
   public void reload() {
     if (this.delays != null && this.delays.size() > 0) {
       for (Future<?> delay : this.delays) {
@@ -74,14 +40,9 @@ public class AnnouncementService
     }
     this.announcements.clear();
 
-    
     load();
   }
 
-
-
-
-  
   private void load() {
     this.announcements = (new FastSet(getDAO().getAnnouncements())).shared();
     
@@ -112,40 +73,23 @@ public class AnnouncementService
     log.info("Loaded " + this.announcements.size() + " announcements");
   }
 
-  
   public void addAnnouncement(Announcement announce) {
     getDAO().addAnnouncement(announce);
   }
 
-  
   public boolean delAnnouncement(int idAnnounce) {
     return getDAO().delAnnouncement(idAnnounce);
   }
 
-  
   public Set<Announcement> getAnnouncements() {
     return getDAO().getAnnouncements();
   }
 
-
-
-
-
-
-  
   private AnnouncementsDAO getDAO() {
-    return (AnnouncementsDAO)DAOManager.getDAO(AnnouncementsDAO.class);
+    return (AnnouncementsDAO) DAOManager.getDAO(AnnouncementsDAO.class);
   }
 
-  
-  private static class SingletonHolder
-  {
+  private static class SingletonHolder {
     protected static final AnnouncementService instance = new AnnouncementService();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\AnnouncementService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

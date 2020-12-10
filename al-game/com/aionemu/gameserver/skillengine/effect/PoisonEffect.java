@@ -12,61 +12,31 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PoisonEffect")
-public class PoisonEffect
-  extends EffectTemplate
-{
+public class PoisonEffect extends EffectTemplate {
   @XmlAttribute(required = true)
   protected int checktime;
   @XmlAttribute
   protected int value;
   @XmlAttribute
   protected int delta;
-  
+
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-  
   public void calculate(Effect effect) {
     if (calculateEffectResistRate(effect, StatEnum.POISON_RESISTANCE)) {
       effect.addSucessEffect(this);
     }
   }
 
-  
   public void endEffect(Effect effect) {
     Creature effected = effect.getEffected();
     effected.getEffectController().unsetAbnormal(EffectId.POISON.getEffectId());
   }
 
-
-  
   public void onPeriodicAction(Effect effect) {
     Creature effected = effect.getEffected();
     Creature effector = effect.getEffector();
@@ -75,27 +45,17 @@ public class PoisonEffect
     effected.getController().onAttack(effector, effect.getSkillId(), SM_ATTACK_STATUS.TYPE.DAMAGE, damage);
   }
 
-
-  
   public void startEffect(final Effect effect) {
     Creature effected = effect.getEffected();
-    
+
     effected.getEffectController().setAbnormal(EffectId.POISON.getEffectId());
-    
-    Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable()
-        {
-          
-          public void run()
-          {
-            PoisonEffect.this.onPeriodicAction(effect);
-          }
-        },  this.checktime, this.checktime);
+
+    Future<?> task = ThreadPoolManager.getInstance().scheduleEffectAtFixedRate(new Runnable() {
+
+      public void run() {
+        PoisonEffect.this.onPeriodicAction(effect);
+      }
+    }, this.checktime, this.checktime);
     effect.setPeriodicTask(task, this.position);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\PoisonEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

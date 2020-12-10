@@ -25,53 +25,23 @@ import com.aionemu.gameserver.configs.network.NetworkConfig;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class Config
-{
+public class Config {
   protected static final Logger log = Logger.getLogger(Config.class);
 
-
-
-
-
-  
   public static void load() {
     try {
       Properties[] props = PropertiesUtils.loadAllFromDirectory("./config");
-      
+
       ConfigurableProcessor.process(Config.class, props);
 
-      
       AEInfos.printSection("Administration");
       Properties[] admin = PropertiesUtils.loadAllFromDirectory("./config/administration");
-      
+
       ConfigurableProcessor.process(AdminConfig.class, admin);
 
-      
       AEInfos.printSection("Main");
       Properties[] main = PropertiesUtils.loadAllFromDirectory("./config/main");
-      
+
       ConfigurableProcessor.process(LegionConfig.class, main);
       ConfigurableProcessor.process(RateConfig.class, main);
       ConfigurableProcessor.process(CacheConfig.class, main);
@@ -88,25 +58,17 @@ public class Config
       ConfigurableProcessor.process(ThreadConfig.class, main);
       ConfigurableProcessor.process(HTMLConfig.class, main);
 
-      
       AEInfos.printSection("Network");
       Properties[] network = PropertiesUtils.loadAllFromDirectory("./config/network");
-      
+
       ConfigurableProcessor.process(NetworkConfig.class, network);
       ConfigurableProcessor.process(DatabaseConfig.class, network);
-    }
-    catch (Exception e) {
-      
+    } catch (Exception e) {
+
       log.fatal("Can't load gameserver configuration: ", e);
       throw new Error("Can't load gameserver configuration: ", e);
-    } 
-    
+    }
+
     IPConfig.load();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\configs\Config.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

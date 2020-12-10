@@ -31,39 +31,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2008Ascension
-  extends QuestHandler
-{
+public class _2008Ascension extends QuestHandler {
   private static final int questId = 2008;
-  
+
   public _2008Ascension() {
     super(Integer.valueOf(2008));
   }
 
-
-  
   public void register() {
     if (CustomConfig.ENABLE_SIMPLE_2NDCLASS)
-      return; 
+      return;
     this.qe.addQuestLvlUp(2008);
     this.qe.setNpcQuestData(203550).addOnTalkEvent(2008);
     this.qe.setNpcQuestData(790003).addOnTalkEvent(2008);
@@ -79,8 +56,6 @@ public class _2008Ascension
     this.deletebleItems = new int[] { 182203009, 182203010, 182203011 };
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     int instanceId = player.getInstanceId();
@@ -91,53 +66,50 @@ public class _2008Ascension
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (targetId == 205040) {
-      
+
       if (var >= 51 && var <= 53) {
-        
+
         qs.setQuestVar(qs.getQuestVars().getQuestVars() + 1);
         updateQuestStatus(player, qs);
         return true;
-      } 
+      }
       if (var == 54) {
-        
+
         qs.setQuestVar(5);
         updateQuestStatus(player, qs);
-        Npc mob = (Npc)QuestService.addNewSpawn(320010000, instanceId, 205041, 301.0F, 259.0F, 205.5F, (byte)0, true);
-        
-        mob.getGameStats().setStat(StatEnum.MAIN_HAND_POWER, mob.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER) / 3);
-        mob.getAggroList().addDamage((Creature)player, 1000);
+        Npc mob = (Npc) QuestService.addNewSpawn(320010000, instanceId, 205041, 301.0F, 259.0F, 205.5F, (byte) 0, true);
+
+        mob.getGameStats().setStat(StatEnum.MAIN_HAND_POWER,
+            mob.getGameStats().getCurrentStat(StatEnum.MAIN_HAND_POWER) / 3);
+        mob.getAggroList().addDamage((Creature) player, 1000);
         return true;
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-
-  
   public boolean onAttackEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVars().getQuestVars() != 5)
-      return false; 
+      return false;
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     if (targetId != 205041)
-      return false; 
-    Npc npc = (Npc)env.getVisibleObject();
+      return false;
+    Npc npc = (Npc) env.getVisibleObject();
     if (npc.getLifeStats().getCurrentHp() < npc.getLifeStats().getMaxHp() / 2) {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 152));
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 152));
       npc.getController().onDelete();
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final int instanceId = player.getInstanceId();
@@ -338,66 +310,58 @@ public class _2008Ascension
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs == null) {
-      
+
       boolean lvlCheck = QuestService.checkLevelRequirement(2008, player.getCommonData().getLevel());
       if (!lvlCheck)
-        return false; 
+        return false;
       env.setQuestId(Integer.valueOf(2008));
       QuestService.startQuest(env, QuestStatus.START);
       return true;
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onEnterWorldEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs != null && qs.getStatus() == QuestStatus.START) {
-      
+
       int var = qs.getQuestVars().getQuestVars();
-      if (var == 5 || (var >= 50 && var <= 55) || var == 99)
-      {
+      if (var == 5 || (var >= 50 && var <= 55) || var == 99) {
         if (player.getWorldId() != 320010000) {
-          
+
           qs.setQuestVar(4);
           updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1, new Object[] { DataManager.QUEST_DATA.getQuestById(2008).getName() }));
-        }
-        else {
-          
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_ASCENSION_MORPH(1));
+          PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1,
+              new Object[] { DataManager.QUEST_DATA.getQuestById(2008).getName() }));
+        } else {
+
+          PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_ASCENSION_MORPH(1));
           return true;
-        } 
+        }
       }
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onMovieEndEvent(QuestEnv env, int movieId) {
     if (movieId != 152)
-      return false; 
+      return false;
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVars().getQuestVars() != 5)
-      return false; 
+      return false;
     int instanceId = player.getInstanceId();
-    QuestService.addNewSpawn(320010000, instanceId, 203550, 301.93F, 274.26F, 205.7F, (byte)0, true);
+    QuestService.addNewSpawn(320010000, instanceId, 203550, 301.93F, 274.26F, 205.7F, (byte) 0, true);
     qs.setQuestVar(6);
     updateQuestStatus(player, qs);
     return true;
   }
 
-  
   private boolean setPlayerClass(QuestEnv env, QuestState qs, PlayerClass playerClass) {
     Player player = env.getPlayer();
     player.getCommonData().setPlayerClass(playerClass);
@@ -408,41 +372,32 @@ public class _2008Ascension
     return true;
   }
 
-
-  
   public boolean onDieEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs == null || qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     int var = qs.getQuestVars().getQuestVars();
     if (var == 5 || (var >= 51 && var <= 53)) {
-      
+
       qs.setQuestVar(4);
       updateQuestStatus(player, qs);
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1, new Object[] { DataManager.QUEST_DATA.getQuestById(env.getQuestId().intValue()).getName() }));
-    } 
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_SYSTEM_MESSAGE(SystemMessageId.QUEST_FAILED_$1,
+          new Object[] { DataManager.QUEST_DATA.getQuestById(env.getQuestId().intValue()).getName() }));
+    }
     return false;
   }
 
-
-  
   public boolean onQuestFinishEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2008);
     if (qs != null && qs.getStatus() == QuestStatus.REWARD) {
-      
-      TeleportService.teleportTo(player, 220010000, 1, 385.0F, 1895.0F, 327.0F, (byte)20, 0);
+
+      TeleportService.teleportTo(player, 220010000, 1, 385.0F, 1895.0F, 327.0F, (byte) 20, 0);
       return true;
-    } 
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ascension\_2008Ascension.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

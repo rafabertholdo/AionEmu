@@ -6,65 +6,25 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "siegelocation")
-public class SiegeLocationTemplate
-{
+public class SiegeLocationTemplate {
   @XmlAttribute(name = "id")
   protected int id;
   @XmlAttribute(name = "type")
   protected SiegeType type;
   @XmlAttribute(name = "world")
   protected int world;
-  
+
   public int getId() {
     return this.id;
   }
 
-
-
-
-  
   public SiegeType getType() {
     return this.type;
   }
 
-
-
-
-  
   public int getWorldId() {
     return this.world;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\siegelocation\SiegeLocationTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

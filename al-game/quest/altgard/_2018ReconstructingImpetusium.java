@@ -17,36 +17,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2018ReconstructingImpetusium
-  extends QuestHandler
-{
+public class _2018ReconstructingImpetusium extends QuestHandler {
   private static final int questId = 2018;
-  
+
   public _2018ReconstructingImpetusium() {
     super(Integer.valueOf(2018));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2018);
     this.qe.setNpcQuestData(203649).addOnTalkEvent(2018);
@@ -56,21 +33,17 @@ public class _2018ReconstructingImpetusium
     this.qe.setNpcQuestData(210752).addOnKillEvent(2018);
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2018);
     boolean lvlCheck = QuestService.checkLevelRequirement(2018, player.getCommonData().getLevel());
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2018);
@@ -172,45 +145,37 @@ public class _2018ReconstructingImpetusium
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2018);
     if (qs == null || qs.getStatus() != QuestStatus.START) {
       return false;
     }
-    
+
     int targetId = 0;
     int var = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     env.setQuestId(Integer.valueOf(2018));
     switch (targetId) {
-      
+
       case 210588:
         var = qs.getQuestVarById(0);
         if (var < 4) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
-        } 
+        }
         break;
       case 210752:
         var = qs.getQuestVarById(0);
         if (var == 5 && QuestService.collectItemCheck(env, false)) {
-          
+
           qs.setQuestVarById(0, 7);
           updateQuestStatus(player, qs);
-        } 
+        }
         break;
-    } 
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2018ReconstructingImpetusium.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -11,37 +11,13 @@ import com.aionemu.gameserver.questEngine.model.QuestState;
 import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2011FungusAmongUs
-  extends QuestHandler
-{
+public class _2011FungusAmongUs extends QuestHandler {
   private static final int questId = 2011;
-  
+
   public _2011FungusAmongUs() {
     super(Integer.valueOf(2011));
   }
 
-
-  
   public void register() {
     int[] talkNpcs = { 203558, 203572, 203558 };
     this.qe.setNpcQuestData(700092).addOnKillEvent(2011);
@@ -51,7 +27,6 @@ public class _2011FungusAmongUs
     }
   }
 
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2011);
@@ -61,31 +36,30 @@ public class _2011FungusAmongUs
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() != QuestStatus.START)
-      return false; 
+      return false;
     if (targetId == 700092) {
-      
+
       if (var > 0 && var < 6) {
-        
+
         qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
         updateQuestStatus(player, qs);
         return true;
-      } 
+      }
       if (var == 6) {
-        
+
         qs.setStatus(QuestStatus.REWARD);
         updateQuestStatus(player, qs);
-        PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+        PacketSendUtility.sendPacket(player,
+            (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
         return true;
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2011);
@@ -95,68 +69,67 @@ public class _2011FungusAmongUs
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.START) {
-      
+
       if (targetId == 203558) {
-        
+
         switch (env.getDialogId().intValue()) {
-          
+
           case 25:
             if (var == 0)
-              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
           case 10000:
             if (var == 0) {
-              
+
               qs.setQuestVarById(0, var + 1);
               updateQuestStatus(player, qs);
-              PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-              
+              PacketSendUtility.sendPacket(player,
+                  (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+
               return true;
-            } 
+            }
             break;
-        } 
+        }
       } else if (targetId == 203572) {
-        
+
         switch (env.getDialogId().intValue()) {
-          
+
           case 25:
             if (var == 1)
-              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+              return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
           case 1352:
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 60));
+            PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 60));
             break;
           case 10001:
             if (var == 1) {
-              
+
               qs.setQuestVarById(0, var + 1);
               updateQuestStatus(player, qs);
-              PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-              
+              PacketSendUtility.sendPacket(player,
+                  (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+
               return true;
-            } 
+            }
             break;
-        } 
-      
-      } 
+        }
+
+      }
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
-      if (targetId == 203558)
-      {
+
+      if (targetId == 203558) {
         return defaultQuestEndDialog(env);
       }
-    } 
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2011);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     QuestState qs2 = player.getQuestStateList().getQuestState(2200);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE) {
       return false;
@@ -166,9 +139,3 @@ public class _2011FungusAmongUs
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2011FungusAmongUs.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

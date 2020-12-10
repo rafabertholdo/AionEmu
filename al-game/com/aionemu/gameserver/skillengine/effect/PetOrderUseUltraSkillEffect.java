@@ -10,56 +10,25 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PetOrderUseUltraSkillEffect")
-public class PetOrderUseUltraSkillEffect
-  extends EffectTemplate
-{
+public class PetOrderUseUltraSkillEffect extends EffectTemplate {
   public void applyEffect(Effect effect) {
-    Player effector = (Player)effect.getEffector();
+    Player effector = (Player) effect.getEffector();
     int effectorId = effector.getSummon().getObjectId();
-    
+
     int npcId = effector.getSummon().getNpcId();
     int orderSkillId = effect.getSkillId();
-    
+
     int petUseSkillId = DataManager.PET_SKILL_DATA.getPetOrderSkill(orderSkillId, npcId);
     int targetId = effect.getEffected().getObjectId();
-    
-    PacketSendUtility.sendPacket(effector, (AionServerPacket)new SM_SUMMON_USESKILL(effectorId, petUseSkillId, 1, targetId));
+
+    PacketSendUtility.sendPacket(effector,
+        (AionServerPacket) new SM_SUMMON_USESKILL(effectorId, petUseSkillId, 1, targetId));
   }
 
-
-
-  
   public void calculate(Effect effect) {
     if (effect.getEffector() instanceof Player && effect.getEffected() != null)
-      effect.addSucessEffect(this); 
+      effect.addSucessEffect(this);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\PetOrderUseUltraSkillEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

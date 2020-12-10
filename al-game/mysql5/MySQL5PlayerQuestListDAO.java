@@ -120,10 +120,3 @@ public class MySQL5PlayerQuestListDAO extends PlayerQuestListDAO {
         return MySQL5DAOUtils.supports(s, i, i1);
     }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\mysql5\MySQL5PlayerQuestListDAO.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

@@ -16,38 +16,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2208MauInTenMinutesADay
-  extends QuestHandler
-{
+public class _2208MauInTenMinutesADay extends QuestHandler {
   private static final int questId = 2208;
-  
+
   public _2208MauInTenMinutesADay() {
     super(Integer.valueOf(2208));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203591).addOnQuestStart(2208);
     this.qe.setNpcQuestData(203591).addOnTalkEvent(2208);
@@ -56,61 +31,57 @@ public class _2208MauInTenMinutesADay
     this.deletebleItems = new int[] { 182203205 };
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     QuestState qs = player.getQuestStateList().getQuestState(2208);
     if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-      
-      if (targetId == 203591)
-      {
+
+      if (targetId == 203591) {
         if (env.getDialogId().intValue() == 25)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
         if (env.getDialogId().intValue() == 1002) {
-          
+
           if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182203205, 1))))
-            return defaultQuestStartDialog(env); 
+            return defaultQuestStartDialog(env);
           return true;
-        } 
-        
+        }
+
         return defaultQuestStartDialog(env);
       }
-    
+
     } else if (qs.getStatus() == QuestStatus.START) {
-      
+
       if (targetId == 203589) {
-        
+
         int var = qs.getQuestVarById(0);
         if (env.getDialogId().intValue() == 25) {
-          
+
           if (var == 0)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
           if (var == 1) {
             return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
           }
         } else if (env.getDialogId().intValue() == 10000) {
-          
+
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
-          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          PacketSendUtility.sendPacket(player,
+              (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
           return true;
         }
-      
-      } 
+
+      }
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 203591)
-        return defaultQuestEndDialog(env); 
-    } 
+        return defaultQuestEndDialog(env);
+    }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, final Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -135,9 +106,3 @@ public class _2208MauInTenMinutesADay
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2208MauInTenMinutesADay.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

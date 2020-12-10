@@ -20,18 +20,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
 public class _1170HeadlessStoneStatue extends QuestHandler {
-    private static final int questId = 1170;
+  private static final int questId = 1170;
 
-    public _1170HeadlessStoneStatue() {
-        super(Integer.valueOf(1170));
-    }
+  public _1170HeadlessStoneStatue() {
+    super(Integer.valueOf(1170));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(730000).addOnQuestStart(1170);
-        this.qe.setNpcQuestData(730000).addOnTalkEvent(1170);
-        this.qe.setNpcQuestData(700033).addOnTalkEvent(1170);
-        this.qe.setQuestMovieEndIds(16).add(1170);
-    }
+  public void register() {
+    this.qe.setNpcQuestData(730000).addOnQuestStart(1170);
+    this.qe.setNpcQuestData(730000).addOnTalkEvent(1170);
+    this.qe.setNpcQuestData(700033).addOnTalkEvent(1170);
+    this.qe.setQuestMovieEndIds(16).add(1170);
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -86,26 +86,19 @@ public class _1170HeadlessStoneStatue extends QuestHandler {
     return false;
   }
 
-    public boolean onMovieEndEvent(QuestEnv env, int movieId) {
-        if (movieId != 16)
-            return false;
-        Player player = env.getPlayer();
-        QuestState qs = player.getQuestStateList().getQuestState(1170);
-        if (qs == null || qs.getStatus() != QuestStatus.REWARD)
-            return false;
-        int rewardExp = player.getRates().getQuestXpRate() * 8410;
-        player.getCommonData().addExp(rewardExp);
-        qs.setStatus(QuestStatus.COMPLETE);
-        qs.setCompliteCount(1);
-        updateQuestStatus(player, qs);
-        PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_QUEST_ACCEPTED(1170, QuestStatus.COMPLETE, 2));
-        return true;
-    }
+  public boolean onMovieEndEvent(QuestEnv env, int movieId) {
+    if (movieId != 16)
+      return false;
+    Player player = env.getPlayer();
+    QuestState qs = player.getQuestStateList().getQuestState(1170);
+    if (qs == null || qs.getStatus() != QuestStatus.REWARD)
+      return false;
+    int rewardExp = player.getRates().getQuestXpRate() * 8410;
+    player.getCommonData().addExp(rewardExp);
+    qs.setStatus(QuestStatus.COMPLETE);
+    qs.setCompliteCount(1);
+    updateQuestStatus(player, qs);
+    PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_QUEST_ACCEPTED(1170, QuestStatus.COMPLETE, 2));
+    return true;
+  }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1170HeadlessStoneStatue.class Java compiler version: 6
- * (50.0) JD-Core Version: 1.1.3
- */

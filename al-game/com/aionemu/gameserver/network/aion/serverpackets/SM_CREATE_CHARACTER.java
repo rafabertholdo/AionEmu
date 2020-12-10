@@ -5,60 +5,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.PlayerInfo;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_CREATE_CHARACTER
-  extends PlayerInfo
-{
+public class SM_CREATE_CHARACTER extends PlayerInfo {
   public static final int RESPONSE_OK = 0;
   public static final int FAILED_TO_CREATE_THE_CHARACTER = 1;
   public static final int RESPONSE_DB_ERROR = 2;
@@ -70,33 +17,21 @@ public class SM_CREATE_CHARACTER
   public static final int RESPONSE_OTHER_RACE = 12;
   private final int responseCode;
   private final PlayerAccountData player;
-  
+
   public SM_CREATE_CHARACTER(PlayerAccountData accPlData, int responseCode) {
     this.player = accPlData;
     this.responseCode = responseCode;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.responseCode);
-    
+
     if (this.responseCode == 0) {
-      
+
       writePlayerInfo(buf, this.player);
-    }
-    else {
-      
+    } else {
+
       writeB(buf, new byte[448]);
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_CREATE_CHARACTER.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -10,55 +10,31 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_UPDATE_PLAYER_APPEAR
 import com.aionemu.gameserver.restrictions.RestrictionsManager;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_EQUIP_ITEM
-  extends AionClientPacket
-{
+public class CM_EQUIP_ITEM extends AionClientPacket {
   public int slotRead;
   public int itemUniqueId;
   public int action;
-  
+
   public CM_EQUIP_ITEM(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.action = readC();
     this.slotRead = readD();
     this.itemUniqueId = readD();
   }
 
-
-  
   protected void runImpl() {
-    Player activePlayer = ((AionConnection)getConnection()).getActivePlayer();
+    Player activePlayer = ((AionConnection) getConnection()).getActivePlayer();
     Equipment equipment = activePlayer.getEquipment();
     Item resultItem = null;
-    
+
     if (!RestrictionsManager.canChangeEquip(activePlayer)) {
       return;
     }
     switch (this.action) {
-      
+
       case 0:
         resultItem = equipment.equipItem(this.itemUniqueId, this.slotRead);
         break;
@@ -68,17 +44,13 @@ public class CM_EQUIP_ITEM
       case 2:
         equipment.switchHands();
         break;
-    } 
-    
-    if (resultItem != null || this.action == 2)
-    {
-      PacketSendUtility.broadcastPacket(activePlayer, (AionServerPacket)new SM_UPDATE_PLAYER_APPEARANCE(activePlayer.getObjectId(), equipment.getEquippedItemsWithoutStigma()), true);
+    }
+
+    if (resultItem != null || this.action == 2) {
+      PacketSendUtility.broadcastPacket(activePlayer,
+          (AionServerPacket) new SM_UPDATE_PLAYER_APPEARANCE(activePlayer.getObjectId(),
+              equipment.getEquippedItemsWithoutStigma()),
+          true);
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_EQUIP_ITEM.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

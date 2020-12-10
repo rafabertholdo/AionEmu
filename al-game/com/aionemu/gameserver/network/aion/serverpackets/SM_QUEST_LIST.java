@@ -11,74 +11,42 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_QUEST_LIST
-  extends AionServerPacket
-{
+public class SM_QUEST_LIST extends AionServerPacket {
   private SortedMap<Integer, QuestState> completeQuestList = new TreeMap<Integer, QuestState>();
   private List<QuestState> startedQuestList = new ArrayList<QuestState>();
 
-  
   public SM_QUEST_LIST(Player player) {
     for (QuestState qs : player.getQuestStateList().getAllQuestState()) {
-      
+
       if (qs.getStatus() == QuestStatus.COMPLETE) {
-        this.completeQuestList.put(Integer.valueOf(qs.getQuestId()), qs); continue;
-      }  if (qs.getStatus() != QuestStatus.NONE) {
+        this.completeQuestList.put(Integer.valueOf(qs.getQuestId()), qs);
+        continue;
+      }
+      if (qs.getStatus() != QuestStatus.NONE) {
         this.startedQuestList.add(qs);
       }
-    } 
+    }
   }
 
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeH(buf, this.completeQuestList.size());
     for (QuestState qs : this.completeQuestList.values()) {
-      
+
       writeH(buf, qs.getQuestId());
       writeH(buf, 0);
       writeC(buf, qs.getCompliteCount());
-    } 
+    }
     writeC(buf, this.startedQuestList.size());
     for (QuestState qs : this.startedQuestList) {
-      
+
       writeH(buf, qs.getQuestId());
       writeH(buf, 0);
-    } 
+    }
     for (QuestState qs : this.startedQuestList) {
-      
+
       writeC(buf, qs.getStatus().value());
       writeD(buf, qs.getQuestVars().getQuestVars());
       writeC(buf, 0);
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_QUEST_LIST.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

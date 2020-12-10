@@ -9,76 +9,39 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OneTimeBoostSkillAttackEffect")
-public class OneTimeBoostSkillAttackEffect
-  extends BufEffect
-{
+public class OneTimeBoostSkillAttackEffect extends BufEffect {
   @XmlAttribute
   private int count;
-  
+
   public void startEffect(final Effect effect) {
     super.startEffect(effect);
-    
-    final int stopCount = this.count;
-    ActionObserver observer = new ActionObserver(ActionObserver.ObserverType.SKILLUSE)
-      {
-        private int count = 0;
 
-        
-        public void skilluse(Skill skill) {
-          if (this.count < stopCount && skill.getSkillTemplate().getType() == SkillType.PHYSICAL) {
-            this.count++;
-          }
-          if (this.count == stopCount) {
-            effect.endEffect();
-          }
+    final int stopCount = this.count;
+    ActionObserver observer = new ActionObserver(ActionObserver.ObserverType.SKILLUSE) {
+      private int count = 0;
+
+      public void skilluse(Skill skill) {
+        if (this.count < stopCount && skill.getSkillTemplate().getType() == SkillType.PHYSICAL) {
+          this.count++;
         }
-      };
+        if (this.count == stopCount) {
+          effect.endEffect();
+        }
+      }
+    };
     effect.getEffected().getObserveController().addObserver(observer);
     effect.setActionObserver(observer, this.position);
   }
 
-
-  
   public void endEffect(Effect effect) {
     super.endEffect(effect);
     ActionObserver observer = effect.getActionObserver(this.position);
     effect.getEffected().getObserveController().removeObserver(observer);
   }
 
-
-  
   public void calculate(Effect effect) {
     super.calculate(effect);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\OneTimeBoostSkillAttackEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

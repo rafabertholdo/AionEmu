@@ -14,37 +14,13 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1487BalaurBones
-  extends QuestHandler
-{
+public class _1487BalaurBones extends QuestHandler {
   private static final int questId = 1487;
-  
+
   public _1487BalaurBones() {
     super(Integer.valueOf(1487));
   }
 
-
-
-  
   public void register() {
     this.qe.setNpcQuestData(798126).addOnQuestStart(1487);
     this.qe.setNpcQuestData(798126).addOnTalkEvent(1487);
@@ -53,8 +29,6 @@ public class _1487BalaurBones
     this.qe.setNpcQuestData(700315).addOnTalkEvent(1487);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -184,9 +158,3 @@ public class _1487BalaurBones
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1487BalaurBones.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

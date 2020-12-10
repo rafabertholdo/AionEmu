@@ -12,61 +12,25 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "zones")
-public class ZoneData
-  implements Iterable<ZoneTemplate>
-{
+public class ZoneData implements Iterable<ZoneTemplate> {
   @XmlElement(name = "zone")
   protected List<ZoneTemplate> zoneList;
   private THashMap<ZoneName, ZoneTemplate> zoneNameMap = new THashMap();
 
-  
   void afterUnmarshal(Unmarshaller u, Object parent) {
-    for (ZoneTemplate zone : this.zoneList)
-    {
+    for (ZoneTemplate zone : this.zoneList) {
       this.zoneNameMap.put(zone.getName(), zone);
     }
   }
 
-
-  
   public Iterator<ZoneTemplate> iterator() {
     return this.zoneList.iterator();
   }
 
-  
   public int size() {
     return this.zoneList.size();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\dataholders\ZoneData.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -7,51 +7,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DpUseAction")
-public class DpUseAction
-  extends Action
-{
+public class DpUseAction extends Action {
   @XmlAttribute(required = true)
   protected int value;
-  
+
   public void act(Skill skill) {
-    Player effector = (Player)skill.getEffector();
+    Player effector = (Player) skill.getEffector();
     int currentDp = effector.getCommonData().getDp();
-    
+
     if (currentDp <= 0 || currentDp < this.value) {
       return;
     }
     effector.getCommonData().setDp(currentDp - this.value);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\action\DpUseAction.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

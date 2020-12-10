@@ -3,42 +3,13 @@ package com.aionemu.gameserver.model.gameobjects.player;
 import com.aionemu.gameserver.dataholders.DataManager;
 import com.aionemu.gameserver.model.gameobjects.PersistentState;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SkillListEntry
-{
+public class SkillListEntry {
   private int skillId;
   private int skillLvl;
   private boolean isStigma;
   private int currentXp;
   private PersistentState persistentState;
-  
+
   public SkillListEntry(int skillId, boolean isStigma, int skillLvl, PersistentState persistentState) {
     this.skillId = skillId;
     this.skillLvl = skillLvl;
@@ -46,56 +17,30 @@ public class SkillListEntry
     this.persistentState = persistentState;
   }
 
-
-
-
-  
   public int getSkillId() {
     return this.skillId;
   }
 
-
-
-
-  
   public int getSkillLevel() {
     return this.skillLvl;
   }
 
-
-
-
-
-  
   public boolean isStigma() {
     return this.isStigma;
   }
 
-
-
-
-
-  
   public String getSkillName() {
     return DataManager.SKILL_DATA.getSkillTemplate(this.skillId).getName();
   }
 
-
-
-
-  
   public void setSkillLvl(int skillLvl) {
     this.skillLvl = skillLvl;
     setPersistentState(PersistentState.UPDATE_REQUIRED);
   }
 
-
-
-
-  
   public int getExtraLvl() {
     switch (this.skillId) {
-      
+
       case 30002:
       case 30003:
       case 40001:
@@ -105,73 +50,48 @@ public class SkillListEntry
       case 40007:
       case 40008:
         return this.skillLvl / 100;
-    } 
+    }
     return 0;
   }
 
-
-
-  
   public int getCurrentXp() {
     return this.currentXp;
   }
 
-
-
-
-  
   public void setCurrentXp(int currentXp) {
     this.currentXp = currentXp;
   }
 
-
-
-
-
-  
   public boolean addSkillXp(int xp) {
     this.currentXp += xp;
     if (this.currentXp > 0.15D * (this.skillLvl + 30) * (this.skillLvl + 30)) {
-      
+
       this.currentXp = 0;
       setSkillLvl(this.skillLvl + 1);
       return true;
-    } 
+    }
     return false;
   }
 
-
-
-
-  
   public PersistentState getPersistentState() {
     return this.persistentState;
   }
 
-
-
-
-  
   public void setPersistentState(PersistentState persistentState) {
     switch (persistentState) {
-      
+
       case DELETED:
         if (this.persistentState == PersistentState.NEW) {
           this.persistentState = PersistentState.NOACTION;
         } else {
           this.persistentState = PersistentState.DELETED;
-        }  return;
+        }
+        return;
       case UPDATE_REQUIRED:
         if (this.persistentState != PersistentState.NEW)
-          this.persistentState = PersistentState.UPDATE_REQUIRED; 
+          this.persistentState = PersistentState.UPDATE_REQUIRED;
         return;
-    } 
+    }
     this.persistentState = persistentState;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\gameobjects\player\SkillListEntry.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

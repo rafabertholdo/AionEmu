@@ -20,37 +20,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1004NeutralizingOdium
-  extends QuestHandler
-{
+public class _1004NeutralizingOdium extends QuestHandler {
   private static final int questId = 1004;
-  
+
   public _1004NeutralizingOdium() {
     super(Integer.valueOf(1004));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1004);
     this.qe.setNpcQuestData(203082).addOnTalkEvent(1004);
@@ -59,8 +35,6 @@ public class _1004NeutralizingOdium
     this.qe.setNpcQuestData(203067).addOnTalkEvent(1004);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1004);
@@ -188,8 +162,6 @@ public class _1004NeutralizingOdium
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1004);
@@ -198,15 +170,9 @@ public class _1004NeutralizingOdium
     }
     boolean lvlCheck = QuestService.checkLevelRequirement(1004, player.getCommonData().getLevel());
     if (!lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\poeta\_1004NeutralizingOdium.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

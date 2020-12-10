@@ -14,38 +14,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2097SpiritBlade
-  extends QuestHandler
-{
+public class _2097SpiritBlade extends QuestHandler {
   private static final int questId = 2097;
-  
+
   public _2097SpiritBlade() {
     super(Integer.valueOf(2097));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2097);
     this.qe.setNpcQuestData(203550).addOnTalkEvent(2097);
@@ -55,8 +30,6 @@ public class _2097SpiritBlade
     this.deletebleItems = new int[] { 182207086, 182207087, 182207088 };
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2097);
@@ -66,91 +39,89 @@ public class _2097SpiritBlade
     int var = qs.getQuestVars().getQuestVars();
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.START) {
-      
+
       switch (targetId) {
-        
+
         case 203550:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 0)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
             case 10000:
               if (var == 0) {
-                
+
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              }  break;
-          } 
+              }
+              break;
+          }
           break;
         case 203546:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 1)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
               return true;
             case 10001:
               if (var == 1) {
-                
+
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              }  break;
-          } 
+              }
+              break;
+          }
           break;
         case 279034:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 2)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
             case 33:
               if (var == 2) {
-                
+
                 if (QuestService.collectItemCheck(env, true)) {
-                  
+
                   qs.setStatus(QuestStatus.REWARD);
                   updateQuestStatus(player, qs);
                   ItemService.addItems(player, Collections.singletonList(new QuestItems(182207085, 1)));
-                  PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                  PacketSendUtility.sendPacket(player,
+                      (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                   return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
-                } 
+                }
                 return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
-              } 
+              }
               break;
-          } 
+          }
           break;
-      } 
+      }
     } else if (qs.getStatus() == QuestStatus.REWARD && targetId == 203550) {
       return defaultQuestEndDialog(env);
-    }  return false;
+    }
+    return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2097);
     if (qs != null)
-      return false; 
+      return false;
     boolean lvlCheck = QuestService.checkLevelRequirement(2097, player.getCommonData().getLevel());
     if (!lvlCheck)
-      return false; 
+      return false;
     env.setQuestId(Integer.valueOf(2097));
     QuestService.startQuest(env, QuestStatus.START);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\pandaemonium\_2097SpiritBlade.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

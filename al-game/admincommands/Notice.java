@@ -41,10 +41,3 @@ public class Notice extends AdminCommand {
         (AionServerPacket) new SM_MESSAGE(0, null, "Information : " + message, ChatType.SYSTEM_NOTICE), true);
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Notice.class Java compiler version: 6 (50.0) JD-Core Version:
- * 1.1.3
- */

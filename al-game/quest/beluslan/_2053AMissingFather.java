@@ -22,49 +22,23 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2053AMissingFather
-  extends QuestHandler
-{
+public class _2053AMissingFather extends QuestHandler {
   private static final int questId = 2053;
   private static final int[] npc_ids = new int[] { 204707, 204749, 204800, 700359, 730108 };
 
-  
   public _2053AMissingFather() {
     super(Integer.valueOf(2053));
   }
 
-
-  
   public void register() {
     this.qe.setQuestEnterZone(ZoneName.MALEK_MINE_220040000).add(2053);
     this.qe.addQuestLvlUp(2053);
     this.qe.setQuestItemIds(182204305).add(2053);
     for (int npc_id : npc_ids)
-      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(2053); 
+      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(2053);
     this.deletebleItems = new int[] { 182204307, 182204305 };
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2053);
@@ -74,14 +48,12 @@ public class _2053AMissingFather
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(2500);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(2053);
@@ -211,22 +183,18 @@ public class _2053AMissingFather
     return false;
   }
 
-
-  
   public boolean onEnterZoneEvent(QuestEnv env, ZoneName zoneName) {
     if (zoneName != ZoneName.MALEK_MINE_220040000)
-      return false; 
+      return false;
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2053);
     if (qs == null || qs.getStatus() != QuestStatus.START || qs.getQuestVarById(0) != 3)
-      return false; 
+      return false;
     qs.setQuestVarById(0, 4);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -252,9 +220,3 @@ public class _2053AMissingFather
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\beluslan\_2053AMissingFather.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

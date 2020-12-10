@@ -11,56 +11,23 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SetQuestVarOperation")
-public class SetQuestVarOperation
-  extends QuestOperation
-{
+public class SetQuestVarOperation extends QuestOperation {
   @XmlAttribute(name = "var_id", required = true)
   protected int varId;
   @XmlAttribute(required = true)
   protected int value;
-  
+
   public void doOperate(QuestEnv env) {
     Player player = env.getPlayer();
     int questId = env.getQuestId().intValue();
     QuestState qs = player.getQuestStateList().getQuestState(questId);
     if (qs != null) {
-      
+
       qs.getQuestVars().setVarById(this.varId, this.value);
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
-    } 
+      PacketSendUtility.sendPacket(player,
+          (AionServerPacket) new SM_QUEST_ACCEPTED(questId, qs.getStatus(), qs.getQuestVars().getQuestVars()));
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\operations\SetQuestVarOperation.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

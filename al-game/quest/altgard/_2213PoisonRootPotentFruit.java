@@ -17,37 +17,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2213PoisonRootPotentFruit
-  extends QuestHandler
-{
+public class _2213PoisonRootPotentFruit extends QuestHandler {
   private static final int questId = 2213;
-  
+
   public _2213PoisonRootPotentFruit() {
     super(Integer.valueOf(2213));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203604).addOnQuestStart(2213);
     this.qe.setNpcQuestData(203604).addOnTalkEvent(2213);
@@ -55,8 +31,6 @@ public class _2213PoisonRootPotentFruit
     this.qe.setNpcQuestData(203604).addOnTalkEvent(2213);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -132,9 +106,3 @@ public class _2213PoisonRootPotentFruit
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2213PoisonRootPotentFruit.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

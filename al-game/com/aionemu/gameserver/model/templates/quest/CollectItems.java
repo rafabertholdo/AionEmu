@@ -7,59 +7,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CollectItems", propOrder = {"collectItem"})
-public class CollectItems
-{
+@XmlType(name = "CollectItems", propOrder = { "collectItem" })
+public class CollectItems {
   @XmlElement(name = "collect_item")
   protected List<CollectItem> collectItem;
-  
+
   public List<CollectItem> getCollectItem() {
     if (this.collectItem == null) {
       this.collectItem = new ArrayList<CollectItem>();
@@ -67,9 +20,3 @@ public class CollectItems
     return this.collectItem;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\quest\CollectItems.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

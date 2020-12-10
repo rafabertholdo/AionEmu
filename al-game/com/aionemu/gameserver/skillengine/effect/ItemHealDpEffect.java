@@ -7,62 +7,23 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ItemHealDpEffect")
-public class ItemHealDpEffect
-  extends AbstractHealEffect
-{
+public class ItemHealDpEffect extends AbstractHealEffect {
   public void applyEffect(Effect effect) {
-    ((Player)effect.getEffected()).getCommonData().addDp(-effect.getReserved1());
+    ((Player) effect.getEffected()).getCommonData().addDp(-effect.getReserved1());
   }
 
-
-  
   public void calculate(Effect effect) {
     super.calculate(effect);
     effect.addSucessEffect(this);
   }
 
-
-  
   protected int getCurrentStatValue(Effect effect) {
-    return ((Player)effect.getEffected()).getCommonData().getDp();
+    return ((Player) effect.getEffected()).getCommonData().getDp();
   }
 
-
-  
   protected int getMaxStatValue(Effect effect) {
     return effect.getEffected().getGameStats().getCurrentStat(StatEnum.MAXDP);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\ItemHealDpEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

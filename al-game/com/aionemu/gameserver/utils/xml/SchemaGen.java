@@ -8,45 +8,17 @@ import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SchemaGen
-{
+public class SchemaGen {
   public static void main(String[] args) throws Exception {
     final File baseDir = new File("./data/static_data");
-    
-    class MySchemaOutputResolver
-      extends SchemaOutputResolver
-    {
-      public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException
-      {
+
+    class MySchemaOutputResolver extends SchemaOutputResolver {
+      public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException {
         return new StreamResult(new File(baseDir, "static_data1.xsd"));
       }
-    };
+    }
+    ;
     JAXBContext context = JAXBContext.newInstance(new Class[] { StaticData.class });
     context.generateSchema(new MySchemaOutputResolver());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\xml\SchemaGen.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

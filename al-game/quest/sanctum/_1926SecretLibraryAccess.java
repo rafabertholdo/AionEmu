@@ -16,37 +16,14 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.WorldMapType;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1926SecretLibraryAccess
-  extends QuestHandler
-{
+public class _1926SecretLibraryAccess extends QuestHandler {
   private static final int questId = 1926;
   private static final int[] npc_ids = new int[] { 203894, 203098 };
 
-  
   public _1926SecretLibraryAccess() {
     super(Integer.valueOf(1926));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203894).addOnQuestStart(1926);
     for (int npc_id : npc_ids) {
@@ -54,14 +31,11 @@ public class _1926SecretLibraryAccess
     }
   }
 
-  
   private boolean AreVerteronQuestsFinished(Player player) {
     QuestState qs = player.getQuestStateList().getQuestState(1020);
     return !(qs == null || qs.getStatus() != QuestStatus.COMPLETE);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -119,9 +93,3 @@ public class _1926SecretLibraryAccess
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\sanctum\_1926SecretLibraryAccess.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

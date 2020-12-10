@@ -19,18 +19,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
 public class _1158VillageSealFound extends QuestHandler {
-    private static final int questId = 1158;
+  private static final int questId = 1158;
 
-    public _1158VillageSealFound() {
-        super(Integer.valueOf(1158));
-    }
+  public _1158VillageSealFound() {
+    super(Integer.valueOf(1158));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(798003).addOnQuestStart(1158);
-        this.qe.setNpcQuestData(798003).addOnTalkEvent(1158);
-        this.qe.setNpcQuestData(700003).addOnTalkEvent(1158);
-        this.qe.setNpcQuestData(203128).addOnTalkEvent(1158);
-    }
+  public void register() {
+    this.qe.setNpcQuestData(798003).addOnQuestStart(1158);
+    this.qe.setNpcQuestData(798003).addOnTalkEvent(1158);
+    this.qe.setNpcQuestData(700003).addOnTalkEvent(1158);
+    this.qe.setNpcQuestData(203128).addOnTalkEvent(1158);
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -105,10 +105,3 @@ public class _1158VillageSealFound extends QuestHandler {
     return false;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1158VillageSealFound.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

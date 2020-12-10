@@ -11,9 +11,9 @@ import com.aionemu.gameserver.world.World;
 import java.util.concurrent.Future;
 
 public class Gag extends AdminCommand {
-    public Gag() {
-        super("gag");
-    }
+  public Gag() {
+    super("gag");
+  }
 
   public void executeCommand(Player admin, String[] params) {
     if (admin.getAccessLevel() < AdminConfig.COMMAND_GAG) {
@@ -72,10 +72,3 @@ public class Gag extends AdminCommand {
     PacketSendUtility.sendMessage(admin, "Player " + name + " gagged" + ((time != 0) ? (" for " + time + " minutes") : ""));
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Gag.class Java compiler version: 6 (50.0) JD-Core Version:
- * 1.1.3
- */

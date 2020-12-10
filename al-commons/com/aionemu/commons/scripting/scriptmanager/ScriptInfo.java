@@ -10,51 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javolution.text.TextBuilder;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "scriptinfo")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ScriptInfo
-{
+public class ScriptInfo {
   @XmlAttribute(required = true)
   private File root;
   @XmlElement(name = "library")
@@ -64,144 +22,67 @@ public class ScriptInfo
   @XmlElement(name = "compiler")
   private String compilerClass = ScriptCompilerImpl.class.getName();
 
-
-
-
-
-
-
-  
   public File getRoot() {
     return this.root;
   }
 
-
-
-
-
-
-
-  
   public void setRoot(File root) {
     this.root = root;
   }
 
-
-
-
-
-
-  
   public List<File> getLibraries() {
     return this.libraries;
   }
 
-
-
-
-
-
-
-  
   public void setLibraries(List<File> libraries) {
     this.libraries = libraries;
   }
 
-
-
-
-
-
-  
   public List<ScriptInfo> getScriptInfos() {
     return this.scriptInfos;
   }
 
-
-
-
-
-
-
-  
   public void setScriptInfos(List<ScriptInfo> scriptInfos) {
     this.scriptInfos = scriptInfos;
   }
 
-
-
-
-
-
-  
   public String getCompilerClass() {
     return this.compilerClass;
   }
 
-
-
-
-
-
-
-  
   public void setCompilerClass(String compilerClass) {
     this.compilerClass = compilerClass;
   }
 
-
-
-
-
-
-
-
-
-  
   public boolean equals(Object o) {
     if (this == o)
-      return true; 
+      return true;
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ScriptInfo that = (ScriptInfo)o;
-    
+    ScriptInfo that = (ScriptInfo) o;
+
     return this.root.equals(that.root);
   }
 
-
-
-
-
-
-
-  
   public int hashCode() {
     return this.root.hashCode();
   }
 
-
-  
   public String toString() {
     TextBuilder tb = TextBuilder.newInstance();
-    
+
     tb.append("ScriptInfo");
     tb.append("{root=").append(this.root);
     tb.append(", libraries=").append(this.libraries);
     tb.append(", compilerClass='").append(this.compilerClass).append('\'');
     tb.append(", scriptInfos=").append(this.scriptInfos);
     tb.append('}');
-    
+
     String toString = tb.toString();
-    
+
     TextBuilder.recycle(tb);
-    
+
     return toString;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\commons\scripting\scriptmanager\ScriptInfo.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

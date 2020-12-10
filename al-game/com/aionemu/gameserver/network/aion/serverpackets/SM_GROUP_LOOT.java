@@ -4,32 +4,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_GROUP_LOOT
-  extends AionServerPacket
-{
+public class SM_GROUP_LOOT extends AionServerPacket {
   private int groupId;
   private int unk1;
   private int unk2;
@@ -39,7 +14,7 @@ public class SM_GROUP_LOOT
   private int distributionId;
   private int playerId;
   private int luck;
-  
+
   public SM_GROUP_LOOT(int groupId, int itemId, int lootCorpseId, int distributionId) {
     this.groupId = groupId;
     this.unk1 = 1;
@@ -52,11 +27,6 @@ public class SM_GROUP_LOOT
     this.luck = 1;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.groupId);
     writeD(buf, this.unk1);
@@ -69,9 +39,3 @@ public class SM_GROUP_LOOT
     writeD(buf, this.luck);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_GROUP_LOOT.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

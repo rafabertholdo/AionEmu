@@ -20,37 +20,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1037SecretsoftheTemple
-  extends QuestHandler
-{
+public class _1037SecretsoftheTemple extends QuestHandler {
   private static final int questId = 1037;
   private static final int[] npc_ids = new int[] { 203965, 203967, 700151, 700154, 700150, 700153, 700152 };
 
-  
   public _1037SecretsoftheTemple() {
     super(Integer.valueOf(1037));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1037);
     for (int npc_id : npc_ids) {
@@ -58,7 +35,6 @@ public class _1037SecretsoftheTemple
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1037);
@@ -71,8 +47,6 @@ public class _1037SecretsoftheTemple
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1037);
@@ -182,9 +156,3 @@ public class _1037SecretsoftheTemple
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1037SecretsoftheTemple.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

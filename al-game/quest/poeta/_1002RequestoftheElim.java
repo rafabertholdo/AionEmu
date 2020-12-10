@@ -26,38 +26,13 @@ import com.aionemu.gameserver.world.WorldMapInstance;
 import java.util.Collections;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1002RequestoftheElim
-  extends QuestHandler
-{
+public class _1002RequestoftheElim extends QuestHandler {
   private static final int questId = 1002;
-  
+
   public _1002RequestoftheElim() {
     super(Integer.valueOf(1002));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1002);
     this.qe.addOnEnterWorld(1002);
@@ -69,20 +44,16 @@ public class _1002RequestoftheElim
     this.qe.setNpcQuestData(203067).addOnTalkEvent(1002);
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1002);
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1002);
@@ -302,25 +273,16 @@ public class _1002RequestoftheElim
     return false;
   }
 
-
-  
   public boolean onEnterWorldEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1002);
-    if (qs != null && qs.getStatus() == QuestStatus.START)
-    {
+    if (qs != null && qs.getStatus() == QuestStatus.START) {
       if (player.getWorldId() == 310010000) {
-        
-        PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_ASCENSION_MORPH(1));
+
+        PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_ASCENSION_MORPH(1));
         return true;
-      } 
+      }
     }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\poeta\_1002RequestoftheElim.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

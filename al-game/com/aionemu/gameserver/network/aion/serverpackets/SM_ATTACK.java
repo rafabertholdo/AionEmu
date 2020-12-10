@@ -7,39 +7,16 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_ATTACK
-  extends AionServerPacket
-{
+public class SM_ATTACK extends AionServerPacket {
   private int attackno;
   private int time;
   private int type;
   private List<AttackResult> attackList;
   private Creature attacker;
   private Creature target;
-  
-  public SM_ATTACK(Creature attacker, Creature target, int attackno, int time, int type, List<AttackResult> attackList) {
+
+  public SM_ATTACK(Creature attacker, Creature target, int attackno, int time, int type,
+      List<AttackResult> attackList) {
     this.attacker = attacker;
     this.target = target;
     this.attackno = attackno;
@@ -48,29 +25,23 @@ public class SM_ATTACK
     this.attackList = attackList;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.attacker.getObjectId());
     writeC(buf, this.attackno);
     writeH(buf, this.time);
     writeC(buf, this.type);
     writeD(buf, this.target.getObjectId());
-    
+
     int attackerMaxHp = this.attacker.getLifeStats().getMaxHp();
     int attackerCurrHp = this.attacker.getLifeStats().getCurrentHp();
     int targetMaxHp = this.target.getLifeStats().getMaxHp();
     int targetCurrHp = this.target.getLifeStats().getCurrentHp();
-    
+
     writeC(buf, 100 * targetCurrHp / targetMaxHp);
     writeC(buf, 100 * attackerCurrHp / attackerMaxHp);
 
-    
-    switch (((AttackResult)this.attackList.get(0)).getAttackStatus().getId()) {
-      
+    switch (((AttackResult) this.attackList.get(0)).getAttackStatus().getId()) {
+
       case -60:
       case 4:
         writeH(buf, 32);
@@ -90,35 +61,26 @@ public class SM_ATTACK
       default:
         writeH(buf, 0);
         break;
-    } 
-    
+    }
+
     writeC(buf, this.attackList.size());
     for (AttackResult attack : this.attackList) {
-      
+
       writeD(buf, attack.getDamage());
       writeC(buf, attack.getAttackStatus().getId());
       writeC(buf, attack.getShieldType());
-      
+
       switch (attack.getShieldType()) {
-        
+
         case 1:
           writeD(buf, 0);
           writeD(buf, 0);
           writeD(buf, 0);
           writeD(buf, 0);
           writeD(buf, 0);
-      } 
+      }
 
-
-
-    
-    } 
+    }
     writeC(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_ATTACK.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

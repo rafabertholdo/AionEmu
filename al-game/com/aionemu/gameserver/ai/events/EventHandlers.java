@@ -10,53 +10,23 @@ import com.aionemu.gameserver.ai.events.handler.SeePlayerEventHandler;
 import com.aionemu.gameserver.ai.events.handler.TalkEventHandler;
 import com.aionemu.gameserver.ai.events.handler.TiredAttackingEventHandler;
 
+public enum EventHandlers {
+  ATTACKED_EH((EventHandler) new AttackedEventHandler()),
+  TIREDATTACKING_EH((EventHandler) new TiredAttackingEventHandler()),
+  MOST_HATED_CHANGED_EH((EventHandler) new TiredAttackingEventHandler()),
+  SEEPLAYER_EH((EventHandler) new SeePlayerEventHandler()),
+  NOTSEEPLAYER_EH((EventHandler) new NotSeePlayerEventHandler()),
+  BACKHOME_EH((EventHandler) new BackHomeEventHandler()), TALK_EH((EventHandler) new TalkEventHandler()),
+  RESTOREDHEALTH_EH((EventHandler) new RestoredHealthEventHandler()),
+  NOTHINGTODO_EH((EventHandler) new NothingTodoEventHandler());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public enum EventHandlers
-{
-  ATTACKED_EH((EventHandler)new AttackedEventHandler()),
-  TIREDATTACKING_EH((EventHandler)new TiredAttackingEventHandler()),
-  MOST_HATED_CHANGED_EH((EventHandler)new TiredAttackingEventHandler()),
-  SEEPLAYER_EH((EventHandler)new SeePlayerEventHandler()),
-  NOTSEEPLAYER_EH((EventHandler)new NotSeePlayerEventHandler()),
-  BACKHOME_EH((EventHandler)new BackHomeEventHandler()),
-  TALK_EH((EventHandler)new TalkEventHandler()),
-  RESTOREDHEALTH_EH((EventHandler)new RestoredHealthEventHandler()),
-  NOTHINGTODO_EH((EventHandler)new NothingTodoEventHandler());
-  
   private EventHandler eventHandler;
 
-  
   EventHandlers(EventHandler eventHandler) {
     this.eventHandler = eventHandler;
   }
 
-  
   public EventHandler getHandler() {
     return this.eventHandler;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\events\EventHandlers.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

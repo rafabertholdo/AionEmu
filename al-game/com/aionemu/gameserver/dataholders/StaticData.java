@@ -6,64 +6,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "ae_static_data")
 @XmlAccessorType(XmlAccessType.NONE)
-public class StaticData
-{
+public class StaticData {
   @XmlElement(name = "world_maps")
   public WorldMapsData worldMapsData;
   @XmlElement(name = "npc_trade_list")
@@ -124,7 +69,7 @@ public class StaticData
   public PetSkillData petSkillData;
   @XmlElement(name = "siege_locations")
   public SiegeLocationData siegeLocationData;
-  
+
   private void afterUnmarshal(Unmarshaller unmarshaller, Object parent) {
     DataManager.log.info("Loaded world maps data: " + this.worldMapsData.size() + " maps");
     DataManager.log.info("Loaded player exp table: " + this.playerExperienceTable.getMaxLevel() + " levels");
@@ -157,9 +102,3 @@ public class StaticData
     DataManager.log.info("Loaded " + this.siegeLocationData.size() + " siege location entries");
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\dataholders\StaticData.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

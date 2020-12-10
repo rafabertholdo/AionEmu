@@ -6,41 +6,15 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_FRIEND_LIST
-  extends AionServerPacket
-{
+public class SM_FRIEND_LIST extends AionServerPacket {
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     FriendList list = con.getActivePlayer().getFriendList();
-    
+
     writeH(buf, 0 - list.getSize());
     writeC(buf, 0);
-    
+
     for (Friend friend : list) {
-      
+
       writeS(buf, friend.getName());
       writeD(buf, friend.getLevel());
       writeD(buf, friend.getPlayerClass().getClassId());
@@ -49,12 +23,6 @@ public class SM_FRIEND_LIST
       writeD(buf, friend.getLastOnlineTime());
       writeS(buf, friend.getNote());
       writeC(buf, friend.getStatus().getIntValue());
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_FRIEND_LIST.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

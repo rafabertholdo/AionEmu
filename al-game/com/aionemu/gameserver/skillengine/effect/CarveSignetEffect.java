@@ -10,54 +10,30 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CarveSignetEffect")
-public class CarveSignetEffect
-  extends DamageEffect
-{
+public class CarveSignetEffect extends DamageEffect {
   @XmlAttribute(required = true)
   protected int signetlvl;
   @XmlAttribute(required = true)
   protected int signetid;
   @XmlAttribute(required = true)
   protected String signet;
-  
+
   public void applyEffect(Effect effect) {
     super.applyEffect(effect);
-    
+
     Creature effected = effect.getEffected();
     Effect placedSignet = effected.getEffectController().getAnormalEffect(this.signet);
     int nextSignetlvl = 1;
     if (placedSignet != null) {
-      
+
       nextSignetlvl = placedSignet.getSkillId() - this.signetid + 2;
       if (nextSignetlvl > this.signetlvl || nextSignetlvl > 5)
-        return; 
+        return;
       placedSignet.endEffect();
-    } 
-    
+    }
+
     SkillTemplate template = DataManager.SKILL_DATA.getSkillTemplate(this.signetid + nextSignetlvl - 1);
     int effectsDuration = template.getEffectsDuration();
     Effect newEffect = new Effect(effect.getEffector(), effect.getEffected(), template, nextSignetlvl, effectsDuration);
@@ -65,15 +41,7 @@ public class CarveSignetEffect
     newEffect.applyEffect();
   }
 
-
-  
   public void calculate(Effect effect) {
     calculate(effect, DamageType.PHYSICAL);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\CarveSignetEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

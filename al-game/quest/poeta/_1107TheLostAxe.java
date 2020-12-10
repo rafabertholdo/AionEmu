@@ -14,103 +14,69 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1107TheLostAxe
-  extends QuestHandler
-{
+public class _1107TheLostAxe extends QuestHandler {
   private static final int questId = 1107;
-  
+
   public _1107TheLostAxe() {
     super(Integer.valueOf(1107));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203075).addOnTalkEvent(1107);
     this.qe.setQuestItemIds(182200501).add(1107);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1107);
-    
+
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     if (targetId == 0) {
-      
+
       if (env.getDialogId().intValue() == 1002) {
-        
+
         QuestService.startQuest(env, QuestStatus.START);
-        PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(0, 0));
+        PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_DIALOG_WINDOW(0, 0));
         return true;
-      } 
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(0, 0));
-    }
-    else if (targetId == 203075) {
-      
+      }
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_DIALOG_WINDOW(0, 0));
+    } else if (targetId == 203075) {
+
       if (qs != null) {
-        
-        if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START)
-        {
+
+        if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START) {
           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
         }
         if (env.getDialogId().intValue() == 1009) {
-          
+
           ItemService.removeItemFromInventoryByItemId(player, 182200501);
           qs.setQuestVar(1);
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return defaultQuestEndDialog(env);
-        } 
-        
+        }
+
         return defaultQuestEndDialog(env);
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     Player player = env.getPlayer();
     int id = item.getItemTemplate().getTemplateId();
     int itemObjId = item.getObjectId();
     QuestState qs = player.getQuestStateList().getQuestState(1107);
-    
+
     if (id != 182200501)
-      return false; 
-    PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+      return false;
+    PacketSendUtility.broadcastPacket(player,
+        (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
     if (qs == null || qs.getStatus() == QuestStatus.NONE)
-      sendQuestDialog(player, 0, 4); 
+      sendQuestDialog(player, 0, 4);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\poeta\_1107TheLostAxe.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

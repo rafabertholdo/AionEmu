@@ -9,42 +9,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
 @XmlRootElement(name = "npc_walker")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class WalkerData
-{
+public class WalkerData {
   @XmlElement(name = "walker_template")
   private List<WalkerTemplate> walkerlist;
   private TIntObjectHashMap<WalkerTemplate> walkerlistData = new TIntObjectHashMap();
 
-  
   void afterUnmarshal(Unmarshaller u, Object parent) {
-    for (WalkerTemplate route : this.walkerlist)
-    {
+    for (WalkerTemplate route : this.walkerlist) {
       this.walkerlistData.put(route.getRouteId(), route);
     }
   }
 
-  
   public int size() {
     return this.walkerlistData.size();
   }
 
-  
   public WalkerTemplate getWalkerTemplate(int id) {
-    return (WalkerTemplate)this.walkerlistData.get(id);
+    return (WalkerTemplate) this.walkerlistData.get(id);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\dataholders\WalkerData.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

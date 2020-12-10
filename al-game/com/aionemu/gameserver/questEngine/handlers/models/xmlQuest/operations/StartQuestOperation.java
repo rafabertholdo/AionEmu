@@ -11,12 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 public class StartQuestOperation extends QuestOperation {
   @XmlAttribute(required = true)
   protected int id;
-  
-  public void doOperate(QuestEnv env) {}
+
+  public void doOperate(QuestEnv env) {
+  }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\operations\StartQuestOperation.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

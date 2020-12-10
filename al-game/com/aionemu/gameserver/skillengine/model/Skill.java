@@ -28,42 +28,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class Skill
-{
+public class Skill {
   private List<Creature> effectedList;
   private Creature firstTarget;
   private Creature effector;
@@ -81,35 +46,16 @@ public class Skill
   private int changeMpConsumptionValue;
   private float firstTargetRange;
   private int duration;
-  
-  public enum SkillType
-  {
-    CAST,
-    ITEM,
-    PASSIVE;
+
+  public enum SkillType {
+    CAST, ITEM, PASSIVE;
   }
 
-
-
-
-
-
-
-
-
-  
   public Skill(SkillTemplate skillTemplate, Player effector, Creature firstTarget) {
-    this(skillTemplate, (Creature)effector, effector.getSkillList().getSkillLevel(skillTemplate.getSkillId()), firstTarget);
+    this(skillTemplate, (Creature) effector, effector.getSkillList().getSkillLevel(skillTemplate.getSkillId()),
+        firstTarget);
   }
 
-
-
-
-
-
-
-
-  
   public Skill(SkillTemplate skillTemplate, Creature effector, int skillLvl, Creature firstTarget) {
     this.effectedList = new ArrayList<Creature>();
     this.conditionChangeListener = new StartMovingListener();
@@ -120,13 +66,6 @@ public class Skill
     this.effector = effector;
   }
 
-
-
-
-
-
-
-  
   public boolean canUseSkill() {
     if (!setProperties(this.skillTemplate.getInitproperties())) {
       return false;
@@ -137,465 +76,311 @@ public class Skill
     if (!setProperties(this.skillTemplate.getSetproperties())) {
       return false;
     }
-    
+
     this.effector.setCasting(this);
     Iterator<Creature> effectedIter = this.effectedList.iterator();
     while (effectedIter.hasNext()) {
-      
+
       Creature effected = effectedIter.next();
       if (effected == null) {
         effected = this.effector;
       }
       if (this.effector instanceof Player) {
-        
-        if (!RestrictionsManager.canAffectBySkill((Player)this.effector, (VisibleObject)effected) && this.skillTemplate.getSkillId() != 1968) {
+
+        if (!RestrictionsManager.canAffectBySkill((Player) this.effector, (VisibleObject) effected)
+            && this.skillTemplate.getSkillId() != 1968) {
           effectedIter.remove();
         }
         continue;
-      } 
-      if (this.effector.getEffectController().isAbnormalState(EffectId.CANT_ATTACK_STATE) && this.skillTemplate.getSkillId() != 1968) {
+      }
+      if (this.effector.getEffectController().isAbnormalState(EffectId.CANT_ATTACK_STATE)
+          && this.skillTemplate.getSkillId() != 1968) {
         effectedIter.remove();
       }
-    } 
+    }
     this.effector.setCasting(null);
 
-    
-    if (this.targetType == 0 && this.effectedList.size() == 0)
-    {
+    if (this.targetType == 0 && this.effectedList.size() == 0) {
       return false;
     }
     return true;
   }
 
-
-
-
-  
   public void useSkill() {
     if (!canUseSkill()) {
       return;
     }
     this.changeMpConsumptionValue = 0;
-    
+
     this.effector.getObserveController().notifySkilluseObservers(this);
 
-    
     this.effector.setCasting(this);
-    
+
     checkSkillSetException();
-    
+
     int skillDuration = this.skillTemplate.getDuration();
     int currentStat = this.effector.getGameStats().getCurrentStat(StatEnum.BOOST_CASTING_TIME);
     this.duration = skillDuration + Math.round((skillDuration * (100 - currentStat)) / 100.0F);
-    
+
     int cooldown = this.skillTemplate.getCooldown();
     if (cooldown != 0) {
-      this.effector.setSkillCoolDown(this.skillTemplate.getSkillId(), (cooldown * 100 + this.duration) + System.currentTimeMillis());
+      this.effector.setSkillCoolDown(this.skillTemplate.getSkillId(),
+          (cooldown * 100 + this.duration) + System.currentTimeMillis());
     }
     if (this.duration < 0) {
       this.duration = 0;
     }
-    if (this.skillTemplate.isActive() || this.skillTemplate.isToggle())
-    {
+    if (this.skillTemplate.isActive() || this.skillTemplate.isToggle()) {
       startCast();
     }
-    
-    this.effector.getObserveController().attach((ActionObserver)this.conditionChangeListener);
-    
+
+    this.effector.getObserveController().attach((ActionObserver) this.conditionChangeListener);
+
     if (this.duration > 0) {
-      
+
       schedule(this.duration);
-    }
-    else {
-      
+    } else {
+
       endCast();
-    } 
+    }
   }
 
-
-
-
-  
   private void startPenaltySkill() {
     if (this.skillTemplate.getPenaltySkillId() == 0) {
       return;
     }
-    Skill skill = SkillEngine.getInstance().getSkill(this.effector, this.skillTemplate.getPenaltySkillId(), 1, (VisibleObject)this.firstTarget);
+    Skill skill = SkillEngine.getInstance().getSkill(this.effector, this.skillTemplate.getPenaltySkillId(), 1,
+        (VisibleObject) this.firstTarget);
     skill.useSkill();
   }
 
-
-
-
-  
   private void startCast() {
     int targetObjId = (this.firstTarget != null) ? this.firstTarget.getObjectId() : 0;
-    
+
     switch (this.targetType) {
-      
+
       case 0:
-        PacketSendUtility.broadcastPacketAndReceive((VisibleObject)this.effector, (AionServerPacket)new SM_CASTSPELL(this.effector.getObjectId(), this.skillTemplate.getSkillId(), this.skillLevel, this.targetType, targetObjId, this.duration));
+        PacketSendUtility.broadcastPacketAndReceive((VisibleObject) this.effector,
+            (AionServerPacket) new SM_CASTSPELL(this.effector.getObjectId(), this.skillTemplate.getSkillId(),
+                this.skillLevel, this.targetType, targetObjId, this.duration));
         break;
 
-
-
-
-
-
-
-      
       case 1:
-        PacketSendUtility.broadcastPacketAndReceive((VisibleObject)this.effector, (AionServerPacket)new SM_CASTSPELL(this.effector.getObjectId(), this.skillTemplate.getSkillId(), this.skillLevel, this.targetType, this.x, this.y, this.z, this.duration));
+        PacketSendUtility.broadcastPacketAndReceive((VisibleObject) this.effector,
+            (AionServerPacket) new SM_CASTSPELL(this.effector.getObjectId(), this.skillTemplate.getSkillId(),
+                this.skillLevel, this.targetType, this.x, this.y, this.z, this.duration));
         break;
-    } 
+    }
   }
 
-
-
-
-
-
-
-
-
-
-
-  
   private void endCast() {
     if (!this.effector.isCasting()) {
       return;
     }
-    
-    if (!checkEndCast())
-    {
+
+    if (!checkEndCast()) {
       if (this.effector instanceof Player) {
-        
-        Player player = (Player)this.effector;
+
+        Player player = (Player) this.effector;
         player.getController().cancelCurrentSkill();
-        PacketSendUtility.sendPacket(player, (AionServerPacket)SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
-        
+        PacketSendUtility.sendPacket(player, (AionServerPacket) SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
+
         return;
-      } 
+      }
     }
-    
+
     this.effector.setCasting(null);
-    
+
     if (!preUsageCheck()) {
       return;
     }
 
-
-    
     int spellStatus = 0;
-    
+
     List<Effect> effects = new ArrayList<Effect>();
-    if (this.skillTemplate.getEffects() != null)
-    {
+    if (this.skillTemplate.getEffects() != null) {
       for (Creature effected : this.effectedList) {
-        
+
         Effect effect = new Effect(this.effector, effected, this.skillTemplate, this.skillLevel, 0, this.itemTemplate);
         effect.initialize();
         spellStatus = effect.getSpellStatus().getId();
         effects.add(effect);
-      } 
+      }
     }
 
-    
     int chainProb = this.skillTemplate.getChainSkillProb();
-    if (chainProb != 0)
-    {
+    if (chainProb != 0) {
       if (Rnd.get(100) < chainProb) {
         this.chainSuccess = true;
       } else {
         this.chainSuccess = false;
-      } 
+      }
     }
 
-
-    
-    if (this.skillTemplate.isActive() || this.skillTemplate.isToggle())
-    {
+    if (this.skillTemplate.isActive() || this.skillTemplate.isToggle()) {
       sendCastspellEnd(spellStatus, effects);
     }
 
-
-
-    
     Actions skillActions = this.skillTemplate.getActions();
-    if (skillActions != null)
-    {
-      for (Action action : skillActions.getActions())
-      {
+    if (skillActions != null) {
+      for (Action action : skillActions.getActions()) {
         action.act(this);
       }
     }
 
-
-
-    
-    for (Effect effect : effects)
-    {
+    for (Effect effect : effects) {
       effect.applyEffect();
     }
 
-
-
-    
     startPenaltySkill();
   }
 
-
-
-
-
-  
   private void sendCastspellEnd(int spellStatus, List<Effect> effects) {
     switch (this.targetType) {
-      
+
       case 0:
-        PacketSendUtility.broadcastPacketAndReceive((VisibleObject)this.effector, (AionServerPacket)new SM_CASTSPELL_END(this.effector, this.firstTarget, effects, this.skillTemplate.getSkillId(), this.skillLevel, this.skillTemplate.getCooldown(), this.chainSuccess, spellStatus));
+        PacketSendUtility.broadcastPacketAndReceive((VisibleObject) this.effector,
+            (AionServerPacket) new SM_CASTSPELL_END(this.effector, this.firstTarget, effects,
+                this.skillTemplate.getSkillId(), this.skillLevel, this.skillTemplate.getCooldown(), this.chainSuccess,
+                spellStatus));
         break;
 
-
-
-
-
-
-
-
-
-      
       case 1:
-        PacketSendUtility.broadcastPacketAndReceive((VisibleObject)this.effector, (AionServerPacket)new SM_CASTSPELL_END(this.effector, this.firstTarget, effects, this.skillTemplate.getSkillId(), this.skillLevel, this.skillTemplate.getCooldown(), this.chainSuccess, spellStatus, this.x, this.y, this.z));
+        PacketSendUtility.broadcastPacketAndReceive((VisibleObject) this.effector,
+            (AionServerPacket) new SM_CASTSPELL_END(this.effector, this.firstTarget, effects,
+                this.skillTemplate.getSkillId(), this.skillLevel, this.skillTemplate.getCooldown(), this.chainSuccess,
+                spellStatus, this.x, this.y, this.z));
         break;
-    } 
+    }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-  
   private void schedule(int delay) {
-    ThreadPoolManager.getInstance().schedule(new Runnable()
-        {
-          public void run()
-          {
-            Skill.this.endCast();
-          }
-        },  delay);
+    ThreadPoolManager.getInstance().schedule(new Runnable() {
+      public void run() {
+        Skill.this.endCast();
+      }
+    }, delay);
   }
 
-
-
-
-  
   private boolean preCastCheck() {
     Conditions skillConditions = this.skillTemplate.getStartconditions();
     return checkConditions(skillConditions);
   }
 
-
-
-
-  
   private boolean preUsageCheck() {
     Conditions skillConditions = this.skillTemplate.getUseconditions();
     return checkConditions(skillConditions);
   }
 
-  
   private boolean checkConditions(Conditions conditions) {
-    if (conditions != null)
-    {
+    if (conditions != null) {
       for (Condition condition : conditions.getConditions()) {
-        
-        if (!condition.verify(this))
-        {
+
+        if (!condition.verify(this)) {
           return false;
         }
-      } 
+      }
     }
     return true;
   }
 
-  
   private boolean setProperties(Properties properties) {
-    if (properties != null)
-    {
+    if (properties != null) {
       for (Property property : properties.getProperties()) {
-        
-        if (!property.set(this))
-        {
+
+        if (!property.set(this)) {
           return false;
         }
-      } 
+      }
     }
     return true;
   }
 
-  
   private void checkSkillSetException() {
     int setNumber = this.skillTemplate.getSkillSetException();
     if (this.effector instanceof Player) {
-      
-      Player player = (Player)this.effector;
+
+      Player player = (Player) this.effector;
       if (setNumber != 0) {
         player.getEffectController().removeEffectBySetNumber(setNumber);
       } else {
         player.getEffectController().removeEffectWithSetNumberReserved();
-      } 
-    } 
+      }
+    }
   }
 
-
-
-  
   public void setChangeMpConsumption(int value) {
     this.changeMpConsumptionValue = value;
   }
 
-
-
-
-  
   public int getChangeMpConsumption() {
     return this.changeMpConsumptionValue;
   }
 
-
-
-
-  
   private boolean checkEndCast() {
     if (this.firstTargetRange == 0.0F) {
       return true;
     }
     if (this.effector == this.firstTarget)
-      return true; 
-    if (!MathUtil.isIn3dRange((VisibleObject)this.effector, (VisibleObject)this.firstTarget, this.firstTargetRange + 4.0F))
-      return false; 
+      return true;
+    if (!MathUtil.isIn3dRange((VisibleObject) this.effector, (VisibleObject) this.firstTarget,
+        this.firstTargetRange + 4.0F))
+      return false;
     return true;
   }
 
-
-
-
-  
   public void setFirstTargetRange(float value) {
     this.firstTargetRange = value;
   }
 
-
-
-
-  
   public List<Creature> getEffectedList() {
     return this.effectedList;
   }
 
-
-
-
-  
   public Creature getEffector() {
     return this.effector;
   }
 
-
-
-
-  
   public int getSkillLevel() {
     return this.skillLevel;
   }
 
-
-
-
-  
   public int getSkillStackLvl() {
     return this.skillStackLvl;
   }
 
-
-
-
-  
   public StartMovingListener getConditionChangeListener() {
     return this.conditionChangeListener;
   }
 
-
-
-
-  
   public SkillTemplate getSkillTemplate() {
     return this.skillTemplate;
   }
 
-
-
-
-  
   public Creature getFirstTarget() {
     return this.firstTarget;
   }
 
-
-
-
-  
   public void setFirstTarget(Creature firstTarget) {
     this.firstTarget = firstTarget;
   }
 
-
-
-
-  
   public boolean isPassive() {
     return (this.skillTemplate.getActivationAttribute() == ActivationAttribute.PASSIVE);
   }
 
-
-
-
-  
   public boolean isFirstTargetRangeCheck() {
     return this.firstTargetRangeCheck;
   }
 
-
-
-
-  
   public void setFirstTargetRangeCheck(boolean firstTargetRangeCheck) {
     this.firstTargetRangeCheck = firstTargetRangeCheck;
   }
 
-
-
-
-  
   public void setItemTemplate(ItemTemplate itemTemplate) {
     this.itemTemplate = itemTemplate;
   }
 
-
-
-
-
-
-
-  
   public void setTargetType(int targetType, float x, float y, float z) {
     this.targetType = targetType;
     this.x = x;
@@ -603,9 +388,3 @@ public class Skill
     this.z = z;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\model\Skill.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

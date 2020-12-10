@@ -8,32 +8,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_GROUP_INFO
-  extends AionServerPacket
-{
+public class SM_GROUP_INFO extends AionServerPacket {
   private int groupid;
   private int leaderid;
   private LootRuleType lootruletype;
@@ -45,11 +20,11 @@ public class SM_GROUP_INFO
   private int ethernal_item_above;
   private int over_ethernal;
   private int over_over_ethernal;
-  
+
   public SM_GROUP_INFO(PlayerGroup group) {
     this.groupid = group.getGroupId();
     this.leaderid = group.getGroupLeader().getObjectId();
-    
+
     LootGroupRules lootRules = group.getLootGroupRules();
     this.lootruletype = lootRules.getLootRule();
     this.autodistribution = lootRules.getAutodistribution();
@@ -62,8 +37,6 @@ public class SM_GROUP_INFO
     this.over_over_ethernal = lootRules.getOverOverEthernal();
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.groupid);
     writeD(buf, this.leaderid);
@@ -81,9 +54,3 @@ public class SM_GROUP_INFO
     writeC(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_GROUP_INFO.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

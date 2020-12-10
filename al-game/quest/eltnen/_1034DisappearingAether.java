@@ -17,35 +17,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1034DisappearingAether
-  extends QuestHandler
-{
+public class _1034DisappearingAether extends QuestHandler {
   private static final int questId = 1034;
-  
+
   public _1034DisappearingAether() {
     super(Integer.valueOf(1034));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1034);
     this.qe.setNpcQuestData(203903).addOnTalkEvent(1034);
@@ -53,8 +31,6 @@ public class _1034DisappearingAether
     this.qe.setNpcQuestData(700149).addOnTalkEvent(1034);
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1034);
@@ -64,14 +40,12 @@ public class _1034DisappearingAether
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(1300);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1034);
@@ -179,9 +153,3 @@ public class _1034DisappearingAether
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1034DisappearingAether.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

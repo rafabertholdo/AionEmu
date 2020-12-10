@@ -13,47 +13,21 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PulledEffect")
-public class PulledEffect
-  extends EffectTemplate
-{
+public class PulledEffect extends EffectTemplate {
   public void applyEffect(Effect effect) {
     effect.addToEffectedController();
   }
 
-
-  
   public void calculate(Effect effect) {
-    if (effect.getEffector() instanceof com.aionemu.gameserver.model.gameobjects.player.Player && effect.getEffected() != null)
-    {
+    if (effect.getEffector() instanceof com.aionemu.gameserver.model.gameobjects.player.Player
+        && effect.getEffected() != null) {
       effect.addSucessEffect(this);
     }
     effect.setSpellStatus(SpellStatus.NONE);
   }
 
-
-  
   public void startEffect(Effect effect) {
     final Creature effector = effect.getEffector();
     final Creature effected = effect.getEffected();
@@ -74,15 +48,7 @@ public class PulledEffect
         }1000L);
   }
 
-
-  
   public void endEffect(Effect effect) {
     effect.getEffected().getEffectController().unsetAbnormal(EffectId.CANNOT_MOVE.getEffectId());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\PulledEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

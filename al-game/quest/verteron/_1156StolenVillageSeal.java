@@ -16,18 +16,18 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
 public class _1156StolenVillageSeal extends QuestHandler {
-    private static final int questId = 1156;
+  private static final int questId = 1156;
 
-    public _1156StolenVillageSeal() {
-        super(Integer.valueOf(1156));
-    }
+  public _1156StolenVillageSeal() {
+    super(Integer.valueOf(1156));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(203128).addOnQuestStart(1156);
-        this.qe.setNpcQuestData(203128).addOnTalkEvent(1156);
-        this.qe.setNpcQuestData(700003).addOnTalkEvent(1156);
-        this.qe.setNpcQuestData(798003).addOnTalkEvent(1156);
-    }
+  public void register() {
+    this.qe.setNpcQuestData(203128).addOnQuestStart(1156);
+    this.qe.setNpcQuestData(203128).addOnTalkEvent(1156);
+    this.qe.setNpcQuestData(700003).addOnTalkEvent(1156);
+    this.qe.setNpcQuestData(798003).addOnTalkEvent(1156);
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -103,10 +103,3 @@ public class _1156StolenVillageSeal extends QuestHandler {
     return false;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1156StolenVillageSeal.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

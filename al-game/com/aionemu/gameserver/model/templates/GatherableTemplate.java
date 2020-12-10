@@ -7,40 +7,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "gatherable_template")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GatherableTemplate
-  extends VisibleObjectTemplate
-{
+public class GatherableTemplate extends VisibleObjectTemplate {
   @XmlElement(required = true)
   protected Materials materials;
   @XmlAttribute
@@ -65,135 +34,52 @@ public class GatherableTemplate
   protected String desc;
   @XmlAttribute
   protected int id;
-  
+
   public Materials getMaterials() {
     return this.materials;
   }
 
-
-
-
-  
   public int getTemplateId() {
     return this.id;
   }
 
-
-
-
-
-
-
-
-  
   public int getAerialAdj() {
     return this.aerialAdj;
   }
 
-
-
-
-
-
-
-
-  
   public int getFailureAdj() {
     return this.failureAdj;
   }
 
-
-
-
-
-
-
-
-  
   public int getSuccessAdj() {
     return this.successAdj;
   }
 
-
-
-
-
-
-
-
-  
   public int getHarvestSkill() {
     return this.harvestSkill;
   }
 
-
-
-
-
-
-
-
-  
   public int getSkillLevel() {
     return this.skillLevel;
   }
 
-
-
-
-
-
-
-
-  
   public int getHarvestCount() {
     return this.harvestCount;
   }
 
-
-
-
-
-
-
-
-  
   public String getSourceType() {
     return this.sourceType;
   }
 
-
-
-
-
-
-
-
-
-  
   public String getName() {
     return this.name;
   }
 
-
-
-
-
-  
   public int getNameId() {
     return this.nameId;
   }
 
-
-
-  
   public String getDesc() {
     return this.desc;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\GatherableTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

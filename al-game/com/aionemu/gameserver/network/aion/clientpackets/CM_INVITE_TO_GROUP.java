@@ -12,78 +12,41 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.Util;
 import com.aionemu.gameserver.world.World;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_INVITE_TO_GROUP
-  extends AionClientPacket
-{
+public class CM_INVITE_TO_GROUP extends AionClientPacket {
   private String name;
   private int inviteType;
-  
+
   public CM_INVITE_TO_GROUP(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     this.inviteType = readC();
     this.name = readS();
   }
 
-
-
-
-
-  
   protected void runImpl() {
     String playerName = Util.convertName(this.name);
-    
-    Player inviter = ((AionConnection)getConnection()).getActivePlayer();
+
+    Player inviter = ((AionConnection) getConnection()).getActivePlayer();
     Player invited = World.getInstance().findPlayer(playerName);
-    
+
     if (invited != null) {
-      
+
       if (invited.getPlayerSettings().isInDeniedStatus(DeniedStatus.GROUP)) {
-        
-        sendPacket((AionServerPacket)SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_INVITE_PARTY(invited.getName()));
+
+        sendPacket((AionServerPacket) SM_SYSTEM_MESSAGE.STR_MSG_REJECTED_INVITE_PARTY(invited.getName()));
         return;
-      } 
+      }
       if (this.inviteType == 0) {
         GroupService.getInstance().invitePlayerToGroup(inviter, invited);
       } else if (this.inviteType == 10) {
         AllianceService.getInstance().invitePlayerToAlliance(inviter, invited);
       } else {
         PacketSendUtility.sendMessage(inviter, "You used an unknown invite type: " + this.inviteType);
-      } 
+      }
     } else {
-      inviter.getClientConnection().sendPacket((AionServerPacket)SM_SYSTEM_MESSAGE.PLAYER_IS_OFFLINE(this.name));
-    } 
+      inviter.getClientConnection().sendPacket((AionServerPacket) SM_SYSTEM_MESSAGE.PLAYER_IS_OFFLINE(this.name));
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_INVITE_TO_GROUP.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

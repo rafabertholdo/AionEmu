@@ -1,67 +1,20 @@
 package com.aionemu.commons.database.dao;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class DAONotFoundException
-  extends DAOException
-{
+public class DAONotFoundException extends DAOException {
   private static final long serialVersionUID = 4241980426435305296L;
-  
-  public DAONotFoundException() {}
-  
+
+  public DAONotFoundException() {
+  }
+
   public DAONotFoundException(String message) {
     super(message);
   }
 
-
-
-
-
-
-  
   public DAONotFoundException(String message, Throwable cause) {
     super(message, cause);
   }
 
-
-
-
-  
   public DAONotFoundException(Throwable cause) {
     super(cause);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\commons\database\dao\DAONotFoundException.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

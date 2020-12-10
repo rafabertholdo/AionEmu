@@ -11,36 +11,7 @@ import com.aionemu.gameserver.services.ClassChangeService;
 import com.aionemu.gameserver.world.World;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_DIALOG_SELECT
-  extends AionClientPacket
-{
+public class CM_DIALOG_SELECT extends AionClientPacket {
   private int targetObjectId;
   private int dialogId;
   private int unk1;
@@ -48,20 +19,10 @@ public class CM_DIALOG_SELECT
   private int questId;
   private static final Logger log = Logger.getLogger(CM_DIALOG_SELECT.class);
 
-
-
-
-
-  
   public CM_DIALOG_SELECT(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     this.targetObjectId = readD();
     this.dialogId = readH();
@@ -70,37 +31,27 @@ public class CM_DIALOG_SELECT
     this.questId = readD();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
     if (player == null) {
       return;
     }
     if (this.targetObjectId == 0) {
-      
-      if (QuestEngine.getInstance().onDialog(new QuestEnv(null, player, Integer.valueOf(this.questId), Integer.valueOf(this.dialogId)))) {
+
+      if (QuestEngine.getInstance()
+          .onDialog(new QuestEnv(null, player, Integer.valueOf(this.questId), Integer.valueOf(this.dialogId)))) {
         return;
       }
       ClassChangeService.changeClassToSelection(player, this.dialogId);
-      
+
       return;
-    } 
+    }
     AionObject object = World.getInstance().findAionObject(this.targetObjectId);
-    
+
     if (object instanceof Creature) {
-      
-      Creature creature = (Creature)object;
+
+      Creature creature = (Creature) object;
       creature.getController().onDialogSelect(this.dialogId, player, this.questId);
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_DIALOG_SELECT.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -9,167 +9,58 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.apache.log4j.helpers.LogLog;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class JuliToLog4JHandler
-  extends Handler
-{
+public class JuliToLog4JHandler extends Handler {
   public void publish(LogRecord record) {
     String loggerName = record.getLoggerName();
-    if (loggerName == null)
-    {
+    if (loggerName == null) {
       loggerName = "";
     }
-    
+
     Logger log = Logger.getLogger(loggerName);
     Level level = toLog4jLevel(record.getLevel());
-    
-    log.log(Logger.class.getName(), (Priority)level, record.getMessage(), record.getThrown());
+
+    log.log(Logger.class.getName(), (Priority) level, record.getMessage(), record.getThrown());
   }
 
-
-
-
-
-
-
-
-
-  
   protected Level toLog4jLevel(Level juliLevel) {
-    if (Level.OFF.equals(juliLevel))
-    {
+    if (Level.OFF.equals(juliLevel)) {
       return Level.OFF;
     }
-    if (Level.SEVERE.equals(juliLevel))
-    {
+    if (Level.SEVERE.equals(juliLevel)) {
       return Level.ERROR;
     }
-    if (Level.WARNING.equals(juliLevel))
-    {
+    if (Level.WARNING.equals(juliLevel)) {
       return Level.WARN;
     }
-    if (Level.INFO.equals(juliLevel))
-    {
+    if (Level.INFO.equals(juliLevel)) {
       return Level.INFO;
     }
-    if (Level.CONFIG.equals(juliLevel) || Level.FINE.equals(juliLevel))
-    {
+    if (Level.CONFIG.equals(juliLevel) || Level.FINE.equals(juliLevel)) {
       return Level.DEBUG;
     }
-    if (Level.FINER.equals(juliLevel) || Level.FINEST.equals(juliLevel))
-    {
+    if (Level.FINER.equals(juliLevel) || Level.FINEST.equals(juliLevel)) {
       return Level.TRACE;
     }
-    if (Level.ALL.equals(juliLevel))
-    {
+    if (Level.ALL.equals(juliLevel)) {
       return Level.ALL;
     }
 
-
-    
     LogLog.warn("Warning: usage of custom JULI level: " + juliLevel.getName(), new Exception());
 
-
-
-
-
-
-    
     return new CustomLog4jLevel(juliLevel.intValue(), juliLevel.getName(), juliLevel.intValue());
   }
 
+  public void flush() {
+  }
 
+  public void close() throws SecurityException {
+  }
 
-
-
-
-
-
-
-  
-  public void flush() {}
-
-
-
-
-
-
-
-
-
-  
-  public void close() throws SecurityException {}
-
-
-
-
-
-
-
-
-  
-  protected static class CustomLog4jLevel
-    extends Level
-  {
+  protected static class CustomLog4jLevel extends Level {
     private static final long serialVersionUID = 4014557380173323844L;
 
-
-
-
-
-
-
-
-    
     protected CustomLog4jLevel(int level, String levelStr, int syslogEquivalent) {
       super(level, levelStr, syslogEquivalent);
     }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\commons\log4j\JuliToLog4JHandler.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

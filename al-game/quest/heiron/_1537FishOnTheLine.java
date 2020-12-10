@@ -14,36 +14,13 @@ import com.aionemu.gameserver.questEngine.model.QuestStatus;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1537FishOnTheLine
-  extends QuestHandler
-{
+public class _1537FishOnTheLine extends QuestHandler {
   private static final int questId = 1537;
-  
+
   public _1537FishOnTheLine() {
     super(Integer.valueOf(1537));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(204588).addOnQuestStart(1537);
     this.qe.setNpcQuestData(204588).addOnTalkEvent(1537);
@@ -52,8 +29,6 @@ public class _1537FishOnTheLine
     this.qe.setNpcQuestData(730191).addOnTalkEvent(1537);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -164,9 +139,3 @@ public class _1537FishOnTheLine
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1537FishOnTheLine.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

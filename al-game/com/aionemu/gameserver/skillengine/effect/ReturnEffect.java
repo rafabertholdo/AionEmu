@@ -7,48 +7,15 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ReturnEffect")
-public class ReturnEffect
-  extends EffectTemplate
-{
+public class ReturnEffect extends EffectTemplate {
   public void applyEffect(Effect effect) {
-    TeleportService.moveToBindLocation((Player)effect.getEffector(), true, 500);
+    TeleportService.moveToBindLocation((Player) effect.getEffector(), true, 500);
   }
 
-
-  
   public void calculate(Effect effect) {
     if (effect.getEffected().isSpawned())
-      effect.addSucessEffect(this); 
+      effect.addSucessEffect(this);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\ReturnEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

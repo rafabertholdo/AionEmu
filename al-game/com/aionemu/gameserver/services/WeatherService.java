@@ -16,107 +16,41 @@ import java.util.Map;
 import java.util.Set;
 import javolution.util.FastMap;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class WeatherService
-{
+public class WeatherService {
   private final long WEATHER_DURATION = 7200000L;
-  
+
   private final long CHECK_INTERVAL = 120000L;
-  
+
   private Map<WeatherKey, Integer> worldWeathers;
 
-  
   public static final WeatherService getInstance() {
     return SingletonHolder.instance;
   }
 
-  
   private WeatherService() {
-    this.worldWeathers = (Map<WeatherKey, Integer>)new FastMap();
-    ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable()
-        {
+    this.worldWeathers = (Map<WeatherKey, Integer>) new FastMap();
+    ThreadPoolManager.getInstance().scheduleAtFixedRate(new Runnable() {
 
-
-
-          
-          public void run()
-          {
-            WeatherService.this.checkWeathersTime();
-          }
-        },  120000L, 120000L);
+      public void run() {
+        WeatherService.this.checkWeathersTime();
+      }
+    }, 120000L, 120000L);
   }
 
-
-
-
-
-
-
-  
-  private class WeatherKey
-  {
+  private class WeatherKey {
     private Date created;
 
-
-
-
-
-
-    
     private WorldMap map;
 
-
-
-
-
-
-
-    
     public WeatherKey(Date date, WorldMap worldMap) {
       this.created = date;
       this.map = worldMap;
     }
 
-
-
-
-    
     public WorldMap getMap() {
       return this.map;
     }
 
-
-
-
-
-
-
-    
     public boolean isOutDated() {
       Date now = new Date();
       long nowTime = now.getTime();
@@ -126,98 +60,55 @@ public class WeatherService
     }
   }
 
-
-
-
-
-  
   private void checkWeathersTime() {
     List<WeatherKey> toBeRefreshed = new ArrayList<WeatherKey>();
     for (WeatherKey key : this.worldWeathers.keySet()) {
-      
-      if (key.isOutDated())
-      {
+
+      if (key.isOutDated()) {
         toBeRefreshed.add(key);
       }
-    } 
+    }
     for (WeatherKey key : toBeRefreshed) {
-      
+
       this.worldWeathers.remove(key);
       onWeatherChange(key.getMap(), null);
-    } 
+    }
   }
 
-
-
-
-  
   private int getRandomWeather() {
     return Rnd.get(0, 8);
   }
 
-
-
-
-
-
-  
   public void loadWeather(Player player) {
     WorldMap worldMap = player.getActiveRegion().getParent().getParent();
     onWeatherChange(worldMap, player);
   }
 
-
-
-
-
-
-
-  
   private WeatherKey getKeyFromMapByWorldMap(WorldMap map) {
     for (WeatherKey key : this.worldWeathers.keySet()) {
-      
-      if (key.getMap().equals(map))
-      {
+
+      if (key.getMap().equals(map)) {
         return key;
       }
-    } 
+    }
     WeatherKey newKey = new WeatherKey(new Date(), map);
     this.worldWeathers.put(newKey, Integer.valueOf(getRandomWeather()));
     return newKey;
   }
 
-
-
-
-
-  
   private int getWeatherTypeByRegion(WorldMap worldMap) {
     WeatherKey key = getKeyFromMapByWorldMap(worldMap);
-    return ((Integer)this.worldWeathers.get(key)).intValue();
+    return ((Integer) this.worldWeathers.get(key)).intValue();
   }
 
-
-
-
-  
   public void resetWeather() {
     Set<WeatherKey> loadedWeathers = new HashSet<WeatherKey>(this.worldWeathers.keySet());
     this.worldWeathers.clear();
-    for (WeatherKey key : loadedWeathers)
-    {
+    for (WeatherKey key : loadedWeathers) {
       onWeatherChange(key.getMap(), null);
     }
   }
 
-
-
-
-
-
-
-
-
-  
   public void changeRegionWeather(int regionId, Integer weatherType) {
     WorldMap worldMap = World.getInstance().getWorldMap(regionId);
     WeatherKey key = getKeyFromMapByWorldMap(worldMap);
@@ -225,47 +116,27 @@ public class WeatherService
     onWeatherChange(worldMap, null);
   }
 
-
-
-
-
-
-
-
-
-
-  
   private void onWeatherChange(WorldMap worldMap, Player player) {
     if (player == null) {
-      
-      for (Player currentPlayer : World.getInstance().getAllPlayers())
-      {
+
+      for (Player currentPlayer : World.getInstance().getAllPlayers()) {
         if (!currentPlayer.isSpawned()) {
           continue;
         }
         WorldMap currentPlayerWorldMap = currentPlayer.getActiveRegion().getParent().getParent();
-        if (currentPlayerWorldMap.equals(worldMap))
-        {
-          PacketSendUtility.sendPacket(currentPlayer, (AionServerPacket)new SM_WEATHER(getWeatherTypeByRegion(currentPlayerWorldMap)));
+        if (currentPlayerWorldMap.equals(worldMap)) {
+          PacketSendUtility.sendPacket(currentPlayer,
+              (AionServerPacket) new SM_WEATHER(getWeatherTypeByRegion(currentPlayerWorldMap)));
         }
       }
-    
+
+    } else {
+
+      PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_WEATHER(getWeatherTypeByRegion(worldMap)));
     }
-    else {
-      
-      PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_WEATHER(getWeatherTypeByRegion(worldMap)));
-    } 
   }
 
-  
-  private static class SingletonHolder
-  {
+  private static class SingletonHolder {
     protected static final WeatherService instance = new WeatherService();
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\services\WeatherService.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

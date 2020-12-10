@@ -130,10 +130,3 @@ public class _1194ReducingTursinStrength extends QuestHandler {
         return false;
     }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1194ReducingTursinStrength.class Java compiler version: 6
- * (50.0) JD-Core Version: 1.1.3
- */

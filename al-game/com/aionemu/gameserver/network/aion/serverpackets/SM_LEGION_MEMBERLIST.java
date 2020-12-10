@@ -6,52 +6,20 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_LEGION_MEMBERLIST
-  extends AionServerPacket
-{
+public class SM_LEGION_MEMBERLIST extends AionServerPacket {
   private static final int OFFLINE = 0;
   private static final int ONLINE = 1;
   private ArrayList<LegionMemberEx> legionMembers;
-  
+
   public SM_LEGION_MEMBERLIST(ArrayList<LegionMemberEx> legionMembers) {
     this.legionMembers = legionMembers;
   }
 
-
-  
   public void writeImpl(AionConnection con, ByteBuffer buf) {
     writeC(buf, 1);
     writeH(buf, 65536 - this.legionMembers.size());
     for (LegionMemberEx legionMember : this.legionMembers) {
-      
+
       writeD(buf, legionMember.getObjectId());
       writeS(buf, legionMember.getName());
       writeC(buf, legionMember.getPlayerClass().getClassId());
@@ -62,12 +30,6 @@ public class SM_LEGION_MEMBERLIST
       writeS(buf, legionMember.getSelfIntro());
       writeS(buf, legionMember.getNickname());
       writeD(buf, legionMember.getLastOnline());
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_LEGION_MEMBERLIST.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

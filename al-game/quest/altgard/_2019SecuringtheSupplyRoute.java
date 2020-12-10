@@ -14,38 +14,13 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2019SecuringtheSupplyRoute
-  extends QuestHandler
-{
+public class _2019SecuringtheSupplyRoute extends QuestHandler {
   private static final int questId = 2019;
-  
+
   public _2019SecuringtheSupplyRoute() {
     super(Integer.valueOf(2019));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(2019);
     this.qe.setNpcQuestData(798033).addOnTalkEvent(2019);
@@ -55,8 +30,6 @@ public class _2019SecuringtheSupplyRoute
     this.deletebleItems = new int[] { 182203024 };
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2019);
@@ -66,68 +39,69 @@ public class _2019SecuringtheSupplyRoute
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.START) {
-      
+
       switch (targetId) {
-        
+
         case 798033:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 0)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
               if (var == 4)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
               break;
             case 10000:
               if (var == 0) {
-                
+
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              } 
+              }
             case 10001:
               if (var == 4) {
-                
+
                 if (!ItemService.addItems(player, Collections.singletonList(new QuestItems(182203024, 1))))
-                  return true; 
+                  return true;
                 qs.setQuestVarById(0, var + 1);
                 updateQuestStatus(player, qs);
-                PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+                PacketSendUtility.sendPacket(player,
+                    (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
                 return true;
-              }  break;
-          } 
+              }
+              break;
+          }
         case 203673:
           switch (env.getDialogId().intValue()) {
-            
+
             case 25:
               if (var == 5)
-                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+                return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
             case 1009:
               if (var == 5) {
-                
+
                 ItemService.removeItemFromInventoryByItemId(player, 182203024);
                 qs.setStatus(QuestStatus.REWARD);
                 updateQuestStatus(player, qs);
                 return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-              } 
+              }
               break;
-          } 
+          }
           break;
-      } 
+      }
     } else if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 203673)
-        return defaultQuestEndDialog(env); 
-    } 
+        return defaultQuestEndDialog(env);
+    }
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2019);
@@ -137,38 +111,31 @@ public class _2019SecuringtheSupplyRoute
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     switch (targetId) {
-      
+
       case 210492:
       case 210493:
         if (var >= 1 && var < 4) {
-          
+
           qs.setQuestVarById(0, var + 1);
           updateQuestStatus(player, qs);
           return true;
-        }  break;
-    } 
+        }
+        break;
+    }
     return false;
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(2019);
     boolean lvlCheck = QuestService.checkLevelRequirement(2019, player.getCommonData().getLevel());
     if (qs == null || qs.getStatus() != QuestStatus.LOCKED || !lvlCheck)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2019SecuringtheSupplyRoute.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

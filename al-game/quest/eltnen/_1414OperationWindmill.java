@@ -17,45 +17,19 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1414OperationWindmill
-  extends QuestHandler
-{
+public class _1414OperationWindmill extends QuestHandler {
   private static final int questId = 1414;
-  
+
   public _1414OperationWindmill() {
     super(Integer.valueOf(1414));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203989).addOnQuestStart(1414);
     this.qe.setNpcQuestData(203989).addOnTalkEvent(1414);
     this.qe.setNpcQuestData(700175).addOnTalkEvent(1414);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -124,9 +98,3 @@ public class _1414OperationWindmill
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1414OperationWindmill.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

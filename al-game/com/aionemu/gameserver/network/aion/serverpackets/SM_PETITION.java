@@ -6,55 +6,28 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.services.PetitionService;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_PETITION
-  extends AionServerPacket
-{
+public class SM_PETITION extends AionServerPacket {
   private Petition petition;
-  
+
   public SM_PETITION() {
     this.petition = null;
   }
 
-  
   public SM_PETITION(Petition petition) {
     this.petition = petition;
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     if (this.petition == null) {
-      
+
       writeD(buf, 0);
       writeD(buf, 0);
       writeD(buf, 0);
       writeD(buf, 0);
       writeH(buf, 0);
       writeC(buf, 0);
-    }
-    else {
-      
+    } else {
+
       writeC(buf, 1);
       writeD(buf, 100);
       writeH(buf, PetitionService.getInstance().getWaitingPlayers(con.getActivePlayer().getObjectId()));
@@ -64,12 +37,6 @@ public class SM_PETITION
       writeC(buf, 49);
       writeH(buf, PetitionService.getInstance().calculateWaitTime(this.petition.getPlayerObjId()));
       writeD(buf, 0);
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_PETITION.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

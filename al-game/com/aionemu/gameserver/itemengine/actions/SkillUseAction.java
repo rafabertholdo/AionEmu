@@ -14,76 +14,41 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SkillUseAction")
-public class SkillUseAction
-  extends AbstractItemAction
-{
+public class SkillUseAction extends AbstractItemAction {
   @XmlAttribute
   protected int skillid;
   @XmlAttribute
   protected int level;
-  
+
   public int getSkillid() {
     return this.skillid;
   }
 
-
-
-  
   public int getLevel() {
     return this.level;
   }
 
-
-  
   public boolean canAct(Player player, Item parentItem, Item targetItem) {
-    Skill skill = SkillEngine.getInstance().getSkill((Creature)player, this.skillid, this.level, player.getTarget());
+    Skill skill = SkillEngine.getInstance().getSkill((Creature) player, this.skillid, this.level, player.getTarget());
     if (skill == null) {
       return false;
     }
     return skill.canUseSkill();
   }
 
-
-  
   public void act(Player player, Item parentItem, Item targetItem) {
-    Skill skill = SkillEngine.getInstance().getSkill((Creature)player, this.skillid, this.level, player.getTarget());
+    Skill skill = SkillEngine.getInstance().getSkill((Creature) player, this.skillid, this.level, player.getTarget());
     if (skill != null) {
-      
+
       skill.setItemTemplate(parentItem.getItemTemplate());
-      PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()), true);
-      
+      PacketSendUtility.broadcastPacket(player, (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(),
+          parentItem.getObjectId(), parentItem.getItemTemplate().getTemplateId()), true);
+
       skill.useSkill();
-      
+
       ItemService.decreaseItemCount(player, parentItem, 1L);
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\itemengine\actions\SkillUseAction.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

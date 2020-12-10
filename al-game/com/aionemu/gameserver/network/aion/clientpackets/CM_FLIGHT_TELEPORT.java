@@ -7,46 +7,16 @@ import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.world.World;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_FLIGHT_TELEPORT
-  extends AionClientPacket
-{
+public class CM_FLIGHT_TELEPORT extends AionClientPacket {
   float x;
   float y;
   float z;
   int distance;
-  
+
   public CM_FLIGHT_TELEPORT(int opcode) {
     super(opcode);
   }
 
-
-
-
-
-  
   protected void readImpl() {
     readD();
     this.x = readF();
@@ -56,24 +26,13 @@ public class CM_FLIGHT_TELEPORT
     this.distance = readD();
   }
 
-
-
-
-
-  
   protected void runImpl() {
-    Player player = ((AionConnection)getConnection()).getActivePlayer();
-    
+    Player player = ((AionConnection) getConnection()).getActivePlayer();
+
     if (player != null && player.isInState(CreatureState.FLIGHT_TELEPORT)) {
-      
+
       player.setFlightDistance(this.distance);
-      World.getInstance().updatePosition((VisibleObject)player, this.x, this.y, this.z, (byte)0);
-    } 
+      World.getInstance().updatePosition((VisibleObject) player, this.x, this.y, this.z, (byte) 0);
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_FLIGHT_TELEPORT.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

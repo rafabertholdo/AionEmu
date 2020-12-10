@@ -20,38 +20,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1057CreatingaMonster
-  extends QuestHandler
-{
+public class _1057CreatingaMonster extends QuestHandler {
   private static final int questId = 1057;
   private static final int[] npc_ids = new int[] { 204502, 204619, 700218, 700279, 204500 };
 
-  
   public _1057CreatingaMonster() {
     super(Integer.valueOf(1057));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1057);
     this.qe.addOnEnterWorld(1057);
@@ -62,7 +38,6 @@ public class _1057CreatingaMonster
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1057);
@@ -72,14 +47,12 @@ public class _1057CreatingaMonster
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(1056);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1057);
@@ -205,24 +178,19 @@ public class _1057CreatingaMonster
     return false;
   }
 
-
-  
   public boolean onEnterWorldEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1057);
-    if (qs != null && qs.getStatus() == QuestStatus.START)
-    {
+    if (qs != null && qs.getStatus() == QuestStatus.START) {
       if (player.getWorldId() == 310050000 && qs.getQuestVarById(0) == 4) {
-        
+
         qs.setQuestVar(5);
         updateQuestStatus(player, qs);
-      } 
+      }
     }
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1057);
@@ -231,24 +199,17 @@ public class _1057CreatingaMonster
     }
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (targetId == 700219 && qs.getQuestVarById(0) < 8) {
-      
+
+      qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+      updateQuestStatus(player, qs);
+    } else if (targetId == 212211 && qs.getQuestVarById(0) == 8) {
+
       qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
       updateQuestStatus(player, qs);
     }
-    else if (targetId == 212211 && qs.getQuestVarById(0) == 8) {
-      
-      qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-      updateQuestStatus(player, qs);
-    } 
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1057CreatingaMonster.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

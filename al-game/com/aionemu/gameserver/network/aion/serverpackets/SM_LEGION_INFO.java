@@ -7,45 +7,13 @@ import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.util.Map;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_LEGION_INFO
-  extends AionServerPacket
-{
+public class SM_LEGION_INFO extends AionServerPacket {
   private Legion legion;
-  
+
   public SM_LEGION_INFO(Legion legion) {
     this.legion = legion;
   }
 
-
-  
   public void writeImpl(AionConnection con, ByteBuffer buf) {
     writeS(buf, this.legion.getLegionName());
     writeC(buf, this.legion.getLegionLevel());
@@ -59,26 +27,18 @@ public class SM_LEGION_INFO
     writeD(buf, 0);
     writeD(buf, 0);
 
-    
     Map<Timestamp, String> announcementList = this.legion.getAnnouncementList().descendingMap();
 
-    
     int i = 0;
     for (Timestamp unixTime : announcementList.keySet()) {
-      
+
       writeS(buf, announcementList.get(unixTime));
-      writeD(buf, (int)(unixTime.getTime() / 1000L));
+      writeD(buf, (int) (unixTime.getTime() / 1000L));
       i++;
       if (i >= 7) {
         break;
       }
-    } 
+    }
     writeH(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_LEGION_INFO.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

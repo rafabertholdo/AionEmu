@@ -7,53 +7,35 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.InventoryPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-public class SM_UPDATE_WAREHOUSE_ITEM
-  extends InventoryPacket
-{
+public class SM_UPDATE_WAREHOUSE_ITEM extends InventoryPacket {
   Item item;
   int warehouseType;
-  
+
   public SM_UPDATE_WAREHOUSE_ITEM(Item item, int warehouseType) {
     this.item = item;
     this.warehouseType = warehouseType;
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeGeneralInfo(buf, this.item);
-    
+
     ItemTemplate itemTemplate = this.item.getItemTemplate();
-    
+
     if (itemTemplate.getTemplateId() == ItemId.KINAH.value()) {
-      
+
       writeKinah(buf, this.item, false);
-    }
-    else if (itemTemplate.isWeapon()) {
-      
+    } else if (itemTemplate.isWeapon()) {
+
       writeWeaponInfo(buf, this.item, false);
-    }
-    else if (itemTemplate.isArmor()) {
-      
+    } else if (itemTemplate.isArmor()) {
+
       writeArmorInfo(buf, this.item, false, false, false);
-    }
-    else {
-      
+    } else {
+
       writeGeneralItemInfo(buf, this.item, false, false);
-    } 
+    }
   }
 
-
-  
   protected void writeGeneralInfo(ByteBuffer buf, Item item) {
     writeD(buf, item.getObjectId());
     writeC(buf, this.warehouseType);
@@ -63,8 +45,6 @@ public class SM_UPDATE_WAREHOUSE_ITEM
     writeH(buf, 0);
   }
 
-
-  
   protected void writeKinah(ByteBuffer buf, Item item, boolean isInventory) {
     writeH(buf, 22);
     writeC(buf, 0);
@@ -78,9 +58,3 @@ public class SM_UPDATE_WAREHOUSE_ITEM
     writeC(buf, 255);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_UPDATE_WAREHOUSE_ITEM.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -16,12 +16,12 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
 public final class AggressionDesire extends AbstractDesire {
-    protected Npc npc;
+  protected Npc npc;
 
-    public AggressionDesire(Npc npc, int desirePower) {
-        super(desirePower);
-        this.npc = npc;
-    }
+  public AggressionDesire(Npc npc, int desirePower) {
+    super(desirePower);
+    this.npc = npc;
+  }
 
   public boolean handleDesire(AI<?> ai) {
     if (this.npc == null) return false;
@@ -64,17 +64,10 @@ public final class AggressionDesire extends AbstractDesire {
     return true;
   }
 
-    public int getExecutionInterval() {
-        return 2;
-    }
+  public int getExecutionInterval() {
+    return 2;
+  }
 
-    public void onClear() {
-    }
+  public void onClear() {
+  }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\com\aionemu\gameserver\ai\desires\impl\AggressionDesire.class Java compiler
- * version: 6 (50.0) JD-Core Version: 1.1.3
- */

@@ -13,39 +13,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SummonTrapEffect")
-public class SummonTrapEffect
-  extends SummonEffect
-{
+public class SummonTrapEffect extends SummonEffect {
   @XmlAttribute(name = "skill_id", required = true)
   protected int skillId;
   @XmlAttribute(name = "time", required = true)
   protected int time;
-  
+
   public void applyEffect(Effect effect) {
     Creature effector = effect.getEffector();
     SpawnEngine spawnEngine = SpawnEngine.getInstance();
@@ -55,30 +30,20 @@ public class SummonTrapEffect
     byte heading = effector.getHeading();
     int worldId = effector.getWorldId();
     int instanceId = effector.getInstanceId();
-    
+
     SpawnTemplate spawn = spawnEngine.addNewSpawn(worldId, instanceId, this.npcId, x, y, z, heading, 0, 0, true, true);
     final Trap trap = spawnEngine.spawnTrap(spawn, instanceId, effector, this.skillId);
-    
-    Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable()
-        {
-          
-          public void run()
-          {
-            trap.getController().onDespawn(true);
-          }
-        },  (this.time * 1000));
+
+    Future<?> task = ThreadPoolManager.getInstance().schedule(new Runnable() {
+
+      public void run() {
+        trap.getController().onDespawn(true);
+      }
+    }, (this.time * 1000));
     trap.getController().addTask(TaskId.DESPAWN, task);
   }
 
-
-  
   public void calculate(Effect effect) {
     super.calculate(effect);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\SummonTrapEffect.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

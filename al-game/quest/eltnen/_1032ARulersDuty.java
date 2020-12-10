@@ -24,37 +24,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1032ARulersDuty
-  extends QuestHandler
-{
+public class _1032ARulersDuty extends QuestHandler {
   private static final int questId = 1032;
-  
+
   public _1032ARulersDuty() {
     super(Integer.valueOf(1032));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182201001).add(1032);
     this.qe.setNpcQuestData(203932).addOnTalkEvent(1032);
@@ -64,8 +40,6 @@ public class _1032ARulersDuty
     this.qe.addQuestLvlUp(1032);
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -90,22 +64,17 @@ public class _1032ARulersDuty
     return false;
   }
 
-
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1032);
     boolean lvlCheck = QuestService.checkLevelRequirement(1032, player.getCommonData().getLevel());
     if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -246,9 +215,3 @@ public class _1032ARulersDuty
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1032ARulersDuty.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

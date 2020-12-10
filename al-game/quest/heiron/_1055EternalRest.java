@@ -19,38 +19,14 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1055EternalRest
-  extends QuestHandler
-{
+public class _1055EternalRest extends QuestHandler {
   private static final int questId = 1055;
   private static final int[] npc_ids = new int[] { 204629, 204625, 204628, 204627, 204626, 204622, 700270 };
 
-  
   public _1055EternalRest() {
     super(Integer.valueOf(1055));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1055);
     for (int npc_id : npc_ids) {
@@ -58,7 +34,6 @@ public class _1055EternalRest
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1055);
@@ -68,14 +43,12 @@ public class _1055EternalRest
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(1500);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     final QuestState qs = player.getQuestStateList().getQuestState(1055);
@@ -259,9 +232,3 @@ public class _1055EternalRest
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1055EternalRest.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -18,20 +18,20 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.WorldMapInstance;
 
 public class _3200PriceOfGoodwill extends QuestHandler {
-    private static final int questId = 3200;
-    private static final int[] npc_ids = new int[] { 204658, 798332, 700522, 279006, 798322 };
+  private static final int questId = 3200;
+  private static final int[] npc_ids = new int[] { 204658, 798332, 700522, 279006, 798322 };
 
-    public _3200PriceOfGoodwill() {
-        super(Integer.valueOf(3200));
-    }
+  public _3200PriceOfGoodwill() {
+    super(Integer.valueOf(3200));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(204658).addOnQuestStart(3200);
-        this.qe.setQuestItemIds(182209082).add(3200);
-        for (int npc_id : npc_ids) {
-            this.qe.setNpcQuestData(npc_id).addOnTalkEvent(3200);
-        }
+  public void register() {
+    this.qe.setNpcQuestData(204658).addOnQuestStart(3200);
+    this.qe.setQuestItemIds(182209082).add(3200);
+    for (int npc_id : npc_ids) {
+      this.qe.setNpcQuestData(npc_id).addOnTalkEvent(3200);
     }
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -163,10 +163,3 @@ public class _3200PriceOfGoodwill extends QuestHandler {
     return true;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\heiron\_3200PriceOfGoodwill.class Java compiler version: 6 (50.0)
- * JD-Core Version: 1.1.3
- */

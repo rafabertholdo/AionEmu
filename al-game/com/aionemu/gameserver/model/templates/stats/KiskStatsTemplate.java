@@ -5,58 +5,27 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlRootElement(name = "kisk_stats")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class KiskStatsTemplate
-{
+public class KiskStatsTemplate {
   @XmlAttribute(name = "usemask")
   private int useMask = 4;
-  
+
   @XmlAttribute(name = "members")
   private int maxMembers = 6;
-  
+
   @XmlAttribute(name = "resurrects")
   private int maxResurrects = 18;
 
-
-  
   public int getUseMask() {
     return this.useMask;
   }
 
-  
   public int getMaxMembers() {
     return this.maxMembers;
   }
 
-  
   public int getMaxResurrects() {
     return this.maxResurrects;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\stats\KiskStatsTemplate.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

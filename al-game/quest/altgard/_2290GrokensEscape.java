@@ -19,36 +19,13 @@ import com.aionemu.gameserver.utils.MathUtil;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2290GrokensEscape
-  extends QuestHandler
-{
+public class _2290GrokensEscape extends QuestHandler {
   private static final int questId = 2290;
-  
+
   public _2290GrokensEscape() {
     super(Integer.valueOf(2290));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203608).addOnQuestStart(2290);
     this.qe.setNpcQuestData(203608).addOnTalkEvent(2290);
@@ -56,8 +33,6 @@ public class _2290GrokensEscape
     this.qe.setNpcQuestData(203607).addOnTalkEvent(2290);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -153,9 +128,3 @@ public class _2290GrokensEscape
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\altgard\_2290GrokensEscape.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

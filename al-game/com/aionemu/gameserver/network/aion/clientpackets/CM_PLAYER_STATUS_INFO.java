@@ -7,64 +7,28 @@ import com.aionemu.gameserver.services.AllianceService;
 import com.aionemu.gameserver.services.GroupService;
 import com.aionemu.gameserver.world.World;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_PLAYER_STATUS_INFO
-  extends AionClientPacket
-{
+public class CM_PLAYER_STATUS_INFO extends AionClientPacket {
   private int status;
   private int playerObjId;
-  
+
   public CM_PLAYER_STATUS_INFO(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.status = readC();
     this.playerObjId = readD();
   }
 
-
-  
   protected void runImpl() {
-    Player player, myActivePlayer = ((AionConnection)getConnection()).getActivePlayer();
-    
+    Player player, myActivePlayer = ((AionConnection) getConnection()).getActivePlayer();
+
     switch (this.status) {
 
-
-      
       case 9:
-        ((AionConnection)getConnection()).getActivePlayer().setLookingForGroup((this.playerObjId == 2));
+        ((AionConnection) getConnection()).getActivePlayer().setLookingForGroup((this.playerObjId == 2));
         break;
 
-      
       case 12:
       case 14:
       case 15:
@@ -74,28 +38,21 @@ public class CM_PLAYER_STATUS_INFO
         AllianceService.getInstance().playerStatusInfo(myActivePlayer, this.status, this.playerObjId);
         break;
 
-      
       case 2:
       case 3:
       case 6:
         player = null;
-        
+
         if (this.playerObjId == 0) {
-          player = ((AionConnection)getConnection()).getActivePlayer();
+          player = ((AionConnection) getConnection()).getActivePlayer();
         } else {
           player = World.getInstance().findPlayer(this.playerObjId);
-        } 
+        }
         if (player == null || player.getPlayerGroup() == null) {
           return;
         }
         GroupService.getInstance().playerStatusInfo(this.status, player);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_PLAYER_STATUS_INFO.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

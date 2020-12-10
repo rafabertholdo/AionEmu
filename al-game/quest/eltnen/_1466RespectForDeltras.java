@@ -17,37 +17,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1466RespectForDeltras
-  extends QuestHandler
-{
+public class _1466RespectForDeltras extends QuestHandler {
   private static final int questId = 1466;
-  
+
   public _1466RespectForDeltras() {
     super(Integer.valueOf(1466));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182201385).add(1466);
     this.qe.setNpcQuestData(212649).addOnQuestStart(1466);
@@ -55,8 +31,6 @@ public class _1466RespectForDeltras
     this.qe.setNpcQuestData(203903).addOnTalkEvent(1466);
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, final Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -83,55 +57,45 @@ public class _1466RespectForDeltras
     return false;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc)
-      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     QuestState qs = player.getQuestStateList().getQuestState(1466);
     if (targetId == 212649) {
-      
-      if (qs == null || qs.getStatus() == QuestStatus.NONE)
-      {
+
+      if (qs == null || qs.getStatus() == QuestStatus.NONE) {
         if (env.getDialogId().intValue() == 25)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
         if (env.getDialogId().intValue() == 1002) {
-          
+
           if (ItemService.addItems(player, Collections.singletonList(new QuestItems(182201385, 1)))) {
             return defaultQuestStartDialog(env);
           }
           return true;
-        } 
-        
+        }
+
         return defaultQuestStartDialog(env);
       }
-    
-    }
-    else if (targetId == 203903) {
-      
+
+    } else if (targetId == 203903) {
+
       if (qs != null) {
-        
+
         if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START)
-          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375); 
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375);
         if (env.getDialogId().intValue() == 1009) {
-          
+
           qs.setQuestVar(2);
           qs.setStatus(QuestStatus.REWARD);
           updateQuestStatus(player, qs);
           return defaultQuestEndDialog(env);
-        } 
-        
+        }
+
         return defaultQuestEndDialog(env);
-      } 
-    } 
+      }
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1466RespectForDeltras.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

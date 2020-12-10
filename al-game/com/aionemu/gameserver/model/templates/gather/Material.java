@@ -5,39 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Material")
-public class Material
-{
+public class Material {
   @XmlAttribute
   protected String name;
   @XmlAttribute
@@ -46,46 +16,20 @@ public class Material
   protected Integer nameid;
   @XmlAttribute
   protected Integer rate;
-  
+
   public String getName() {
     return this.name;
   }
 
-
-
-
-  
   public Integer getItemid() {
     return this.itemid;
   }
 
-
-
-
-
-
-
-
-  
   public Integer getNameid() {
     return this.nameid;
   }
 
-
-
-
-
-
-
-
-  
   public Integer getRate() {
     return this.rate;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\templates\gather\Material.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

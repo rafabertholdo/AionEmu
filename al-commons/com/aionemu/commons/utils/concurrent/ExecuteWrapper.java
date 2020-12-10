@@ -4,94 +4,57 @@ import java.util.concurrent.TimeUnit;
 import javolution.text.TextBuilder;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class ExecuteWrapper
-  implements Runnable
-{
+public class ExecuteWrapper implements Runnable {
   private static final Logger log = Logger.getLogger(ExecuteWrapper.class);
-  
+
   private final Runnable runnable;
 
-  
   public ExecuteWrapper(Runnable runnable) {
     this.runnable = runnable;
   }
 
-
-  
   public final void run() {
     execute(this.runnable, getMaximumRuntimeInMillisecWithoutWarning());
   }
 
-  
   protected long getMaximumRuntimeInMillisecWithoutWarning() {
     return Long.MAX_VALUE;
   }
 
-  
   public static void execute(Runnable runnable) {
     execute(runnable, Long.MAX_VALUE);
   }
 
-  
   public static void execute(Runnable runnable, long maximumRuntimeInMillisecWithoutWarning) {
     long begin = System.nanoTime();
 
-    
     try {
       runnable.run();
-    }
-    catch (RuntimeException e) {
-      
+    } catch (RuntimeException e) {
+
       log.warn("Exception in a Runnable execution:", e);
-    }
-    finally {
-      
+    } finally {
+
       long runtimeInNanosec = System.nanoTime() - begin;
-      Class<? extends Runnable> clazz = (Class)runnable.getClass();
-      
+      Class<? extends Runnable> clazz = (Class) runnable.getClass();
+
       RunnableStatsManager.handleStats(clazz, runtimeInNanosec);
-      
+
       long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
-      
+
       if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning) {
-        
+
         TextBuilder tb = TextBuilder.newInstance();
-        
+
         tb.append(clazz);
         tb.append(" - execution time: ");
         tb.append(runtimeInMillisec);
         tb.append("msec");
-        
+
         log.warn(tb.toString());
-        
+
         TextBuilder.recycle(tb);
-      } 
-    } 
+      }
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\common\\utils\concurrent\ExecuteWrapper.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

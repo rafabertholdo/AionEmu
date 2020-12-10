@@ -13,38 +13,14 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1056LepharistPoisonResearch
-  extends QuestHandler
-{
+public class _1056LepharistPoisonResearch extends QuestHandler {
   private static final int questId = 1056;
   private static final int[] npc_ids = new int[] { 204504, 204574, 203705, 203707 };
 
-  
   public _1056LepharistPoisonResearch() {
     super(Integer.valueOf(1056));
   }
 
-
-  
   public void register() {
     this.qe.addQuestLvlUp(1056);
     this.qe.setNpcQuestData(212151).addOnKillEvent(1056);
@@ -53,7 +29,6 @@ public class _1056LepharistPoisonResearch
     }
   }
 
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1056);
@@ -63,14 +38,12 @@ public class _1056LepharistPoisonResearch
     }
     QuestState qs2 = player.getQuestStateList().getQuestState(1500);
     if (qs2 == null || qs2.getStatus() != QuestStatus.COMPLETE)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1056);
@@ -80,95 +53,97 @@ public class _1056LepharistPoisonResearch
     int var = qs.getQuestVarById(0);
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (qs.getStatus() == QuestStatus.REWARD) {
-      
+
       if (targetId == 203707) {
         return defaultQuestEndDialog(env);
       }
     } else if (qs.getStatus() != QuestStatus.START) {
-      
+
       return false;
-    } 
+    }
     if (targetId == 204504) {
-      
+
       switch (env.getDialogId().intValue()) {
-        
+
         case 25:
           if (var == 0)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
         case 10000:
           if (var == 0) {
-            
+
             qs.setQuestVarById(0, var + 1);
             updateQuestStatus(player, qs);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
           return false;
-      } 
-    
+      }
+
     } else if (targetId == 204574) {
-      
+
       switch (env.getDialogId().intValue()) {
-        
+
         case 25:
           if (var == 1)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352);
         case 10001:
           if (var == 1) {
-            
+
             qs.setQuestVarById(0, var + 1);
             updateQuestStatus(player, qs);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
           return false;
-      } 
-    
+      }
+
     } else if (targetId == 203705) {
-      
+
       switch (env.getDialogId().intValue()) {
-        
+
         case 25:
           if (var == 2)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693);
           if (var == 5)
-            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716); 
+            return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2716);
         case 33:
           if (var == 2 && player.getInventory().getItemCountByItemId(182201614) == 1L) {
-            
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_PLAY_MOVIE(0, 101));
+
+            PacketSendUtility.sendPacket(player, (AionServerPacket) new SM_PLAY_MOVIE(0, 101));
             return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10000);
-          } 
-          
+          }
+
           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10001);
         case 10003:
           if (var == 2) {
-            
+
             qs.setQuestVarById(0, 4);
             updateQuestStatus(player, qs);
             ItemService.decreaseItemCountByItemId(player, 182201614, 1L);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
         case 10255:
           if (var == 5) {
-            
+
             qs.setStatus(QuestStatus.REWARD);
             updateQuestStatus(player, qs);
-            PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+            PacketSendUtility.sendPacket(player,
+                (AionServerPacket) new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
             return true;
-          } 
+          }
           return false;
-      } 
-    } 
+      }
+    }
     return false;
   }
 
-
-  
   public boolean onKillEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1056);
@@ -177,19 +152,13 @@ public class _1056LepharistPoisonResearch
     }
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
     if (targetId == 212151 && qs.getQuestVarById(0) == 4) {
-      
+
       qs.setQuestVarById(0, 5);
       updateQuestStatus(player, qs);
-    } 
+    }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1056LepharistPoisonResearch.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -5,44 +5,14 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_CRAFT_UPDATE
-  extends AionServerPacket
-{
+public class SM_CRAFT_UPDATE extends AionServerPacket {
   private int skillId;
   private int itemId;
   private int action;
   private int success;
   private int failure;
   private int nameId;
-  
+
   public SM_CRAFT_UPDATE(int skillId, ItemTemplate item, int success, int failure, int action) {
     this.action = action;
     this.skillId = skillId;
@@ -52,16 +22,13 @@ public class SM_CRAFT_UPDATE
     this.nameId = item.getNameId();
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeH(buf, this.skillId);
     writeC(buf, this.action);
     writeD(buf, this.itemId);
-    
+
     switch (this.action) {
 
-      
       case 0:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -73,7 +40,6 @@ public class SM_CRAFT_UPDATE
         writeH(buf, 0);
         break;
 
-      
       case 1:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -83,7 +49,6 @@ public class SM_CRAFT_UPDATE
         writeH(buf, 0);
         break;
 
-      
       case 2:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -93,7 +58,6 @@ public class SM_CRAFT_UPDATE
         writeH(buf, 0);
         break;
 
-      
       case 5:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -103,7 +67,6 @@ public class SM_CRAFT_UPDATE
         writeH(buf, 0);
         break;
 
-      
       case 6:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -113,7 +76,6 @@ public class SM_CRAFT_UPDATE
         writeH(buf, 0);
         break;
 
-      
       case 7:
         writeD(buf, this.success);
         writeD(buf, this.failure);
@@ -124,12 +86,6 @@ public class SM_CRAFT_UPDATE
         writeD(buf, this.nameId);
         writeH(buf, 0);
         break;
-    } 
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_CRAFT_UPDATE.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

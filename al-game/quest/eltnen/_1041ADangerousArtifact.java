@@ -20,37 +20,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1041ADangerousArtifact
-  extends QuestHandler
-{
+public class _1041ADangerousArtifact extends QuestHandler {
   private static final int questId = 1041;
-  
+
   public _1041ADangerousArtifact() {
     super(Integer.valueOf(1041));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203901).addOnTalkEvent(1041);
     this.qe.setNpcQuestData(204015).addOnTalkEvent(1041);
@@ -62,21 +38,17 @@ public class _1041ADangerousArtifact
     this.qe.addQuestLvlUp(1041);
   }
 
-
-  
   public boolean onLvlUpEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1041);
     boolean lvlCheck = QuestService.checkLevelRequirement(1041, player.getCommonData().getLevel());
     if (qs == null || !lvlCheck || qs.getStatus() != QuestStatus.LOCKED)
-      return false; 
+      return false;
     qs.setStatus(QuestStatus.START);
     updateQuestStatus(player, qs);
     return true;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -315,9 +287,3 @@ public class _1041ADangerousArtifact
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1041ADangerousArtifact.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

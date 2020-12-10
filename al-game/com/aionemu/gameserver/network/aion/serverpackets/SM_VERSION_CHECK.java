@@ -7,43 +7,7 @@ import com.aionemu.gameserver.network.aion.AionServerPacket;
 import com.aionemu.gameserver.services.ChatService;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_VERSION_CHECK
-  extends AionServerPacket
-{
+public class SM_VERSION_CHECK extends AionServerPacket {
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeC(buf, 0);
     writeC(buf, NetworkConfig.GAMESERVER_ID);
@@ -56,7 +20,7 @@ public class SM_VERSION_CHECK
     writeC(buf, GSConfig.SERVER_COUNTRY_CODE);
     writeC(buf, 0);
     writeC(buf, GSConfig.SERVER_MODE);
-    writeD(buf, (int)(System.currentTimeMillis() / 1000L));
+    writeD(buf, (int) (System.currentTimeMillis() / 1000L));
     writeH(buf, 350);
     writeH(buf, 2561);
     writeH(buf, 2561);
@@ -69,9 +33,3 @@ public class SM_VERSION_CHECK
     writeH(buf, ChatService.getPort());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_VERSION_CHECK.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

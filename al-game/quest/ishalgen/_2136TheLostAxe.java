@@ -20,36 +20,14 @@ import com.aionemu.gameserver.services.QuestService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _2136TheLostAxe
-  extends QuestHandler
-{
+public class _2136TheLostAxe extends QuestHandler {
   private static final int questId = 2136;
   private static final int[] npc_ids = new int[] { 700146, 790009 };
 
-  
   public _2136TheLostAxe() {
     super(Integer.valueOf(2136));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182203130).add(2136);
     for (int npc_id : npc_ids) {
@@ -57,7 +35,6 @@ public class _2136TheLostAxe
     }
   }
 
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -157,25 +134,18 @@ public class _2136TheLostAxe
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, Item item) {
     Player player = env.getPlayer();
     int id = item.getItemTemplate().getTemplateId();
     int itemObjId = item.getObjectId();
     QuestState qs = player.getQuestStateList().getQuestState(2136);
-    
+
     if (id != 182203130)
-      return false; 
-    PacketSendUtility.broadcastPacket(player, (AionServerPacket)new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
+      return false;
+    PacketSendUtility.broadcastPacket(player,
+        (AionServerPacket) new SM_ITEM_USAGE_ANIMATION(player.getObjectId(), itemObjId, id, 20, 1, 0), true);
     if (qs == null || qs.getStatus() == QuestStatus.NONE)
-      sendQuestDialog(player, 0, 4); 
+      sendQuestDialog(player, 0, 4);
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\ishalgen\_2136TheLostAxe.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

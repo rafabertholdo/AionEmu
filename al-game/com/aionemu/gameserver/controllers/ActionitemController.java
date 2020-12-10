@@ -13,34 +13,9 @@ import com.aionemu.gameserver.services.DropService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class ActionitemController
-  extends NpcController
-{
+public class ActionitemController extends NpcController {
   private Player lastActor = null;
 
-
-
-
-
-
-
-  
   public void onDialogRequest(final Player player) {
     if (!QuestEngine.getInstance().onDialog(new QuestEnv((VisibleObject)getOwner(), player, Integer.valueOf(0), Integer.valueOf(-1))))
       return; 
@@ -61,28 +36,18 @@ public class ActionitemController
         }3000L);
   }
 
-
-  
   public void doReward() {
     if (this.lastActor == null) {
       return;
     }
     DropService.getInstance().registerDrop(getOwner(), this.lastActor, this.lastActor.getLevel());
     DropService.getInstance().requestDropList(this.lastActor, getOwner().getObjectId());
-    
+
     this.lastActor = null;
   }
 
-
-  
   public void onRespawn() {
     super.onRespawn();
     DropService.getInstance().unregisterDrop(getOwner());
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\controllers\ActionitemController.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

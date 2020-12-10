@@ -12,47 +12,22 @@ import com.aionemu.gameserver.world.WorldPosition;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_GROUP_MEMBER_INFO
-  extends AionServerPacket
-{
+public class SM_GROUP_MEMBER_INFO extends AionServerPacket {
   private PlayerGroup group;
   private Player player;
   private GroupEvent event;
-  
+
   public SM_GROUP_MEMBER_INFO(PlayerGroup group, Player player, GroupEvent event) {
     this.group = group;
     this.player = player;
     this.event = event;
   }
 
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     PlayerLifeStats pls = this.player.getLifeStats();
     PlayerCommonData pcd = this.player.getCommonData();
     WorldPosition wp = pcd.getPosition();
-    
+
     writeD(buf, this.group.getGroupId());
     writeD(buf, this.player.getObjectId());
     writeD(buf, pls.getMaxHp());
@@ -74,27 +49,21 @@ public class SM_GROUP_MEMBER_INFO
     if (this.event == GroupEvent.MOVEMENT) {
       return;
     }
-    
+
     writeS(buf, pcd.getName());
     writeH(buf, 0);
     writeH(buf, 0);
-    
+
     List<Effect> abnormalEffects = this.player.getEffectController().getAbnormalEffects();
     writeH(buf, abnormalEffects.size());
     for (Effect effect : abnormalEffects) {
-      
+
       writeD(buf, effect.getEffectorId());
       writeH(buf, effect.getSkillId());
       writeC(buf, effect.getSkillLevel());
       writeC(buf, effect.getTargetSlot());
       writeD(buf, effect.getElapsedTime());
-    } 
+    }
     writeD(buf, 9719);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_GROUP_MEMBER_INFO.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

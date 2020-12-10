@@ -8,44 +8,19 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.World;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class RestartTask
-  extends TaskFromDBHandler
-{
+public class RestartTask extends TaskFromDBHandler {
   private static final Logger log = Logger.getLogger(RestartTask.class);
-  
+
   private int countDown;
-  
+
   private int announceInterval;
-  
+
   private int warnCountDown;
-  
+
   public String getTaskName() {
     return "restart";
   }
 
-
-  
   public boolean isValid() {
     if (this.params.length == 3) {
       return true;
@@ -53,8 +28,6 @@ public class RestartTask
     return false;
   }
 
-
-  
   public void run() {
     log.info("Task[" + this.id + "] launched : restarting the server !");
     setLastActivation();
@@ -75,9 +48,3 @@ public class RestartTask
         }(this.warnCountDown * 1000));
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\taskmanager\tasks\RestartTask.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -8,39 +8,14 @@ import com.aionemu.gameserver.network.aion.AionClientPacket;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.world.World;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class CM_SUMMON_COMMAND
-  extends AionClientPacket
-{
+public class CM_SUMMON_COMMAND extends AionClientPacket {
   private int mode;
   private int targetObjId;
-  
+
   public CM_SUMMON_COMMAND(int opcode) {
     super(opcode);
   }
 
-
-  
   protected void readImpl() {
     this.mode = readC();
     readD();
@@ -48,19 +23,16 @@ public class CM_SUMMON_COMMAND
     this.targetObjId = readD();
   }
 
-
-  
   protected void runImpl() {
-    Player activePlayer = ((AionConnection)getConnection()).getActivePlayer();
+    Player activePlayer = ((AionConnection) getConnection()).getActivePlayer();
     Summon summon = activePlayer.getSummon();
     if (summon != null) {
       AionObject target;
       switch (this.mode) {
-        
+
         case 0:
           target = World.getInstance().findAionObject(this.targetObjId);
-          if (target != null && target instanceof com.aionemu.gameserver.model.gameobjects.Creature)
-          {
+          if (target != null && target instanceof com.aionemu.gameserver.model.gameobjects.Creature) {
             summon.getController().attackMode();
           }
           break;
@@ -73,13 +45,7 @@ public class CM_SUMMON_COMMAND
         case 3:
           summon.getController().release(SummonController.UnsummonType.COMMAND);
           break;
-      } 
-    } 
+      }
+    }
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_SUMMON_COMMAND.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

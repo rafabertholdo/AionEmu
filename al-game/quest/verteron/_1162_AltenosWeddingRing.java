@@ -19,18 +19,18 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
 public class _1162_AltenosWeddingRing extends QuestHandler {
-    private static final int questId = 1162;
+  private static final int questId = 1162;
 
-    public _1162_AltenosWeddingRing() {
-        super(Integer.valueOf(1162));
-    }
+  public _1162_AltenosWeddingRing() {
+    super(Integer.valueOf(1162));
+  }
 
-    public void register() {
-        this.qe.setNpcQuestData(203095).addOnQuestStart(1162);
-        this.qe.setNpcQuestData(203095).addOnTalkEvent(1162);
-        this.qe.setNpcQuestData(203093).addOnTalkEvent(1162);
-        this.qe.setNpcQuestData(700005).addOnTalkEvent(1162);
-    }
+  public void register() {
+    this.qe.setNpcQuestData(203095).addOnQuestStart(1162);
+    this.qe.setNpcQuestData(203095).addOnTalkEvent(1162);
+    this.qe.setNpcQuestData(203093).addOnTalkEvent(1162);
+    this.qe.setNpcQuestData(700005).addOnTalkEvent(1162);
+  }
 
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
@@ -128,10 +128,3 @@ public class _1162_AltenosWeddingRing extends QuestHandler {
     return false;
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\quest\verteron\_1162_AltenosWeddingRing.class Java compiler version: 6
- * (50.0) JD-Core Version: 1.1.3
- */

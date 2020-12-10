@@ -10,67 +10,37 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestConditions", propOrder = {"conditions"})
-public class QuestConditions
-{
-  @XmlElements({@XmlElement(name = "quest_status", type = QuestStatusCondition.class), @XmlElement(name = "npc_id", type = NpcIdCondition.class), @XmlElement(name = "pc_inventory", type = PcInventoryCondition.class), @XmlElement(name = "quest_var", type = QuestVarCondition.class), @XmlElement(name = "dialog_id", type = DialogIdCondition.class)})
+@XmlType(name = "QuestConditions", propOrder = { "conditions" })
+public class QuestConditions {
+  @XmlElements({ @XmlElement(name = "quest_status", type = QuestStatusCondition.class),
+      @XmlElement(name = "npc_id", type = NpcIdCondition.class),
+      @XmlElement(name = "pc_inventory", type = PcInventoryCondition.class),
+      @XmlElement(name = "quest_var", type = QuestVarCondition.class),
+      @XmlElement(name = "dialog_id", type = DialogIdCondition.class) })
   protected List<QuestCondition> conditions;
   @XmlAttribute(required = true)
   protected ConditionUnionType operate;
-  
+
   public boolean checkConditionOfSet(QuestEnv env) {
     boolean inCondition = (this.operate == ConditionUnionType.AND);
     for (QuestCondition cond : this.conditions) {
-      
+
       boolean bCond = cond.doCheck(env);
       switch (this.operate) {
-        
+
         case AND:
-          if (!bCond) return false; 
+          if (!bCond)
+            return false;
           inCondition = (inCondition && bCond);
-        
+
         case OR:
-          if (bCond) return true; 
+          if (bCond)
+            return true;
           inCondition = (inCondition || bCond);
-      } 
-    
-    } 
+      }
+
+    }
     return inCondition;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\conditions\QuestConditions.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

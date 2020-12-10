@@ -22,40 +22,16 @@ import com.aionemu.gameserver.world.WorldMap;
 import com.aionemu.gameserver.world.WorldMapInstance;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class PortalController
-  extends NpcController
-{
+public class PortalController extends NpcController {
   private static final Logger log = Logger.getLogger(PortalController.class);
 
-  
   PortalTemplate portalTemplate;
 
-  
   public void setOwner(Creature owner) {
     super.setOwner(owner);
     this.portalTemplate = DataManager.PORTAL_DATA.getPortalTemplate(owner.getObjectTemplate().getTemplateId());
   }
 
-
-  
   public void onDialogRequest(final Player player) {
     if (this.portalTemplate == null) {
       return;
@@ -135,56 +111,37 @@ public class PortalController
         }3000L);
   }
 
-
-
-
-
-  
   private void port(Player requester) {
     WorldMapInstance instance = null;
     int worldId = this.portalTemplate.getExitPoint().getMapId();
     if (this.portalTemplate.isInstance()) {
-      
+
       instance = InstanceService.getNextAvailableInstance(worldId);
       InstanceService.registerPlayerWithInstance(instance, requester);
-    
-    }
-    else {
-      
+
+    } else {
+
       WorldMap worldMap = World.getInstance().getWorldMap(worldId);
       if (worldMap == null) {
-        
+
         log.warn("There is no registered map with id " + worldId);
         return;
-      } 
+      }
       instance = worldMap.getWorldMapInstance();
-    } 
-    
+    }
+
     transfer(requester, instance);
   }
 
-
-
-
-  
   private WorldMapInstance registerGroup(PlayerGroup group) {
     WorldMapInstance instance = InstanceService.getNextAvailableInstance(this.portalTemplate.getExitPoint().getMapId());
     InstanceService.registerGroupWithInstance(instance, group);
     return instance;
   }
 
-
-
-
-  
   private void transfer(Player player, WorldMapInstance instance) {
     ExitPoint exitPoint = this.portalTemplate.getExitPoint();
-    TeleportService.teleportTo(player, exitPoint.getMapId(), instance.getInstanceId(), exitPoint.getX(), exitPoint.getY(), exitPoint.getZ(), 0);
+    TeleportService.teleportTo(player, exitPoint.getMapId(), instance.getInstanceId(), exitPoint.getX(),
+        exitPoint.getY(), exitPoint.getZ(), 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\controllers\PortalController.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

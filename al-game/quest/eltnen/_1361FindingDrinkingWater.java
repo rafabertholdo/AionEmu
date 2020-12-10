@@ -21,37 +21,13 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import com.aionemu.gameserver.world.zone.ZoneName;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1361FindingDrinkingWater
-  extends QuestHandler
-{
+public class _1361FindingDrinkingWater extends QuestHandler {
   private static final int questId = 1361;
-  
+
   public _1361FindingDrinkingWater() {
     super(Integer.valueOf(1361));
   }
 
-
-  
   public void register() {
     this.qe.setQuestItemIds(182201326).add(1361);
     this.qe.setNpcQuestData(203943).addOnQuestStart(1361);
@@ -59,8 +35,6 @@ public class _1361FindingDrinkingWater
     this.qe.setNpcQuestData(700173).addOnTalkEvent(1361);
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, final Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -88,8 +62,6 @@ public class _1361FindingDrinkingWater
     return false;
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -165,9 +137,3 @@ public class _1361FindingDrinkingWater
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1361FindingDrinkingWater.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

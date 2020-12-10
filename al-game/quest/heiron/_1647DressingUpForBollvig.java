@@ -17,109 +17,70 @@ import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1647DressingUpForBollvig
-  extends QuestHandler
-{
+public class _1647DressingUpForBollvig extends QuestHandler {
   private static final int questId = 1647;
-  
+
   public _1647DressingUpForBollvig() {
     super(Integer.valueOf(1647));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(790019).addOnQuestStart(1647);
     this.qe.setNpcQuestData(790019).addOnTalkEvent(1647);
     this.qe.setQuestItemIds(182201783).add(1647);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     Player player = env.getPlayer();
     QuestState qs = player.getQuestStateList().getQuestState(1647);
-    
+
     int targetId = 0;
     if (env.getVisibleObject() instanceof Npc) {
-      targetId = ((Npc)env.getVisibleObject()).getNpcId();
+      targetId = ((Npc) env.getVisibleObject()).getNpcId();
     }
-    if (qs == null || qs.getStatus() == QuestStatus.NONE)
-    {
+    if (qs == null || qs.getStatus() == QuestStatus.NONE) {
       if (targetId == 790019) {
-        
+
         switch (env.getDialogId().intValue()) {
 
-          
           case 25:
             return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 4762);
 
-          
           case 1002:
-            if (player.getInventory().getItemCountByItemId(182201783) == 0L)
-            {
-              if (!ItemService.addItems(player, Collections.singletonList(new QuestItems(182201783, 1))))
-              {
+            if (player.getInventory().getItemCountByItemId(182201783) == 0L) {
+              if (!ItemService.addItems(player, Collections.singletonList(new QuestItems(182201783, 1)))) {
                 return true;
               }
             }
             break;
-        } 
+        }
         return defaultQuestStartDialog(env);
-      } 
+      }
     }
 
-    
     if (qs == null) {
       return false;
     }
-    if (qs.getStatus() == QuestStatus.REWARD)
-    {
+    if (qs.getStatus() == QuestStatus.REWARD) {
       switch (targetId) {
 
-        
         case 790019:
           switch (env.getDialogId().intValue()) {
 
-            
             case 25:
               return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 10002);
 
-            
             case 1009:
               return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 5);
-          } 
-          
-          return defaultQuestEndDialog(env);
-      } 
+          }
 
-    
+          return defaultQuestEndDialog(env);
+      }
+
     }
     return false;
   }
 
-
-  
   public boolean onItemUseEvent(QuestEnv env, final Item item) {
     final Player player = env.getPlayer();
     final int id = item.getItemTemplate().getTemplateId();
@@ -193,9 +154,3 @@ public class _1647DressingUpForBollvig
     return true;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\heiron\_1647DressingUpForBollvig.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

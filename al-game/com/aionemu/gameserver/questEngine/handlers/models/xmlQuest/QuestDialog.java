@@ -9,55 +9,22 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestDialog", propOrder = {"conditions", "operations"})
-public class QuestDialog
-{
+@XmlType(name = "QuestDialog", propOrder = { "conditions", "operations" })
+public class QuestDialog {
   protected QuestConditions conditions;
   protected QuestOperations operations;
   @XmlAttribute(required = true)
   protected int id;
-  
+
   public boolean operate(QuestEnv env, QuestState qs) {
     if (env.getDialogId().intValue() != this.id)
-      return false; 
-    if (this.conditions == null || this.conditions.checkConditionOfSet(env))
-    {
-      if (this.operations != null)
-      {
+      return false;
+    if (this.conditions == null || this.conditions.checkConditionOfSet(env)) {
+      if (this.operations != null) {
         return this.operations.operate(env);
       }
     }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\QuestDialog.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

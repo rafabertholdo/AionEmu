@@ -9,37 +9,7 @@ import com.aionemu.gameserver.model.items.ItemSlot;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public abstract class PlayerInfo
-  extends AionServerPacket
-{
+public abstract class PlayerInfo extends AionServerPacket {
   protected void writePlayerInfo(ByteBuffer buf, PlayerAccountData accPlData) {
     PlayerCommonData pbd = accPlData.getPlayerCommonData();
     int raceId = pbd.getRace().getRaceId();
@@ -48,8 +18,6 @@ public abstract class PlayerInfo
     writeD(buf, pbd.getPlayerObjId());
     writeS(buf, pbd.getName());
 
-
-    
     int size = 44 - pbd.getName().length() * 2 + 2;
     byte[] stupidNc = new byte[size];
     writeB(buf, stupidNc);
@@ -92,11 +60,10 @@ public abstract class PlayerInfo
     writeC(buf, playerAppearance.getEarShape());
     writeC(buf, playerAppearance.getHeadSize());
 
-    
     writeC(buf, playerAppearance.getNeck());
     writeC(buf, playerAppearance.getNeckLength());
     writeC(buf, playerAppearance.getShoulderSize());
-    
+
     writeC(buf, playerAppearance.getTorso());
     writeC(buf, playerAppearance.getChest());
     writeC(buf, playerAppearance.getWaist());
@@ -112,7 +79,7 @@ public abstract class PlayerInfo
     writeC(buf, playerAppearance.getShoulders());
     writeC(buf, 0);
     writeC(buf, 0);
-    
+
     writeF(buf, playerAppearance.getHeight());
     int raceSex = 100000 + raceId * 2 + genderId;
     writeD(buf, raceSex);
@@ -142,34 +109,28 @@ public abstract class PlayerInfo
     writeD(buf, 0);
     writeD(buf, 0);
     writeD(buf, 0);
-    
+
     int itemsDataSize = 0;
-    
+
     List<Item> items = accPlData.getEquipment();
-    
+
     for (Item item : items) {
-      
+
       if (itemsDataSize < 208 && item.getItemTemplate().getItemSlot() <= ItemSlot.PANTS.getSlotIdMask()) {
-        
+
         writeC(buf, 1);
         writeD(buf, item.getItemSkinTemplate().getTemplateId());
         GodStone godStone = item.getGodStone();
         writeD(buf, (godStone != null) ? godStone.getItemId() : 0);
         writeD(buf, item.getItemColor());
-        
+
         itemsDataSize += 13;
-      } 
-    } 
-    
+      }
+    }
+
     stupidNc = new byte[208 - itemsDataSize];
     writeB(buf, stupidNc);
     writeD(buf, accPlData.getDeletionTimeInSeconds());
     writeD(buf, 0);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\PlayerInfo.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

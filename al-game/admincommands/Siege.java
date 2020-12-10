@@ -295,10 +295,3 @@ public class Siege extends AdminCommand {
         "Syntax: //siege capture <location id> <race> [legion id]\nRace may be: Elyos, Asmos, Balaur. (Not case sensitive.)");
   }
 }
-
-/*
- * Location:
- * D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar
- * !\admincommands\Siege.class Java compiler version: 6 (50.0) JD-Core Version:
- * 1.1.3
- */

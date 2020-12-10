@@ -17,37 +17,13 @@ import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 import java.util.Collections;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1311AGermOfHope
-  extends QuestHandler
-{
+public class _1311AGermOfHope extends QuestHandler {
   private static final int questId = 1311;
-  
+
   public _1311AGermOfHope() {
     super(Integer.valueOf(1311));
   }
 
-
-  
   public void register() {
     this.qe.setNpcQuestData(203997).addOnQuestStart(1311);
     this.qe.setNpcQuestData(203997).addOnTalkEvent(1311);
@@ -55,8 +31,6 @@ public class _1311AGermOfHope
     this.qe.setNpcQuestData(203997).addOnTalkEvent(1311);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -139,9 +113,3 @@ public class _1311AGermOfHope
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1311AGermOfHope.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

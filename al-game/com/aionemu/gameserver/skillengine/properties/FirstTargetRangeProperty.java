@@ -14,40 +14,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.log4j.Logger;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FirstTargetRangeProperty")
-public class FirstTargetRangeProperty
-  extends Property
-{
+public class FirstTargetRangeProperty extends Property {
   private static final Logger log = Logger.getLogger(FirstTargetRangeProperty.class);
 
-  
   @XmlAttribute(required = true)
   protected int value;
 
-  
   public boolean set(Skill skill) {
     if (!skill.isFirstTargetRangeCheck()) {
       return true;
@@ -61,23 +35,15 @@ public class FirstTargetRangeProperty
       log.warn("FirstTarget has mapId of 0. (" + firstTarget.getName() + ")");
     }
     skill.setFirstTargetRange(this.value);
-    
-    if (MathUtil.isIn3dRange((VisibleObject)effector, (VisibleObject)firstTarget, (this.value + 4)))
-    {
+
+    if (MathUtil.isIn3dRange((VisibleObject) effector, (VisibleObject) firstTarget, (this.value + 4))) {
       return true;
     }
 
-    
-    if (effector instanceof Player)
-    {
-      PacketSendUtility.sendPacket((Player)effector, (AionServerPacket)SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
+    if (effector instanceof Player) {
+      PacketSendUtility.sendPacket((Player) effector,
+          (AionServerPacket) SM_SYSTEM_MESSAGE.STR_ATTACK_TOO_FAR_FROM_TARGET());
     }
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\properties\FirstTargetRangeProperty.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

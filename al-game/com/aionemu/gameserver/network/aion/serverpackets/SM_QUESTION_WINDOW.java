@@ -5,44 +5,7 @@ import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 import java.nio.ByteBuffer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class SM_QUESTION_WINDOW
-  extends AionServerPacket
-{
+public class SM_QUESTION_WINDOW extends AionServerPacket {
   public static final int STR_BUDDYLIST_ADD_BUDDY_REQUETS = 900841;
   public static final int STR_EXCHANGE_DO_YOU_ACCEPT_EXCHANGE = 90001;
   public static final int STR_EXCHANGE_HE_REJECTED_EXCHANGE = 1300354;
@@ -65,33 +28,28 @@ public class SM_QUESTION_WINDOW
   private int code;
   private int senderId;
   private Object[] params;
-  
+
   public SM_QUESTION_WINDOW(int code, int senderId, Object... params) {
     this.code = code;
     this.senderId = senderId;
     this.params = params;
   }
 
-
-
-
-
-  
   protected void writeImpl(AionConnection con, ByteBuffer buf) {
     writeD(buf, this.code);
-    
+
     for (Object param : this.params) {
-      
+
       if (param instanceof DescriptionId) {
-        
+
         writeH(buf, 36);
-        writeD(buf, ((DescriptionId)param).getValue());
+        writeD(buf, ((DescriptionId) param).getValue());
         writeH(buf, 0);
       } else {
-        
+
         writeS(buf, String.valueOf(param));
-      } 
-    } 
+      }
+    }
     writeD(buf, 0);
     writeH(buf, 0);
     writeC(buf, 1);
@@ -99,9 +57,3 @@ public class SM_QUESTION_WINDOW
     writeD(buf, 6);
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\serverpackets\SM_QUESTION_WINDOW.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -15,45 +15,19 @@ import com.aionemu.gameserver.services.ItemService;
 import com.aionemu.gameserver.utils.PacketSendUtility;
 import com.aionemu.gameserver.utils.ThreadPoolManager;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class _1371FlowersForIsson
-  extends QuestHandler
-{
+public class _1371FlowersForIsson extends QuestHandler {
   private static final int questId = 1371;
-  
+
   public _1371FlowersForIsson() {
     super(Integer.valueOf(1371));
   }
 
-
-
-  
   public void register() {
     this.qe.setNpcQuestData(203949).addOnQuestStart(1371);
     this.qe.setNpcQuestData(203949).addOnTalkEvent(1371);
     this.qe.setNpcQuestData(730039).addOnTalkEvent(1371);
   }
 
-
-  
   public boolean onDialogEvent(QuestEnv env) {
     final Player player = env.getPlayer();
     int targetId = 0;
@@ -140,9 +114,3 @@ public class _1371FlowersForIsson
     return false;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\eltnen\_1371FlowersForIsson.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

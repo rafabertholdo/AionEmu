@@ -11,79 +11,23 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "QuestEvent", propOrder = {"conditions", "operations"})
-@XmlSeeAlso({OnKillEvent.class, OnTalkEvent.class})
-public abstract class QuestEvent
-{
+@XmlType(name = "QuestEvent", propOrder = { "conditions", "operations" })
+@XmlSeeAlso({ OnKillEvent.class, OnTalkEvent.class })
+public abstract class QuestEvent {
   protected QuestConditions conditions;
   protected QuestOperations operations;
   @XmlAttribute
   protected List<Integer> ids;
-  
+
   public boolean operate(QuestEnv env) {
     return false;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   public List<Integer> getIds() {
-    if (this.ids == null)
-    {
+    if (this.ids == null) {
       this.ids = new ArrayList<Integer>();
     }
     return this.ids;
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\questEngine\handlers\models\xmlQuest\events\QuestEvent.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */

@@ -7,84 +7,20 @@ import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.ObjectPool;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public class PoolableConnectionFactoryAE
-  extends PoolableConnectionFactory
-{
+public class PoolableConnectionFactoryAE extends PoolableConnectionFactory {
   private final int validationTimeout;
-  
-  public PoolableConnectionFactoryAE(ConnectionFactory connFactory, ObjectPool pool, KeyedObjectPoolFactory stmtPoolFactory, int validationTimeout, boolean defaultReadOnly, boolean defaultAutoCommit) {
+
+  public PoolableConnectionFactoryAE(ConnectionFactory connFactory, ObjectPool pool,
+      KeyedObjectPoolFactory stmtPoolFactory, int validationTimeout, boolean defaultReadOnly,
+      boolean defaultAutoCommit) {
     super(connFactory, pool, stmtPoolFactory, null, defaultReadOnly, defaultAutoCommit);
     this.validationTimeout = validationTimeout;
   }
 
-
-
-
-
-
-  
   public void validateConnection(Connection conn) throws SQLException {
     if (conn.isClosed())
-      throw new SQLException("validateConnection: connection closed"); 
+      throw new SQLException("validateConnection: connection closed");
     if (this.validationTimeout >= 0 && !conn.isValid(this.validationTimeout))
-      throw new SQLException("validateConnection: connection invalid"); 
+      throw new SQLException("validateConnection: connection invalid");
   }
 }
-
-
-/* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\commons\database\PoolableConnectionFactoryAE.class
- * Java compiler version: 6 (50.0)
- * JD-Core Version:       1.1.3
- */
