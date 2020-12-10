@@ -87,31 +87,31 @@ public class _1022KrallDesecration extends QuestHandler {
         QuestState qs = player.getQuestStateList().getQuestState(1022);
         if (qs == null || qs.getStatus() != QuestStatus.START) {
             return false;
-            /*     */ }
-        /* 120 */ int var = qs.getQuestVarById(0);
-        /* 121 */ int targetId = 0;
-        /* 122 */ if (env.getVisibleObject() instanceof Npc)
-            /* 123 */ targetId = ((Npc) env.getVisibleObject()).getNpcId();
-        /* 124 */ switch (targetId) {
+            }
+        int var = qs.getQuestVarById(0);
+        int targetId = 0;
+        if (env.getVisibleObject() instanceof Npc)
+            targetId = ((Npc) env.getVisibleObject()).getNpcId();
+        switch (targetId) {
             /*     */
-            /*     */ case 210178:
-                /* 127 */ if (var >= 1 && var <= 4) {
+            case 210178:
+                if (var >= 1 && var <= 4) {
                     /*     */
-                    /* 129 */ qs.setQuestVarById(0, var + 1);
-                    /* 130 */ updateQuestStatus(player, qs);
-                    /* 131 */ return true;
-                    /*     */ }
-                /* 133 */ if (var == 5) {
+                    qs.setQuestVarById(0, var + 1);
+                    updateQuestStatus(player, qs);
+                    return true;
+                    }
+                if (var == 5) {
                     /*     */
-                    /* 135 */ qs.setStatus(QuestStatus.REWARD);
-                    /* 136 */ updateQuestStatus(player, qs);
-                    /* 137 */ return true;
-                    /*     */ }
+                    qs.setStatus(QuestStatus.REWARD);
+                    updateQuestStatus(player, qs);
+                    return true;
+                    }
                 break;
-            /*     */ }
-        /* 140 */ return false;
-        /*     */ }
-    /*     */ }
+            }
+        return false;
+        }
+    }
 
 /*
  * Location:

@@ -1,57 +1,57 @@
-/*    */ package com.aionemu.gameserver.skillengine.effect.modifier;
-/*    */ 
-/*    */ import com.aionemu.gameserver.skillengine.effect.EffectId;
-/*    */ import com.aionemu.gameserver.skillengine.model.Effect;
-/*    */ import javax.xml.bind.annotation.XmlAccessType;
-/*    */ import javax.xml.bind.annotation.XmlAccessorType;
-/*    */ import javax.xml.bind.annotation.XmlAttribute;
-/*    */ import javax.xml.bind.annotation.XmlType;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ @XmlAccessorType(XmlAccessType.FIELD)
-/*    */ @XmlType(name = "StumbleDamageModifier")
-/*    */ public class StumbleDamageModifier
-/*    */   extends ActionModifier
-/*    */ {
-/*    */   @XmlAttribute(required = true)
-/*    */   protected int delta;
-/*    */   @XmlAttribute(required = true)
-/*    */   protected int value;
-/*    */   
-/*    */   public int analyze(Effect effect, int originalValue) {
-/* 46 */     return originalValue + this.value + effect.getSkillLevel() * this.delta;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public boolean check(Effect effect) {
-/* 52 */     return effect.getEffected().getEffectController().isAbnoramlSet(EffectId.STUMBLE);
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.skillengine.effect.modifier;
+
+import com.aionemu.gameserver.skillengine.effect.EffectId;
+import com.aionemu.gameserver.skillengine.model.Effect;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "StumbleDamageModifier")
+public class StumbleDamageModifier
+  extends ActionModifier
+{
+  @XmlAttribute(required = true)
+  protected int delta;
+  @XmlAttribute(required = true)
+  protected int value;
+  
+  public int analyze(Effect effect, int originalValue) {
+    return originalValue + this.value + effect.getSkillLevel() * this.delta;
+  }
+
+
+  
+  public boolean check(Effect effect) {
+    return effect.getEffected().getEffectController().isAbnoramlSet(EffectId.STUMBLE);
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\modifier\StumbleDamageModifier.class

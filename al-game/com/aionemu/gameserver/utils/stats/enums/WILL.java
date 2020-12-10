@@ -1,52 +1,52 @@
-/*    */ package com.aionemu.gameserver.utils.stats.enums;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum WILL
-/*    */ {
-/* 25 */   WARRIOR(90),
-/* 26 */   GLADIATOR(90),
-/* 27 */   TEMPLAR(105),
-/* 28 */   SCOUT(90),
-/* 29 */   ASSASSIN(90),
-/* 30 */   RANGER(110),
-/* 31 */   MAGE(115),
-/* 32 */   SORCERER(110),
-/* 33 */   SPIRIT_MASTER(115),
-/* 34 */   PRIEST(110),
-/* 35 */   CLERIC(110),
-/* 36 */   CHANTER(110);
-/*    */   
-/*    */   private int value;
-/*    */ 
-/*    */   
-/*    */   WILL(int value) {
-/* 42 */     this.value = value;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public int getValue() {
-/* 47 */     return this.value;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.utils.stats.enums;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum WILL
+{
+  WARRIOR(90),
+  GLADIATOR(90),
+  TEMPLAR(105),
+  SCOUT(90),
+  ASSASSIN(90),
+  RANGER(110),
+  MAGE(115),
+  SORCERER(110),
+  SPIRIT_MASTER(115),
+  PRIEST(110),
+  CLERIC(110),
+  CHANTER(110);
+  
+  private int value;
+
+  
+  WILL(int value) {
+    this.value = value;
+  }
+
+  
+  public int getValue() {
+    return this.value;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\stats\enums\WILL.class

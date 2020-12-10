@@ -1,33 +1,33 @@
-/*    */ package com.aionemu.gameserver.model.gameobjects;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum PersistentState
-/*    */ {
-/* 25 */   NEW,
-/* 26 */   UPDATE_REQUIRED,
-/* 27 */   UPDATED,
-/* 28 */   DELETED,
-/* 29 */   NOACTION;
-/*    */ }
+package com.aionemu.gameserver.model.gameobjects;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum PersistentState
+{
+  NEW,
+  UPDATE_REQUIRED,
+  UPDATED,
+  DELETED,
+  NOACTION;
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\gameobjects\PersistentState.class

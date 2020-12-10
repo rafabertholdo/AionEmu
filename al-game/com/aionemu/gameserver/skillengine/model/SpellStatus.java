@@ -1,67 +1,67 @@
-/*    */ package com.aionemu.gameserver.skillengine.model;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum SpellStatus
-/*    */ {
-/* 39 */   NONE(0),
-/* 40 */   STUMBLE(1),
-/* 41 */   STAGGER(2),
-/* 42 */   OPENAERIAL(4),
-/* 43 */   CLOSEAERIAL(8),
-/* 44 */   SPIN(16),
-/* 45 */   BLOCK(32),
-/* 46 */   PARRY(64),
-/* 47 */   DODGE(128),
-/* 48 */   RESIST(256);
-/*    */   
-/*    */   private int id;
-/*    */ 
-/*    */   
-/*    */   SpellStatus(int id) {
-/* 54 */     this.id = id;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public int getId() {
-/* 62 */     return this.id;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.skillengine.model;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum SpellStatus
+{
+  NONE(0),
+  STUMBLE(1),
+  STAGGER(2),
+  OPENAERIAL(4),
+  CLOSEAERIAL(8),
+  SPIN(16),
+  BLOCK(32),
+  PARRY(64),
+  DODGE(128),
+  RESIST(256);
+  
+  private int id;
+
+  
+  SpellStatus(int id) {
+    this.id = id;
+  }
+
+
+
+
+  
+  public int getId() {
+    return this.id;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\model\SpellStatus.class

@@ -1,76 +1,76 @@
-/*    */ package com.aionemu.gameserver.ai.events;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum Event
-/*    */ {
-/* 28 */   ATTACKED,
-/*    */ 
-/*    */ 
-/*    */   
-/* 32 */   TIRED_ATTACKING_TARGET,
-/*    */ 
-/*    */ 
-/*    */   
-/* 36 */   MOST_HATED_CHANGED,
-/*    */ 
-/*    */ 
-/*    */   
-/* 40 */   NOTHING_TODO,
-/*    */ 
-/*    */ 
-/*    */   
-/* 44 */   FAR_FROM_HOME,
-/*    */ 
-/*    */ 
-/*    */   
-/* 48 */   BACK_HOME,
-/*    */ 
-/*    */ 
-/*    */   
-/* 52 */   RESTORED_HEALTH,
-/*    */ 
-/*    */ 
-/*    */   
-/* 56 */   SEE_PLAYER,
-/*    */ 
-/*    */ 
-/*    */   
-/* 60 */   NOT_SEE_PLAYER,
-/*    */ 
-/*    */ 
-/*    */   
-/* 64 */   SEE_CREATURE,
-/*    */ 
-/*    */ 
-/*    */   
-/* 68 */   NOT_SEE_CREATURE,
-/*    */ 
-/*    */ 
-/*    */   
-/* 72 */   TALK;
-/*    */ }
+package com.aionemu.gameserver.ai.events;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum Event
+{
+  ATTACKED,
+
+
+  
+  TIRED_ATTACKING_TARGET,
+
+
+  
+  MOST_HATED_CHANGED,
+
+
+  
+  NOTHING_TODO,
+
+
+  
+  FAR_FROM_HOME,
+
+
+  
+  BACK_HOME,
+
+
+  
+  RESTORED_HEALTH,
+
+
+  
+  SEE_PLAYER,
+
+
+  
+  NOT_SEE_PLAYER,
+
+
+  
+  SEE_CREATURE,
+
+
+  
+  NOT_SEE_CREATURE,
+
+
+  
+  TALK;
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\ai\events\Event.class

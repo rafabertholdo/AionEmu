@@ -1,52 +1,52 @@
-/*    */ package com.aionemu.gameserver.utils.stats.enums;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum PDEF
-/*    */ {
-/* 25 */   WARRIOR(100),
-/* 26 */   GLADIATOR(100),
-/* 27 */   TEMPLAR(100),
-/* 28 */   SCOUT(100),
-/* 29 */   ASSASSIN(100),
-/* 30 */   RANGER(100),
-/* 31 */   MAGE(100),
-/* 32 */   SORCERER(100),
-/* 33 */   SPIRIT_MASTER(100),
-/* 34 */   PRIEST(100),
-/* 35 */   CLERIC(100),
-/* 36 */   CHANTER(100);
-/*    */   
-/*    */   private int value;
-/*    */ 
-/*    */   
-/*    */   PDEF(int value) {
-/* 42 */     this.value = value;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public int getValue() {
-/* 47 */     return this.value;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.utils.stats.enums;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum PDEF
+{
+  WARRIOR(100),
+  GLADIATOR(100),
+  TEMPLAR(100),
+  SCOUT(100),
+  ASSASSIN(100),
+  RANGER(100),
+  MAGE(100),
+  SORCERER(100),
+  SPIRIT_MASTER(100),
+  PRIEST(100),
+  CLERIC(100),
+  CHANTER(100);
+  
+  private int value;
+
+  
+  PDEF(int value) {
+    this.value = value;
+  }
+
+  
+  public int getValue() {
+    return this.value;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\stats\enums\PDEF.class

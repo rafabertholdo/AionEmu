@@ -73,33 +73,33 @@ public class MySQL5FriendListDAO extends FriendListDAO {
                 ps.addBatch();
 
                 ps.executeBatch();
-                /*     */ }
-            /*     */ });
-        /*     */ }
+                }
+            });
+        }
 
     /*     */
     /*     */
     /*     */
     /*     */
-    /*     */ public boolean delFriends(final int playerOid, final int friendOid) {
-        /* 120 */ return DB.insertUpdate("DELETE FROM friends WHERE player = ? AND friend = ?", new IUStH()
-        /*     */ {
+    public boolean delFriends(final int playerOid, final int friendOid) {
+        return DB.insertUpdate("DELETE FROM friends WHERE player = ? AND friend = ?", new IUStH()
+        {
             /*     */
             /*     */
-            /*     */ public void handleInsertUpdate(PreparedStatement ps) throws SQLException
-            /*     */ {
-                /* 126 */ ps.setInt(1, playerOid);
-                /* 127 */ ps.setInt(2, friendOid);
-                /* 128 */ ps.addBatch();
+            public void handleInsertUpdate(PreparedStatement ps) throws SQLException
+            {
+                ps.setInt(1, playerOid);
+                ps.setInt(2, friendOid);
+                ps.addBatch();
                 /*     */
-                /* 130 */ ps.setInt(1, friendOid);
-                /* 131 */ ps.setInt(2, playerOid);
-                /* 132 */ ps.addBatch();
+                ps.setInt(1, friendOid);
+                ps.setInt(2, playerOid);
+                ps.addBatch();
                 /*     */
-                /* 134 */ ps.executeBatch();
-                /*     */ }
-            /*     */ });
-        /*     */ }
+                ps.executeBatch();
+                }
+            });
+        }
 
     /*     */
     /*     */
@@ -107,10 +107,10 @@ public class MySQL5FriendListDAO extends FriendListDAO {
     /*     */
     /*     */
     /*     */
-    /*     */ public boolean supports(String s, int i, int i1) {
-        /* 145 */ return MySQL5DAOUtils.supports(s, i, i1);
-        /*     */ }
-    /*     */ }
+    public boolean supports(String s, int i, int i1) {
+        return MySQL5DAOUtils.supports(s, i, i1);
+        }
+    }
 
 /*
  * Location:

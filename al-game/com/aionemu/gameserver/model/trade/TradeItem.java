@@ -1,82 +1,82 @@
-/*    */ package com.aionemu.gameserver.model.trade;
-/*    */ 
-/*    */ import com.aionemu.gameserver.model.templates.item.ItemTemplate;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class TradeItem
-/*    */ {
-/*    */   private int itemId;
-/*    */   private long count;
-/*    */   private ItemTemplate itemTemplate;
-/*    */   
-/*    */   public TradeItem(int itemId, long count) {
-/* 34 */     this.itemId = itemId;
-/* 35 */     this.count = count;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public ItemTemplate getItemTemplate() {
-/* 43 */     return this.itemTemplate;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public void setItemTemplate(ItemTemplate itemTemplate) {
-/* 52 */     this.itemTemplate = itemTemplate;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public int getItemId() {
-/* 60 */     return this.itemId;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public long getCount() {
-/* 68 */     return this.count;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public void decreaseCount(long decreaseCount) {
-/* 76 */     if (decreaseCount < this.count)
-/* 77 */       this.count -= decreaseCount; 
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.model.trade;
+
+import com.aionemu.gameserver.model.templates.item.ItemTemplate;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class TradeItem
+{
+  private int itemId;
+  private long count;
+  private ItemTemplate itemTemplate;
+  
+  public TradeItem(int itemId, long count) {
+    this.itemId = itemId;
+    this.count = count;
+  }
+
+
+
+
+  
+  public ItemTemplate getItemTemplate() {
+    return this.itemTemplate;
+  }
+
+
+
+
+
+  
+  public void setItemTemplate(ItemTemplate itemTemplate) {
+    this.itemTemplate = itemTemplate;
+  }
+
+
+
+
+  
+  public int getItemId() {
+    return this.itemId;
+  }
+
+
+
+
+  
+  public long getCount() {
+    return this.count;
+  }
+
+
+
+
+  
+  public void decreaseCount(long decreaseCount) {
+    if (decreaseCount < this.count)
+      this.count -= decreaseCount; 
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\trade\TradeItem.class

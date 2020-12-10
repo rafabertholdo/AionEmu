@@ -1,39 +1,39 @@
-/*    */ package com.aionemu.gameserver.model;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum TaskId
-/*    */ {
-/* 25 */   DECAY,
-/* 26 */   RESPAWN,
-/* 27 */   PRISON,
-/* 28 */   PROTECTION_ACTIVE,
-/* 29 */   DROWN,
-/* 30 */   DESPAWN,
-/* 31 */   QUEST_TIMER,
-/* 32 */   RESTORE,
-/* 33 */   PLAYER_UPDATE,
-/* 34 */   GAG,
-/* 35 */   ITEM_USE;
-/*    */ }
+package com.aionemu.gameserver.model;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum TaskId
+{
+  DECAY,
+  RESPAWN,
+  PRISON,
+  PROTECTION_ACTIVE,
+  DROWN,
+  DESPAWN,
+  QUEST_TIMER,
+  RESTORE,
+  PLAYER_UPDATE,
+  GAG,
+  ITEM_USE;
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\TaskId.class

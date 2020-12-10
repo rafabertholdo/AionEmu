@@ -1,30 +1,30 @@
-/*    */ package com.aionemu.gameserver.model.broker;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum BrokerRace
-/*    */ {
-/* 25 */   ELYOS,
-/* 26 */   ASMODIAN;
-/*    */ }
+package com.aionemu.gameserver.model.broker;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum BrokerRace
+{
+  ELYOS,
+  ASMODIAN;
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\broker\BrokerRace.class

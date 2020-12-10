@@ -1,47 +1,47 @@
-/*    */ package com.aionemu.gameserver.model.group;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum GroupEvent
-/*    */ {
-/* 27 */   LEAVE(0),
-/* 28 */   MOVEMENT(1),
-/* 29 */   ENTER(13),
-/* 30 */   UPDATE(13),
-/* 31 */   CHANGELEADER(13);
-/*    */   
-/*    */   private int id;
-/*    */ 
-/*    */   
-/*    */   GroupEvent(int id) {
-/* 37 */     this.id = id;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public int getId() {
-/* 42 */     return this.id;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.model.group;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum GroupEvent
+{
+  LEAVE(0),
+  MOVEMENT(1),
+  ENTER(13),
+  UPDATE(13),
+  CHANGELEADER(13);
+  
+  private int id;
+
+  
+  GroupEvent(int id) {
+    this.id = id;
+  }
+
+  
+  public int getId() {
+    return this.id;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\group\GroupEvent.class

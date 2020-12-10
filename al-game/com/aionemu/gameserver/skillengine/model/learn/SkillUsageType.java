@@ -1,32 +1,32 @@
-/*    */ package com.aionemu.gameserver.skillengine.model.learn;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum SkillUsageType
-/*    */ {
-/* 25 */   ACTIVE,
-/* 26 */   PASSIVE,
-/* 27 */   TOGGLE,
-/* 28 */   MAINTAIN;
-/*    */ }
+package com.aionemu.gameserver.skillengine.model.learn;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum SkillUsageType
+{
+  ACTIVE,
+  PASSIVE,
+  TOGGLE,
+  MAINTAIN;
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\model\learn\SkillUsageType.class

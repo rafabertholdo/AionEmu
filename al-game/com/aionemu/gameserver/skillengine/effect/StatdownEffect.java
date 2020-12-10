@@ -1,42 +1,42 @@
-/*    */ package com.aionemu.gameserver.skillengine.effect;
-/*    */ 
-/*    */ import com.aionemu.gameserver.skillengine.model.Effect;
-/*    */ import javax.xml.bind.annotation.XmlAccessType;
-/*    */ import javax.xml.bind.annotation.XmlAccessorType;
-/*    */ import javax.xml.bind.annotation.XmlType;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ @XmlAccessorType(XmlAccessType.FIELD)
-/*    */ @XmlType(name = "StatdownEffect")
-/*    */ public class StatdownEffect
-/*    */   extends BufEffect
-/*    */ {
-/*    */   public void calculate(Effect effect) {
-/* 36 */     if (calculateEffectResistRate(effect, null))
-/* 37 */       effect.addSucessEffect(this); 
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.skillengine.effect;
+
+import com.aionemu.gameserver.skillengine.model.Effect;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "StatdownEffect")
+public class StatdownEffect
+  extends BufEffect
+{
+  public void calculate(Effect effect) {
+    if (calculateEffectResistRate(effect, null))
+      effect.addSucessEffect(this); 
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\skillengine\effect\StatdownEffect.class

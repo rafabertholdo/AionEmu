@@ -1,52 +1,52 @@
-/*    */ package com.aionemu.gameserver.model.legion;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum LegionHistoryType
-/*    */ {
-/* 25 */   CREATE(0),
-/* 26 */   JOIN(1),
-/* 27 */   KICK(2),
-/* 28 */   LEVEL_UP(3),
-/* 29 */   APPOINTED(4),
-/* 30 */   EMBLEM_REGISTER(5),
-/* 31 */   EMBLEM_MODIFIED(6);
-/*    */   
-/*    */   private byte historyType;
-/*    */ 
-/*    */   
-/*    */   LegionHistoryType(int historyType) {
-/* 37 */     this.historyType = (byte)historyType;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public byte getHistoryId() {
-/* 47 */     return this.historyType;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.model.legion;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum LegionHistoryType
+{
+  CREATE(0),
+  JOIN(1),
+  KICK(2),
+  LEVEL_UP(3),
+  APPOINTED(4),
+  EMBLEM_REGISTER(5),
+  EMBLEM_MODIFIED(6);
+  
+  private byte historyType;
+
+  
+  LegionHistoryType(int historyType) {
+    this.historyType = (byte)historyType;
+  }
+
+
+
+
+
+
+  
+  public byte getHistoryId() {
+    return this.historyType;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\legion\LegionHistoryType.class

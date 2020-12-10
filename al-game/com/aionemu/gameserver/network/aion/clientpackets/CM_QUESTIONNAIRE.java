@@ -1,51 +1,51 @@
-/*    */ package com.aionemu.gameserver.network.aion.clientpackets;
-/*    */ 
-/*    */ import com.aionemu.gameserver.network.aion.AionClientPacket;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class CM_QUESTIONNAIRE
-/*    */   extends AionClientPacket
-/*    */ {
-/*    */   private int objectId;
-/*    */   
-/*    */   public CM_QUESTIONNAIRE(int opcode) {
-/* 31 */     super(opcode);
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   protected void readImpl() {
-/* 40 */     this.objectId = readD();
-/* 41 */     readH();
-/* 42 */     readH();
-/* 43 */     readH();
-/* 44 */     readH();
-/*    */   }
-/*    */   
-/*    */   protected void runImpl() {}
-/*    */ }
+package com.aionemu.gameserver.network.aion.clientpackets;
+
+import com.aionemu.gameserver.network.aion.AionClientPacket;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class CM_QUESTIONNAIRE
+  extends AionClientPacket
+{
+  private int objectId;
+  
+  public CM_QUESTIONNAIRE(int opcode) {
+    super(opcode);
+  }
+
+
+
+
+
+  
+  protected void readImpl() {
+    this.objectId = readD();
+    readH();
+    readH();
+    readH();
+    readH();
+  }
+  
+  protected void runImpl() {}
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\network\aion\clientpackets\CM_QUESTIONNAIRE.class

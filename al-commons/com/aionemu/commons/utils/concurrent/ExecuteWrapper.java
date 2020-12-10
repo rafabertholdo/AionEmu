@@ -1,94 +1,94 @@
-/*    */ package com.aionemu.commons.utils.concurrent;
-/*    */ 
-/*    */ import java.util.concurrent.TimeUnit;
-/*    */ import javolution.text.TextBuilder;
-/*    */ import org.apache.log4j.Logger;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class ExecuteWrapper
-/*    */   implements Runnable
-/*    */ {
-/* 30 */   private static final Logger log = Logger.getLogger(ExecuteWrapper.class);
-/*    */   
-/*    */   private final Runnable runnable;
-/*    */ 
-/*    */   
-/*    */   public ExecuteWrapper(Runnable runnable) {
-/* 36 */     this.runnable = runnable;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public final void run() {
-/* 42 */     execute(this.runnable, getMaximumRuntimeInMillisecWithoutWarning());
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   protected long getMaximumRuntimeInMillisecWithoutWarning() {
-/* 47 */     return Long.MAX_VALUE;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public static void execute(Runnable runnable) {
-/* 52 */     execute(runnable, Long.MAX_VALUE);
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public static void execute(Runnable runnable, long maximumRuntimeInMillisecWithoutWarning) {
-/* 57 */     long begin = System.nanoTime();
-/*    */ 
-/*    */     
-/*    */     try {
-/* 61 */       runnable.run();
-/*    */     }
-/* 63 */     catch (RuntimeException e) {
-/*    */       
-/* 65 */       log.warn("Exception in a Runnable execution:", e);
-/*    */     }
-/*    */     finally {
-/*    */       
-/* 69 */       long runtimeInNanosec = System.nanoTime() - begin;
-/* 70 */       Class<? extends Runnable> clazz = (Class)runnable.getClass();
-/*    */       
-/* 72 */       RunnableStatsManager.handleStats(clazz, runtimeInNanosec);
-/*    */       
-/* 74 */       long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
-/*    */       
-/* 76 */       if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning) {
-/*    */         
-/* 78 */         TextBuilder tb = TextBuilder.newInstance();
-/*    */         
-/* 80 */         tb.append(clazz);
-/* 81 */         tb.append(" - execution time: ");
-/* 82 */         tb.append(runtimeInMillisec);
-/* 83 */         tb.append("msec");
-/*    */         
-/* 85 */         log.warn(tb.toString());
-/*    */         
-/* 87 */         TextBuilder.recycle(tb);
-/*    */       } 
-/*    */     } 
-/*    */   }
-/*    */ }
+package com.aionemu.commons.utils.concurrent;
+
+import java.util.concurrent.TimeUnit;
+import javolution.text.TextBuilder;
+import org.apache.log4j.Logger;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class ExecuteWrapper
+  implements Runnable
+{
+  private static final Logger log = Logger.getLogger(ExecuteWrapper.class);
+  
+  private final Runnable runnable;
+
+  
+  public ExecuteWrapper(Runnable runnable) {
+    this.runnable = runnable;
+  }
+
+
+  
+  public final void run() {
+    execute(this.runnable, getMaximumRuntimeInMillisecWithoutWarning());
+  }
+
+  
+  protected long getMaximumRuntimeInMillisecWithoutWarning() {
+    return Long.MAX_VALUE;
+  }
+
+  
+  public static void execute(Runnable runnable) {
+    execute(runnable, Long.MAX_VALUE);
+  }
+
+  
+  public static void execute(Runnable runnable, long maximumRuntimeInMillisecWithoutWarning) {
+    long begin = System.nanoTime();
+
+    
+    try {
+      runnable.run();
+    }
+    catch (RuntimeException e) {
+      
+      log.warn("Exception in a Runnable execution:", e);
+    }
+    finally {
+      
+      long runtimeInNanosec = System.nanoTime() - begin;
+      Class<? extends Runnable> clazz = (Class)runnable.getClass();
+      
+      RunnableStatsManager.handleStats(clazz, runtimeInNanosec);
+      
+      long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
+      
+      if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning) {
+        
+        TextBuilder tb = TextBuilder.newInstance();
+        
+        tb.append(clazz);
+        tb.append(" - execution time: ");
+        tb.append(runtimeInMillisec);
+        tb.append("msec");
+        
+        log.warn(tb.toString());
+        
+        TextBuilder.recycle(tb);
+      } 
+    } 
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\libs\al-commons-1.0.1.jar!\com\aionemu\common\\utils\concurrent\ExecuteWrapper.class

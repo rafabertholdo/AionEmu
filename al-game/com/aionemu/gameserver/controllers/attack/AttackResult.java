@@ -1,79 +1,79 @@
-/*    */ package com.aionemu.gameserver.controllers.attack;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public class AttackResult
-/*    */ {
-/*    */   private int damage;
-/*    */   private AttackStatus attackStatus;
-/*    */   private int shieldType;
-/*    */   
-/*    */   public AttackResult(int damage, AttackStatus attackStatus) {
-/* 33 */     this.damage = damage;
-/* 34 */     this.attackStatus = attackStatus;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public int getDamage() {
-/* 42 */     return this.damage;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public void setDamage(int damage) {
-/* 50 */     this.damage = damage;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public AttackStatus getAttackStatus() {
-/* 58 */     return this.attackStatus;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public int getShieldType() {
-/* 66 */     return this.shieldType;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public void setShieldType(int shieldType) {
-/* 74 */     this.shieldType = shieldType;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.controllers.attack;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class AttackResult
+{
+  private int damage;
+  private AttackStatus attackStatus;
+  private int shieldType;
+  
+  public AttackResult(int damage, AttackStatus attackStatus) {
+    this.damage = damage;
+    this.attackStatus = attackStatus;
+  }
+
+
+
+
+  
+  public int getDamage() {
+    return this.damage;
+  }
+
+
+
+
+  
+  public void setDamage(int damage) {
+    this.damage = damage;
+  }
+
+
+
+
+  
+  public AttackStatus getAttackStatus() {
+    return this.attackStatus;
+  }
+
+
+
+
+  
+  public int getShieldType() {
+    return this.shieldType;
+  }
+
+
+
+
+  
+  public void setShieldType(int shieldType) {
+    this.shieldType = shieldType;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\controllers\attack\AttackResult.class

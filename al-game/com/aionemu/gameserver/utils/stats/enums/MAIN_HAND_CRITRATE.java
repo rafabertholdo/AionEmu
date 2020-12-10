@@ -1,52 +1,52 @@
-/*    */ package com.aionemu.gameserver.utils.stats.enums;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum MAIN_HAND_CRITRATE
-/*    */ {
-/* 25 */   WARRIOR(2),
-/* 26 */   GLADIATOR(2),
-/* 27 */   TEMPLAR(2),
-/* 28 */   SCOUT(3),
-/* 29 */   ASSASSIN(3),
-/* 30 */   RANGER(3),
-/* 31 */   MAGE(1),
-/* 32 */   SORCERER(2),
-/* 33 */   SPIRIT_MASTER(2),
-/* 34 */   PRIEST(2),
-/* 35 */   CLERIC(2),
-/* 36 */   CHANTER(1);
-/*    */   
-/*    */   private int value;
-/*    */ 
-/*    */   
-/*    */   MAIN_HAND_CRITRATE(int value) {
-/* 42 */     this.value = value;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public int getValue() {
-/* 47 */     return this.value;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.utils.stats.enums;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum MAIN_HAND_CRITRATE
+{
+  WARRIOR(2),
+  GLADIATOR(2),
+  TEMPLAR(2),
+  SCOUT(3),
+  ASSASSIN(3),
+  RANGER(3),
+  MAGE(1),
+  SORCERER(2),
+  SPIRIT_MASTER(2),
+  PRIEST(2),
+  CLERIC(2),
+  CHANTER(1);
+  
+  private int value;
+
+  
+  MAIN_HAND_CRITRATE(int value) {
+    this.value = value;
+  }
+
+  
+  public int getValue() {
+    return this.value;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\stats\enums\MAIN_HAND_CRITRATE.class

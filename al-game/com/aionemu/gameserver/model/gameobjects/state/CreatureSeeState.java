@@ -1,46 +1,46 @@
-/*    */ package com.aionemu.gameserver.model.gameobjects.state;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum CreatureSeeState
-/*    */ {
-/* 25 */   NORMAL(0),
-/* 26 */   SEARCH1(1),
-/* 27 */   SEARCH2(2);
-/*    */   
-/*    */   private int id;
-/*    */ 
-/*    */   
-/*    */   CreatureSeeState(int id) {
-/* 33 */     this.id = id;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public int getId() {
-/* 41 */     return this.id;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.model.gameobjects.state;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum CreatureSeeState
+{
+  NORMAL(0),
+  SEARCH1(1),
+  SEARCH2(2);
+  
+  private int id;
+
+  
+  CreatureSeeState(int id) {
+    this.id = id;
+  }
+
+
+
+
+  
+  public int getId() {
+    return this.id;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\model\gameobjects\state\CreatureSeeState.class

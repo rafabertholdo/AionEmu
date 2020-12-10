@@ -1,74 +1,74 @@
-/*    */ package com.aionemu.gameserver.world;
-/*    */ 
-/*    */ import com.aionemu.gameserver.model.gameobjects.VisibleObject;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public final class StaticObjectKnownList
-/*    */   extends KnownList
-/*    */ {
-/*    */   public StaticObjectKnownList(VisibleObject owner) {
-/* 33 */     super(owner);
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   protected final boolean addKnownObject(VisibleObject object) {
-/* 44 */     if (object instanceof com.aionemu.gameserver.model.gameobjects.player.Player) {
-/* 45 */       return super.addKnownObject(object);
-/*    */     }
-/* 47 */     return false;
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   protected final void findVisibleObjects() {
-/* 56 */     if (getOwner() == null || !getOwner().isSpawned()) {
-/*    */       return;
-/*    */     }
-/* 59 */     for (MapRegion region : getOwner().getActiveRegion().getNeighbours()) {
-/*    */       
-/* 61 */       for (VisibleObject object : region.getVisibleObjects().values()) {
-/*    */         
-/* 63 */         if (!(object instanceof com.aionemu.gameserver.model.gameobjects.player.Player)) {
-/*    */           continue;
-/*    */         }
-/* 66 */         addKnownObject(object);
-/* 67 */         object.getKnownList().addKnownObject(getOwner());
-/*    */       } 
-/*    */     } 
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.world;
+
+import com.aionemu.gameserver.model.gameobjects.VisibleObject;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public final class StaticObjectKnownList
+  extends KnownList
+{
+  public StaticObjectKnownList(VisibleObject owner) {
+    super(owner);
+  }
+
+
+
+
+
+
+
+  
+  protected final boolean addKnownObject(VisibleObject object) {
+    if (object instanceof com.aionemu.gameserver.model.gameobjects.player.Player) {
+      return super.addKnownObject(object);
+    }
+    return false;
+  }
+
+
+
+
+
+  
+  protected final void findVisibleObjects() {
+    if (getOwner() == null || !getOwner().isSpawned()) {
+      return;
+    }
+    for (MapRegion region : getOwner().getActiveRegion().getNeighbours()) {
+      
+      for (VisibleObject object : region.getVisibleObjects().values()) {
+        
+        if (!(object instanceof com.aionemu.gameserver.model.gameobjects.player.Player)) {
+          continue;
+        }
+        addKnownObject(object);
+        object.getKnownList().addKnownObject(getOwner());
+      } 
+    } 
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserver\world\StaticObjectKnownList.class

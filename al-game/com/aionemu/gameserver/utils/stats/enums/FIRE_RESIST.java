@@ -1,53 +1,53 @@
-/*    */ package com.aionemu.gameserver.utils.stats.enums;
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ public enum FIRE_RESIST
-/*    */ {
-/* 26 */   WARRIOR(0),
-/* 27 */   GLADIATOR(0),
-/* 28 */   TEMPLAR(0),
-/* 29 */   SCOUT(0),
-/* 30 */   ASSASSIN(0),
-/* 31 */   RANGER(0),
-/* 32 */   MAGE(0),
-/* 33 */   SORCERER(0),
-/* 34 */   SPIRIT_MASTER(0),
-/* 35 */   PRIEST(0),
-/* 36 */   CLERIC(0),
-/* 37 */   CHANTER(0);
-/*    */   
-/*    */   private int value;
-/*    */ 
-/*    */   
-/*    */   FIRE_RESIST(int value) {
-/* 43 */     this.value = value;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public int getValue() {
-/* 48 */     return this.value;
-/*    */   }
-/*    */ }
+package com.aionemu.gameserver.utils.stats.enums;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public enum FIRE_RESIST
+{
+  WARRIOR(0),
+  GLADIATOR(0),
+  TEMPLAR(0),
+  SCOUT(0),
+  ASSASSIN(0),
+  RANGER(0),
+  MAGE(0),
+  SORCERER(0),
+  SPIRIT_MASTER(0),
+  PRIEST(0),
+  CLERIC(0),
+  CHANTER(0);
+  
+  private int value;
+
+  
+  FIRE_RESIST(int value) {
+    this.value = value;
+  }
+
+  
+  public int getValue() {
+    return this.value;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\com\aionemu\gameserve\\utils\stats\enums\FIRE_RESIST.class

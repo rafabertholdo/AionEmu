@@ -1,143 +1,143 @@
-/*     */ package quest.beluslan;
-/*     */ 
-/*     */ import com.aionemu.gameserver.model.gameobjects.Npc;
-/*     */ import com.aionemu.gameserver.model.gameobjects.player.Player;
-/*     */ import com.aionemu.gameserver.network.aion.AionServerPacket;
-/*     */ import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
-/*     */ import com.aionemu.gameserver.questEngine.handlers.QuestHandler;
-/*     */ import com.aionemu.gameserver.questEngine.model.QuestEnv;
-/*     */ import com.aionemu.gameserver.questEngine.model.QuestState;
-/*     */ import com.aionemu.gameserver.questEngine.model.QuestStatus;
-/*     */ import com.aionemu.gameserver.utils.PacketSendUtility;
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ public class _2515LeanorsErrand
-/*     */   extends QuestHandler
-/*     */ {
-/*     */   private static final int questId = 2515;
-/*     */   
-/*     */   public _2515LeanorsErrand() {
-/*  21 */     super(Integer.valueOf(2515));
-/*     */   }
-/*     */ 
-/*     */ 
-/*     */   
-/*     */   public void register() {
-/*  27 */     this.qe.setNpcQuestData(790015).addOnQuestStart(2515);
-/*  28 */     this.qe.setNpcQuestData(790015).addOnTalkEvent(2515);
-/*  29 */     this.qe.setNpcQuestData(204192).addOnTalkEvent(2515);
-/*  30 */     this.qe.setNpcQuestData(204205).addOnTalkEvent(2515);
-/*  31 */     this.qe.setNpcQuestData(798081).addOnTalkEvent(2515);
-/*     */   }
-/*     */ 
-/*     */ 
-/*     */   
-/*     */   public boolean onDialogEvent(QuestEnv env) {
-/*  37 */     Player player = env.getPlayer();
-/*  38 */     int targetId = 0;
-/*  39 */     if (env.getVisibleObject() instanceof Npc)
-/*  40 */       targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
-/*  41 */     QuestState qs = player.getQuestStateList().getQuestState(2515);
-/*  42 */     if (targetId == 790015) {
-/*     */       
-/*  44 */       if (qs == null || qs.getStatus() == QuestStatus.NONE) {
-/*     */         
-/*  46 */         if (env.getDialogId().intValue() == 25) {
-/*  47 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
-/*     */         }
-/*  49 */         return defaultQuestStartDialog(env);
-/*     */       } 
-/*  51 */       if (qs != null && qs.getStatus() == QuestStatus.START) {
-/*     */         
-/*  53 */         if (env.getDialogId().intValue() == 25)
-/*  54 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375); 
-/*  55 */         if (env.getDialogId().intValue() == 1009) {
-/*     */           
-/*  57 */           qs.setStatus(QuestStatus.REWARD);
-/*  58 */           updateQuestStatus(player, qs);
-/*  59 */           PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-/*  60 */           return true;
-/*     */         } 
-/*     */         
-/*  63 */         return defaultQuestEndDialog(env);
-/*     */       } 
-/*  65 */       if (qs != null && qs.getStatus() == QuestStatus.REWARD)
-/*     */       {
-/*  67 */         return defaultQuestEndDialog(env);
-/*     */       }
-/*     */     }
-/*  70 */     else if (targetId == 204192) {
-/*     */       
-/*  72 */       if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
-/*     */       {
-/*  74 */         if (env.getDialogId().intValue() == 25)
-/*  75 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
-/*  76 */         if (env.getDialogId().intValue() == 10000) {
-/*     */           
-/*  78 */           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-/*  79 */           updateQuestStatus(player, qs);
-/*  80 */           PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-/*  81 */           return true;
-/*     */         } 
-/*     */         
-/*  84 */         return defaultQuestStartDialog(env);
-/*     */       }
-/*     */     
-/*  87 */     } else if (targetId == 204205) {
-/*     */       
-/*  89 */       if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
-/*     */       {
-/*  91 */         if (env.getDialogId().intValue() == 25)
-/*  92 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
-/*  93 */         if (env.getDialogId().intValue() == 10001) {
-/*     */           
-/*  95 */           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-/*  96 */           updateQuestStatus(player, qs);
-/*  97 */           PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-/*  98 */           return true;
-/*     */         } 
-/*     */         
-/* 101 */         return defaultQuestStartDialog(env);
-/*     */       }
-/*     */     
-/* 104 */     } else if (targetId == 798081) {
-/*     */       
-/* 106 */       if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 2)
-/*     */       {
-/* 108 */         if (env.getDialogId().intValue() == 25)
-/* 109 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034); 
-/* 110 */         if (env.getDialogId().intValue() == 10002) {
-/*     */           
-/* 112 */           qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
-/* 113 */           updateQuestStatus(player, qs);
-/* 114 */           PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
-/* 115 */           return true;
-/*     */         } 
-/*     */         
-/* 118 */         return defaultQuestStartDialog(env);
-/*     */       }
-/*     */     
-/* 121 */     } else if (targetId == 790015) {
-/*     */       
-/* 123 */       if (qs != null) {
-/*     */         
-/* 125 */         if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START)
-/* 126 */           return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375); 
-/* 127 */         if (env.getDialogId().intValue() == 1009) {
-/*     */           
-/* 129 */           qs.setQuestVar(3);
-/* 130 */           qs.setStatus(QuestStatus.REWARD);
-/* 131 */           updateQuestStatus(player, qs);
-/* 132 */           return defaultQuestEndDialog(env);
-/*     */         } 
-/*     */         
-/* 135 */         return defaultQuestEndDialog(env);
-/*     */       } 
-/*     */     } 
-/* 138 */     return false;
-/*     */   }
-/*     */ }
+package quest.beluslan;
+
+import com.aionemu.gameserver.model.gameobjects.Npc;
+import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.network.aion.AionServerPacket;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_DIALOG_WINDOW;
+import com.aionemu.gameserver.questEngine.handlers.QuestHandler;
+import com.aionemu.gameserver.questEngine.model.QuestEnv;
+import com.aionemu.gameserver.questEngine.model.QuestState;
+import com.aionemu.gameserver.questEngine.model.QuestStatus;
+import com.aionemu.gameserver.utils.PacketSendUtility;
+
+
+
+public class _2515LeanorsErrand
+  extends QuestHandler
+{
+  private static final int questId = 2515;
+  
+  public _2515LeanorsErrand() {
+    super(Integer.valueOf(2515));
+  }
+
+
+  
+  public void register() {
+    this.qe.setNpcQuestData(790015).addOnQuestStart(2515);
+    this.qe.setNpcQuestData(790015).addOnTalkEvent(2515);
+    this.qe.setNpcQuestData(204192).addOnTalkEvent(2515);
+    this.qe.setNpcQuestData(204205).addOnTalkEvent(2515);
+    this.qe.setNpcQuestData(798081).addOnTalkEvent(2515);
+  }
+
+
+  
+  public boolean onDialogEvent(QuestEnv env) {
+    Player player = env.getPlayer();
+    int targetId = 0;
+    if (env.getVisibleObject() instanceof Npc)
+      targetId = ((Npc)env.getVisibleObject()).getNpcId(); 
+    QuestState qs = player.getQuestStateList().getQuestState(2515);
+    if (targetId == 790015) {
+      
+      if (qs == null || qs.getStatus() == QuestStatus.NONE) {
+        
+        if (env.getDialogId().intValue() == 25) {
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1011);
+        }
+        return defaultQuestStartDialog(env);
+      } 
+      if (qs != null && qs.getStatus() == QuestStatus.START) {
+        
+        if (env.getDialogId().intValue() == 25)
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375); 
+        if (env.getDialogId().intValue() == 1009) {
+          
+          qs.setStatus(QuestStatus.REWARD);
+          updateQuestStatus(player, qs);
+          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          return true;
+        } 
+        
+        return defaultQuestEndDialog(env);
+      } 
+      if (qs != null && qs.getStatus() == QuestStatus.REWARD)
+      {
+        return defaultQuestEndDialog(env);
+      }
+    }
+    else if (targetId == 204192) {
+      
+      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 0)
+      {
+        if (env.getDialogId().intValue() == 25)
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1352); 
+        if (env.getDialogId().intValue() == 10000) {
+          
+          qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+          updateQuestStatus(player, qs);
+          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          return true;
+        } 
+        
+        return defaultQuestStartDialog(env);
+      }
+    
+    } else if (targetId == 204205) {
+      
+      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 1)
+      {
+        if (env.getDialogId().intValue() == 25)
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 1693); 
+        if (env.getDialogId().intValue() == 10001) {
+          
+          qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+          updateQuestStatus(player, qs);
+          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          return true;
+        } 
+        
+        return defaultQuestStartDialog(env);
+      }
+    
+    } else if (targetId == 798081) {
+      
+      if (qs != null && qs.getStatus() == QuestStatus.START && qs.getQuestVarById(0) == 2)
+      {
+        if (env.getDialogId().intValue() == 25)
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2034); 
+        if (env.getDialogId().intValue() == 10002) {
+          
+          qs.setQuestVarById(0, qs.getQuestVarById(0) + 1);
+          updateQuestStatus(player, qs);
+          PacketSendUtility.sendPacket(player, (AionServerPacket)new SM_DIALOG_WINDOW(env.getVisibleObject().getObjectId(), 10));
+          return true;
+        } 
+        
+        return defaultQuestStartDialog(env);
+      }
+    
+    } else if (targetId == 790015) {
+      
+      if (qs != null) {
+        
+        if (env.getDialogId().intValue() == 25 && qs.getStatus() == QuestStatus.START)
+          return sendQuestDialog(player, env.getVisibleObject().getObjectId(), 2375); 
+        if (env.getDialogId().intValue() == 1009) {
+          
+          qs.setQuestVar(3);
+          qs.setStatus(QuestStatus.REWARD);
+          updateQuestStatus(player, qs);
+          return defaultQuestEndDialog(env);
+        } 
+        
+        return defaultQuestEndDialog(env);
+      } 
+    } 
+    return false;
+  }
+}
 
 
 /* Location:              D:\games\aion\servers\AionLightning1.9\docker-gs\gameserver\al-game-1.0.1.jar!\quest\beluslan\_2515LeanorsErrand.class
