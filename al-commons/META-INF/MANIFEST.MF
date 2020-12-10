@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: Administrator
+Build-Jdk: 1.6.0_21
+Implementation-Title: AionLightning
+Implementation-Version: 1.0.1
+Implementation-Vendor-Id: AionLightning
+Implementation-Build: 333
+Implementation-Time: 1285975596906
+
